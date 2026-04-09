@@ -1,0 +1,1288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop Collections | FloraFit</title>
+    <link rel="icon" type="image/png" href="assets/img/Flora.png">
+    <link rel="stylesheet" href="assets/css/website.css">
+    <link rel="stylesheet" href="assets/css/notifications.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <style>
+        .shop-page-content {
+            padding-top: 140px;
+        }
+
+        .shop-admin-panel {
+            display: grid;
+            gap: 18px;
+            margin-bottom: 32px;
+            padding: 22px;
+            border-radius: 24px;
+            background: linear-gradient(145deg, #fffafc 0%, #f8fbff 100%);
+            border: 1px solid rgba(214, 99, 143, 0.12);
+            box-shadow: 0 18px 45px rgba(15, 23, 42, 0.08);
+        }
+
+        .shop-admin-hero {
+            display: flex;
+            justify-content: space-between;
+            gap: 18px;
+            flex-wrap: wrap;
+            align-items: stretch;
+            padding: 18px;
+            border-radius: 18px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.96) 0%, rgba(245,250,255,0.96) 100%);
+            border: 1px solid rgba(148, 163, 184, 0.16);
+        }
+
+        .shop-admin-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 999px;
+            background: rgba(214, 99, 143, 0.12);
+            color: #b64372;
+            font-size: 0.82rem;
+            font-weight: 700;
+        }
+
+        .shop-admin-hero h3 {
+            margin: 10px 0 6px;
+            font-size: 1.35rem;
+            color: #243042;
+        }
+
+        .shop-admin-hero p {
+            margin: 0;
+            max-width: 620px;
+            color: #5f6f82;
+            line-height: 1.6;
+        }
+
+        .shop-admin-hero-stats {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(96px, 1fr));
+            gap: 10px;
+            min-width: min(100%, 320px);
+        }
+
+        .shop-admin-stat {
+            background: #fff;
+            border-radius: 16px;
+            padding: 14px 12px;
+            text-align: center;
+            border: 1px solid rgba(148, 163, 184, 0.16);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.85);
+        }
+
+        .shop-admin-stat strong {
+            display: block;
+            font-size: 1.3rem;
+            color: #d6638f;
+            margin-bottom: 4px;
+        }
+
+        .shop-admin-stat span {
+            font-size: 0.78rem;
+            color: #64748b;
+        }
+
+        .shop-admin-form {
+            display: grid;
+            gap: 16px;
+        }
+
+        .shop-admin-section-head {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+
+        .shop-admin-section-head h4 {
+            margin: 0 0 4px;
+            color: #243042;
+        }
+
+        .shop-admin-section-head p {
+            margin: 0;
+            color: #64748b;
+        }
+
+        .shop-admin-mini-badge {
+            padding: 8px 12px;
+            border-radius: 999px;
+            background: rgba(102, 126, 234, 0.1);
+            color: #4c63d2;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .shop-admin-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        .shop-admin-field {
+            display: grid;
+            gap: 8px;
+        }
+
+        .shop-admin-field.full {
+            grid-column: 1 / -1;
+        }
+
+        .shop-admin-field label {
+            margin: 0;
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: #314155;
+        }
+
+        .shop-admin-note {
+            display: flex;
+            align-items: center;
+            padding: 12px 14px;
+            min-height: 48px;
+            border-radius: 14px;
+            background: #fff;
+            border: 1px dashed rgba(214, 99, 143, 0.3);
+            color: #7b8794;
+            font-size: 0.9rem;
+        }
+
+        .shop-admin-form input,
+        .shop-admin-form select,
+        .shop-admin-form textarea {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 12px 14px;
+            border-radius: 12px;
+            border: 1px solid rgba(15, 23, 42, 0.10);
+            background: #fff;
+            transition: all 0.2s ease;
+            box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.03);
+        }
+
+        .shop-admin-form input:focus,
+        .shop-admin-form select:focus,
+        .shop-admin-form textarea:focus {
+            outline: none;
+            border-color: rgba(214, 99, 143, 0.65);
+            box-shadow: 0 0 0 4px rgba(214, 99, 143, 0.12);
+        }
+
+        .admin-upload-card,
+        .admin-requirements-card {
+            display: grid;
+            gap: 10px;
+            padding: 16px;
+            border-radius: 16px;
+            background: #fff;
+            border: 1px solid rgba(148, 163, 184, 0.16);
+            box-shadow: 0 10px 25px rgba(15, 23, 42, 0.04);
+        }
+
+        .admin-upload-card small,
+        .admin-requirements-card small {
+            color: #64748b;
+        }
+
+        .requirements-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        #add-requirement-row {
+            padding: 8px 14px;
+            background: linear-gradient(135deg, #d6638f 0%, #8f7cff 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            box-shadow: 0 8px 18px rgba(214, 99, 143, 0.18);
+        }
+
+        #requirements-container {
+            display: grid;
+            gap: 10px;
+        }
+
+        .requirement-row {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 120px auto;
+            gap: 8px;
+        }
+
+        .remove-requirement {
+            padding: 10px 12px;
+            background: #fff1f4;
+            color: #c2416c;
+            border: 1px solid rgba(194, 65, 108, 0.16);
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .shop-admin-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+        }
+
+        .shop-admin-submit,
+        .shop-admin-cancel {
+            border: none;
+            border-radius: 12px;
+            padding: 11px 18px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .shop-admin-submit {
+            background: linear-gradient(135deg, #d6638f 0%, #8f7cff 100%);
+            color: white;
+            box-shadow: 0 10px 18px rgba(143, 124, 255, 0.2);
+        }
+
+        .shop-admin-cancel {
+            background: #eef2f7;
+            color: #475569;
+        }
+
+        .card-admin-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .card-admin-btn {
+            flex: 1;
+            padding: 9px 10px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 0.88rem;
+            font-weight: 600;
+        }
+
+        .card-admin-btn.edit {
+            background: #e8f1ff;
+            color: #2458c6;
+        }
+
+        .card-admin-btn.delete {
+            background: #ffe7ec;
+            color: #c6285b;
+        }
+
+        @media (max-width: 768px) {
+            .shop-page-content {
+                padding-top: 120px;
+            }
+
+            .shop-admin-grid,
+            .shop-admin-hero-stats,
+            .requirement-row {
+                grid-template-columns: 1fr;
+            }
+
+            .shop-admin-actions {
+                justify-content: stretch;
+            }
+
+            .shop-admin-submit,
+            .shop-admin-cancel {
+                width: 100%;
+            }
+        }
+    </style>
+
+    <header>
+        <div class="container header-container">
+            <button id="hamburger-btn" class="hamburger-btn" aria-label="Open menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <a href="index.html" class="logo">
+                <span style="font-size: 2rem;">🌸</span>
+                <h1>FLORAFIT</h1>
+            </a>
+
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="mobile-menu" aria-hidden="true">
+                <button id="mobile-menu-close" class="mobile-menu-close" aria-label="Close menu">&times;</button>
+                <nav class="mobile-nav">
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#about">About</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="shop.html">Shop</a></li>
+                        <li><a href="customize.html">Start Designing</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div id="mobile-menu-overlay" class="mobile-menu-overlay"></div>
+
+            <div id="auth-toggle">
+                <a href="admin/dashboard.php" id="staff-dashboard-link" class="nav-cta" style="display:none; margin-right:15px; background:linear-gradient(135deg, #667eea 0%, #764ba2 100%); border:none;">
+                    <i class="fas fa-chart-line"></i> Dashboard
+                </a>
+                <div id="auth-buttons">
+                    <a href="login.html" class="nav-cta">Login</a>
+                    <a href="signup.html" class="nav-cta">Sign Up</a>
+                </div>
+                <div id="profile-section" style="display: none;">
+                    <div class="profile-menu">
+                        <img id="cornerProfilePic" src="uploads/default-avatar.svg" alt="profile">
+                        <i class="fas fa-user-circle"></i>
+                        <span id="user-name"></span>
+                        <button id="logout-btn" class="nav-cta">Logout</button>
+                    </div>
+                </div>
+                <button type="button" id="cart-toggle-btn" class="cart-toggle-btn" aria-label="Open cart">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span id="cart-badge" class="cart-badge">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="container shop-page-content">
+        <section class="shop-header">
+            <h2>Our Ready-Made Collections</h2>
+            <p>lalagyan ng motto</p>
+        </section>
+
+        <!-- Admin Controls -->
+        <div id="admin-controls" class="shop-admin-panel" style="display:none;">
+            <div class="shop-admin-hero">
+                <div>
+                    <span class="shop-admin-chip"><i class="fas fa-wand-sparkles"></i> Admin mode</span>
+                    <h3>Shop Product Studio</h3>
+                    <p>Create a cleaner storefront by managing bouquet listings, pricing, gallery photos, and flower usage from one polished space.</p>
+                </div>
+                <div class="shop-admin-hero-stats">
+                    <div class="shop-admin-stat">
+                        <strong id="admin-total-products">0</strong>
+                        <span>Total Products</span>
+                    </div>
+                    <div class="shop-admin-stat">
+                        <strong id="admin-featured-count">0</strong>
+                        <span>Badged Items</span>
+                    </div>
+                    <div class="shop-admin-stat">
+                        <strong id="admin-gallery-count">0</strong>
+                        <span>Gallery Photos</span>
+                    </div>
+                </div>
+            </div>
+
+            <form id="product-form" class="shop-admin-form">
+                <input type="hidden" id="product-id">
+                <input type="hidden" id="existing-image">
+                <input type="hidden" id="existing-images" value="[]">
+
+                <div class="shop-admin-section-head">
+                    <div>
+                        <h4 id="admin-form-title">Add a bouquet to the shop</h4>
+                        <p id="admin-form-caption">Fill in the details below to publish a ready-made arrangement.</p>
+                    </div>
+                    <span class="shop-admin-mini-badge">Live storefront sync</span>
+                </div>
+
+                <div class="shop-admin-grid">
+                    <div class="shop-admin-field">
+                        <label for="product-name">Product name</label>
+                        <input type="text" id="product-name" placeholder="Romantic Rose Basket" required>
+                    </div>
+                    <div class="shop-admin-field">
+                        <label for="product-price">Price</label>
+                        <input type="number" id="product-price" placeholder="Price (₱)" step="0.01" required>
+                    </div>
+                    <div class="shop-admin-field">
+                        <label for="product-badge">Badge</label>
+                        <select id="product-badge">
+                            <option value="">No Badge</option>
+                            <option value="Best Seller">Best Seller</option>
+                            <option value="New Arrival">New Arrival</option>
+                            <option value="Limited">Limited</option>
+                        </select>
+                    </div>
+                    <div class="shop-admin-note">
+                        Add a badge to highlight best sellers, new arrivals, or limited drops.
+                    </div>
+
+                    <div class="shop-admin-field full">
+                        <label for="product-description">Bouquet description</label>
+                        <textarea id="product-description" placeholder="Write a short, charming description for this bouquet." rows="3"></textarea>
+                    </div>
+                </div>
+
+                <div class="admin-upload-card">
+                    <label for="product-images"><strong style="color:#243042;">Angle photos</strong></label>
+                    <input type="file" id="product-images" accept="image/*" multiple>
+                    <small id="image-count-label">No gallery images selected yet.</small>
+                </div>
+
+                <div class="admin-requirements-card">
+                    <div class="requirements-toolbar">
+                        <strong style="color:#243042;">Flowers needed per bouquet</strong>
+                        <button type="button" id="add-requirement-row">+ Add Flower</button>
+                    </div>
+                    <datalist id="inventory-name-list"></datalist>
+                    <div id="requirements-container"></div>
+                    <small>These quantities are deducted from inventory each time this bouquet is ordered.</small>
+                </div>
+
+                <div class="shop-admin-actions">
+                    <button type="button" id="cancel-edit" class="shop-admin-cancel">Clear Form</button>
+                    <button type="submit" id="save-product-btn" class="shop-admin-submit">Save Product</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="flower-grid" id="products-container">
+            <!-- Products will be loaded here dynamically -->
+        </div>
+    </div>
+
+    <div id="product-modal" class="product-modal" style="display:none;">
+        <div class="product-modal-content">
+            <button type="button" class="product-modal-close" id="product-modal-close" aria-label="Close">&times;</button>
+            <div class="product-modal-layout">
+                <div class="product-modal-gallery">
+                    <img id="modal-main-image" src="" alt="Bouquet image" class="modal-main-image">
+                    <div id="modal-thumbnails" class="modal-thumbnails"></div>
+                </div>
+                <div class="product-modal-details">
+                    <h3 id="modal-product-name"></h3>
+                    <div class="modal-rating-row">
+                        <span id="modal-rating-stars" class="modal-rating-stars"></span>
+                        <span id="modal-rating-value" class="modal-rating-value"></span>
+                    </div>
+                    <p id="modal-product-description" class="modal-product-description"></p>
+                    <p class="modal-product-price">₱<span id="modal-product-price"></span></p>
+
+                    <div class="modal-section">
+                        <h4>Choose add-ons</h4>
+                        <div id="modal-addons" class="modal-addons"></div>
+                    </div>
+
+                    <div class="modal-section">
+                        <h4>Quantity</h4>
+                        <div class="modal-quantity-wrap">
+                            <button type="button" class="qty-btn" id="modal-qty-dec">-</button>
+                            <span id="modal-qty">1</span>
+                            <button type="button" class="qty-btn" id="modal-qty-inc">+</button>
+                        </div>
+                    </div>
+
+                    <div class="modal-actions">
+                        <button type="button" id="modal-add-to-cart" class="buy-button">Add to Cart</button>
+                        <button type="button" id="modal-buy-now" class="buy-now-btn">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div style="text-align: center;">
+                <h3>FLORA FIT</h3>
+                <p>Bringing nature's beauty to your doorstep.</p>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2026 Flora Fit. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/notifications.js"></script>
+    <script>
+        let products = [];
+        let inventoryNames = [];
+        let isAdmin = false;
+        let selectedProduct = null;
+        let selectedQuantity = 1;
+        const defaultAddOns = [
+            { id: 'card', name: 'Greeting Card', price: 99 },
+            { id: 'chocolate', name: 'Chocolates', price: 199 },
+            { id: 'bear', name: 'Teddy Bear', price: 299 }
+        ];
+
+        function updateCartBadge() {
+            const badge = document.getElementById('cart-badge');
+            if (!badge) return;
+            const total = getCart().reduce((sum, item) => sum + Math.max(1, Number(item.quantity || 1)), 0);
+            badge.textContent = total;
+        }
+
+        const cartBtn = document.getElementById('cart-toggle-btn');
+        if (cartBtn) {
+            cartBtn.addEventListener('click', () => {
+                window.location.href = 'checkout.html';
+            });
+        }
+
+        // Auth toggle functionality
+        function updateAuthUI() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            const authButtons = document.getElementById('auth-buttons');
+            const profileSection = document.getElementById('profile-section');
+            const userName = document.getElementById('user-name');
+            const cornerImg = document.getElementById('cornerProfilePic');
+            const cartBtn = document.getElementById('cart-toggle-btn');
+            const adminControls = document.getElementById('admin-controls');
+            
+            if (isLoggedIn) {
+                const user = JSON.parse(localStorage.getItem('user'));
+                authButtons.style.display = 'none';
+                profileSection.style.display = 'block';
+                if (user) {
+                    userName.textContent = user.name || [user.firstName, user.lastName].filter(Boolean).join(' ');
+                }
+                if (user && user.profile_picture) {
+                    cornerImg.src = user.profile_picture;
+                    cornerImg.style.display = 'inline-block';
+                    const icon = profileSection.querySelector('.fa-user-circle');
+                    if (icon) icon.style.display = 'none';
+                } else {
+                    cornerImg.style.display = 'none';
+                    const icon = profileSection.querySelector('.fa-user-circle');
+                    if (icon) icon.style.display = 'inline-block';
+                }
+                
+                // Check if user is admin/staff
+                if (user && (user.role === 'admin' || user.role === 'staff' || user.is_admin)) {
+                    isAdmin = true;
+                    if (adminControls) adminControls.style.display = 'grid';
+                    // Show staff dashboard link
+                    const staffLink = document.getElementById('staff-dashboard-link');
+                    if (staffLink) staffLink.style.display = 'inline-block';
+                    if (cartBtn) cartBtn.style.display = 'none';
+                    updateAdminFormMode();
+                    // Replace Start Designing with plain Customize link for admins
+                    const designLink = document.getElementById('start-designing-link');
+                    if (designLink) {
+                        designLink.innerHTML = '<a href="customize.html">Customize</a>';
+                    }
+                } else {
+                    isAdmin = false;
+                    if (adminControls) adminControls.style.display = 'none';
+                    if (cartBtn) cartBtn.style.display = 'inline-flex';
+                }
+            } else {
+                isAdmin = false;
+                authButtons.style.display = 'flex';
+                profileSection.style.display = 'none';
+                if (adminControls) adminControls.style.display = 'none';
+                if (cartBtn) cartBtn.style.display = 'inline-flex';
+                // Hide staff dashboard link when not logged in
+                const staffLink = document.getElementById('staff-dashboard-link');
+                if (staffLink) staffLink.style.display = 'none';
+            }
+        }
+        
+        // Load products from database
+        async function loadProducts() {
+            try {
+                const response = await fetch('api/get_shop_products.php');
+                const data = await response.json();
+                
+                // Check if data is an array
+                if (Array.isArray(data)) {
+                    products = data;
+                } else {
+                    console.error('Invalid response format:', data);
+                    products = [];
+                }
+                
+                renderProducts();
+            } catch (error) {
+                console.error('Error loading products:', error);
+                products = [];
+                renderProducts();
+            }
+        }
+
+        async function loadInventoryNames() {
+            try {
+                const response = await fetch('api/get_inventory_for_customize.php');
+                const data = await response.json();
+                const items = Array.isArray(data?.items) ? data.items : [];
+                inventoryNames = Array.from(new Set(items.map(item => String(item.name || '').trim()).filter(Boolean))).sort((a, b) => a.localeCompare(b));
+                const list = document.getElementById('inventory-name-list');
+                if (list) {
+                    list.innerHTML = inventoryNames.map(name => `<option value="${sanitizeText(name)}"></option>`).join('');
+                }
+            } catch (error) {
+                console.error('Error loading inventory names:', error);
+                inventoryNames = [];
+            }
+        }
+
+        function sanitizeText(value) {
+            return String(value ?? '').replace(/[&<>'"]/g, (char) => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#39;'
+            }[char]));
+        }
+
+        function sanitizeImageSrc(value) {
+            const fallback = 'https://via.placeholder.com/800x600?text=No+Image';
+            const src = String(value ?? '').trim();
+            if (!src) return fallback;
+
+            if (
+                src.startsWith('http://') ||
+                src.startsWith('https://') ||
+                src.startsWith('uploads/') ||
+                src.startsWith('./uploads/') ||
+                src.startsWith('../uploads/') ||
+                src.startsWith('/')
+            ) {
+                return src;
+            }
+
+            return fallback;
+        }
+
+        function parseFlowerRequirements(value) {
+            if (!value) return {};
+
+            if (typeof value === 'object' && !Array.isArray(value)) {
+                return Object.entries(value).reduce((acc, [name, qty]) => {
+                    const flowerName = String(name || '').trim();
+                    const quantity = Math.max(0, Number(qty || 0));
+                    if (flowerName && quantity > 0) acc[flowerName] = quantity;
+                    return acc;
+                }, {});
+            }
+
+            if (typeof value === 'string') {
+                const raw = value.trim();
+                if (!raw) return {};
+                try {
+                    const parsed = JSON.parse(raw);
+                    return parseFlowerRequirements(parsed);
+                } catch (error) {
+                    return {};
+                }
+            }
+
+            return {};
+        }
+
+        function createRequirementRow(name = '', quantity = 1) {
+            const row = document.createElement('div');
+            row.className = 'requirement-row';
+
+            const safeQuantity = Number.isFinite(Number(quantity)) ? Math.max(1, Number(quantity)) : 1;
+
+            row.innerHTML = `
+                <input type="text" class="requirement-name" list="inventory-name-list" placeholder="Flower name from inventory" value="${sanitizeText(name)}">
+                <input type="number" class="requirement-qty" min="1" step="1" value="${safeQuantity}">
+                <button type="button" class="remove-requirement">Remove</button>
+            `;
+
+            return row;
+        }
+
+        function renderRequirements(requirements = {}) {
+            const container = document.getElementById('requirements-container');
+            if (!container) return;
+
+            container.innerHTML = '';
+            const entries = Object.entries(requirements || {}).filter(([name, qty]) => String(name).trim() && Number(qty) > 0);
+
+            if (entries.length === 0) {
+                container.appendChild(createRequirementRow('', 1));
+                return;
+            }
+
+            entries.forEach(([name, qty]) => {
+                container.appendChild(createRequirementRow(name, qty));
+            });
+        }
+
+        function getRequirementsFromForm() {
+            const container = document.getElementById('requirements-container');
+            if (!container) return {};
+
+            const rows = Array.from(container.querySelectorAll('.requirement-row'));
+            return rows.reduce((acc, row) => {
+                const nameInput = row.querySelector('.requirement-name');
+                const qtyInput = row.querySelector('.requirement-qty');
+                const name = String(nameInput?.value || '').trim();
+                const qty = Math.max(0, Number(qtyInput?.value || 0));
+
+                if (name && qty > 0) {
+                    acc[name] = (acc[name] || 0) + qty;
+                }
+
+                return acc;
+            }, {});
+        }
+
+        function updateImageCountLabel() {
+            const fileInput = document.getElementById('product-images');
+            const label = document.getElementById('image-count-label');
+            if (!label || !fileInput) return;
+
+            const newFilesCount = fileInput.files?.length || 0;
+            const existingRaw = document.getElementById('existing-images')?.value || '[]';
+            let existingCount = 0;
+            try {
+                const parsed = JSON.parse(existingRaw);
+                existingCount = Array.isArray(parsed) ? parsed.length : 0;
+            } catch (error) {
+                existingCount = 0;
+            }
+
+            if (newFilesCount > 0) {
+                label.textContent = `${newFilesCount} new angle photo(s) selected.`;
+                return;
+            }
+
+            if (existingCount > 0) {
+                label.textContent = `${existingCount} saved angle photo(s). Upload new files only if you want to replace/add.`;
+                return;
+            }
+
+            label.textContent = 'No gallery images selected yet.';
+        }
+
+        function updateAdminProductSummary() {
+            const totalEl = document.getElementById('admin-total-products');
+            const featuredEl = document.getElementById('admin-featured-count');
+            const galleryEl = document.getElementById('admin-gallery-count');
+
+            if (totalEl) totalEl.textContent = products.length;
+            if (featuredEl) featuredEl.textContent = products.filter(product => String(product.badge || '').trim()).length;
+            if (galleryEl) {
+                const galleryCount = products.reduce((count, product) => count + getProductImages(product).length, 0);
+                galleryEl.textContent = galleryCount;
+            }
+        }
+
+        function updateAdminFormMode(product = null) {
+            const title = document.getElementById('admin-form-title');
+            const caption = document.getElementById('admin-form-caption');
+            const saveBtn = document.getElementById('save-product-btn');
+
+            if (!title || !caption || !saveBtn) return;
+
+            if (product) {
+                title.textContent = `Editing: ${product.name}`;
+                caption.textContent = 'Update the bouquet details, then save to refresh the storefront.';
+                saveBtn.textContent = 'Update Product';
+                return;
+            }
+
+            title.textContent = 'Add a bouquet to the shop';
+            caption.textContent = 'Fill in the details below to publish a ready-made arrangement.';
+            saveBtn.textContent = 'Save Product';
+        }
+        
+        // Render products
+        function renderProducts() {
+            const container = document.getElementById('products-container');
+            container.innerHTML = '';
+            updateAdminProductSummary();
+            
+            if (!products || products.length === 0) {
+                container.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:40px; color:rgba(0,0,0,0.55); border-radius:18px; background:linear-gradient(135deg, #fffafc 0%, #f8fbff 100%); border:1px solid rgba(214,99,143,0.12);">No products available yet. Use the admin studio above to add your first bouquet.</div>';
+                return;
+            }
+            
+            products.forEach(product => {
+                const safeName = sanitizeText(product.name || 'Untitled Product');
+                const safeBadge = sanitizeText(product.badge || '');
+                const safeImage = sanitizeImageSrc(getProductImages(product)[0]);
+                const safePrice = Number(product.price);
+
+                const card = document.createElement('div');
+                card.className = 'flower-card';
+                card.dataset.productId = product.id;
+                card.innerHTML = `
+                    ${safeBadge ? `<span class="badge">${safeBadge}</span>` : ''}
+                    <div class="image-container">
+                        <img src="${safeImage}" alt="${safeName}">
+                    </div>
+                    <div class="flower-details">
+                        <h3>${safeName}</h3>
+                        <span class="price">₱${Number.isNaN(safePrice) ? '0.00' : safePrice.toFixed(2)}</span>
+                        <button class="buy-button view-details">View Details</button>
+                        ${isAdmin ? `
+                            <div class="card-admin-actions">
+                                <button class="card-admin-btn edit edit-product" data-id="${product.id}">Edit</button>
+                                <button class="card-admin-btn delete delete-product" data-id="${product.id}">Delete</button>
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+                card.addEventListener('click', () => openProductModal(product));
+                container.appendChild(card);
+            });
+
+            document.querySelectorAll('.view-details').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const card = e.target.closest('.flower-card');
+                    const productId = card?.dataset.productId;
+                    const product = products.find(p => String(p.id) === String(productId));
+                    if (product) {
+                        openProductModal(product);
+                    }
+                });
+            });
+            
+            // Add event listeners for admin buttons
+            if (isAdmin) {
+                document.querySelectorAll('.edit-product').forEach(btn => {
+                    btn.addEventListener('click', handleEdit);
+                });
+                document.querySelectorAll('.delete-product').forEach(btn => {
+                    btn.addEventListener('click', handleDelete);
+                });
+            }
+        }
+        
+        // Handle product form submission
+        document.getElementById('product-form')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData();
+            const id = document.getElementById('product-id').value;
+            
+            if (id) {
+                formData.append('id', id);
+                formData.append('existing_image', document.getElementById('existing-image').value);
+            }
+            
+            formData.append('name', document.getElementById('product-name').value);
+            formData.append('price', document.getElementById('product-price').value);
+            formData.append('badge', document.getElementById('product-badge').value);
+            formData.append('description', document.getElementById('product-description').value.trim());
+            formData.append('existing_images', document.getElementById('existing-images').value || '[]');
+            formData.append('flower_requirements', JSON.stringify(getRequirementsFromForm()));
+            
+            const imageFiles = Array.from(document.getElementById('product-images').files || []);
+            imageFiles.forEach(file => {
+                formData.append('image_gallery[]', file);
+            });
+
+            if (imageFiles.length > 0) {
+                formData.append('image', imageFiles[0]);
+            }
+            
+            try {
+                const response = await fetch('api/save_shop_product.php', {
+                    method: 'POST',
+                    body: formData
+                });
+                const result = await response.json();
+                
+                if (result.status === 'success') {
+                    showNotification(id ? 'Product updated!' : 'Product added!', 'success');
+                    resetForm();
+                    loadProducts();
+                } else {
+                    showNotification('Error: ' + result.message, 'error');
+                }
+            } catch (error) {
+                console.error('Error saving product:', error);
+                showNotification('Failed to save product.', 'error');
+            }
+        });
+        
+        // Handle edit
+        function handleEdit(e) {
+            e.stopPropagation();
+            const productId = e.target.dataset.id;
+            const product = products.find(p => p.id == productId);
+            
+            if (product) {
+                document.getElementById('product-id').value = product.id;
+                document.getElementById('product-name').value = product.name;
+                document.getElementById('product-price').value = product.price;
+                document.getElementById('product-badge').value = product.badge || '';
+                document.getElementById('product-description').value = product.description || '';
+
+                const images = getProductImages(product);
+                document.getElementById('existing-image').value = images[0] || '';
+                document.getElementById('existing-images').value = JSON.stringify(images);
+
+                const requirements = parseFlowerRequirements(product.flower_requirements);
+                renderRequirements(requirements);
+                updateImageCountLabel();
+                updateAdminFormMode(product);
+                
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+        
+        // Handle delete
+        async function handleDelete(e) {
+            e.stopPropagation();
+            if (!confirm('Delete this product?')) return;
+            
+            const productId = e.target.dataset.id;
+            
+            try {
+                const response = await fetch('api/delete_shop_product.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: `id=${productId}`
+                });
+                const result = await response.json();
+                
+                if (result.status === 'success') {
+                    showNotification('Product deleted!', 'success');
+                    loadProducts();
+                } else {
+                    showNotification('Error: ' + result.message, 'error');
+                }
+            } catch (error) {
+                console.error('Error deleting product:', error);
+                showNotification('Failed to delete product.', 'error');
+            }
+        }
+        
+        // Reset form
+        function resetForm() {
+            document.getElementById('product-form').reset();
+            document.getElementById('product-id').value = '';
+            document.getElementById('existing-image').value = '';
+            document.getElementById('existing-images').value = '[]';
+            document.getElementById('product-description').value = '';
+            renderRequirements({});
+            updateImageCountLabel();
+            updateAdminFormMode();
+        }
+
+        function getProductImages(product) {
+            if (Array.isArray(product.images) && product.images.length) {
+                return product.images.map(sanitizeImageSrc).filter(Boolean);
+            }
+            if (typeof product.images === 'string' && product.images.trim()) {
+                const raw = product.images.trim();
+                if (raw.startsWith('[')) {
+                    try {
+                        const parsed = JSON.parse(raw);
+                        if (Array.isArray(parsed) && parsed.length) {
+                            return parsed.map(sanitizeImageSrc).filter(Boolean);
+                        }
+                    } catch (error) {
+                        console.warn('Unable to parse product images JSON:', error);
+                    }
+                }
+                return raw.split(',').map(img => sanitizeImageSrc(img)).filter(Boolean);
+            }
+            return [sanitizeImageSrc(product.image || 'https://via.placeholder.com/800x600?text=No+Image')];
+        }
+
+        function getFlowerRequirements(product) {
+            return parseFlowerRequirements(product?.flower_requirements || {});
+        }
+
+        function getProductRating(product) {
+            const rating = Number(product.rating);
+            if (!Number.isNaN(rating) && rating > 0) return Math.min(Math.max(rating, 1), 5);
+            return 4.6;
+        }
+
+        function getProductDescription(product) {
+            return product.description || `Beautifully handcrafted ${product.name} bouquet perfect for birthdays, anniversaries, and special moments.`;
+        }
+
+        function renderRating(rating) {
+            const fullStars = Math.round(rating);
+            return '★'.repeat(fullStars) + '☆'.repeat(5 - fullStars);
+        }
+
+        function renderAddOns() {
+            const addOnContainer = document.getElementById('modal-addons');
+            addOnContainer.innerHTML = defaultAddOns.map(addOn => `
+                <label class="addon-option">
+                    <input type="checkbox" value="${addOn.id}" data-price="${addOn.price}" data-name="${addOn.name}">
+                    <span>${addOn.name}</span>
+                    <strong>+₱${addOn.price}</strong>
+                </label>
+            `).join('');
+        }
+
+        function updateQuantityUI() {
+            document.getElementById('modal-qty').textContent = selectedQuantity;
+        }
+
+        function openProductModal(product) {
+            selectedProduct = product;
+            selectedQuantity = 1;
+            updateQuantityUI();
+
+            const images = getProductImages(product);
+            const rating = getProductRating(product);
+            const description = getProductDescription(product);
+
+            document.getElementById('modal-product-name').textContent = product.name;
+            const safePrice = Number(product.price);
+            document.getElementById('modal-product-price').textContent = Number.isNaN(safePrice) ? '0.00' : safePrice.toFixed(2);
+            document.getElementById('modal-rating-stars').textContent = renderRating(rating);
+            document.getElementById('modal-rating-value').textContent = rating.toFixed(1);
+            document.getElementById('modal-product-description').textContent = description;
+
+            const mainImage = document.getElementById('modal-main-image');
+            mainImage.src = images[0];
+
+            const thumbnailWrap = document.getElementById('modal-thumbnails');
+            thumbnailWrap.innerHTML = '';
+            images.forEach((img, index) => {
+                const thumb = document.createElement('img');
+                thumb.src = img;
+                thumb.alt = `${product.name} image ${index + 1}`;
+                thumb.className = `modal-thumb ${index === 0 ? 'active' : ''}`;
+                thumb.addEventListener('click', () => {
+                    mainImage.src = img;
+                    document.querySelectorAll('.modal-thumb').forEach(t => t.classList.remove('active'));
+                    thumb.classList.add('active');
+                });
+                thumbnailWrap.appendChild(thumb);
+            });
+
+            renderAddOns();
+            document.getElementById('product-modal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeProductModal() {
+            document.getElementById('product-modal').style.display = 'none';
+            document.body.style.overflow = '';
+            selectedProduct = null;
+        }
+
+        function getSelectedAddOns() {
+            return Array.from(document.querySelectorAll('#modal-addons input[type="checkbox"]:checked')).map(input => ({
+                id: input.value,
+                name: input.dataset.name,
+                price: Number(input.dataset.price)
+            }));
+        }
+
+        function getStorageIdentity() {
+            try {
+                const user = JSON.parse(localStorage.getItem('user') || '{}');
+                if (user && user.id) return `user_${user.id}`;
+                if (user && user.email) return `email_${String(user.email).toLowerCase()}`;
+            } catch (error) {
+            }
+            return 'guest';
+        }
+
+        function getCartStorageKey() {
+            return `cart_${getStorageIdentity()}`;
+        }
+
+        function getCart() {
+            try {
+                const key = getCartStorageKey();
+                const scoped = localStorage.getItem(key);
+
+                if (scoped === null) {
+                    const legacy = localStorage.getItem('cart');
+                    if (legacy) {
+                        localStorage.setItem(key, legacy);
+                        localStorage.removeItem('cart');
+                    }
+                }
+
+                const cart = JSON.parse(localStorage.getItem(key));
+                return Array.isArray(cart) ? cart : [];
+            } catch (error) {
+                return [];
+            }
+        }
+
+        function saveCart(cart) {
+            localStorage.setItem(getCartStorageKey(), JSON.stringify(cart));
+        }
+
+        function addSelectedProductToCart() {
+            if (!selectedProduct) return;
+
+            const addOns = getSelectedAddOns();
+            const item = {
+                id: selectedProduct.id,
+                name: selectedProduct.name,
+                image: document.getElementById('modal-main-image')?.src || getProductImages(selectedProduct)[0],
+                basePrice: Number(selectedProduct.price),
+                quantity: selectedQuantity,
+                description: getProductDescription(selectedProduct),
+                flowerRequirements: getFlowerRequirements(selectedProduct),
+                addOns,
+                addedAt: Date.now()
+            };
+
+            const cart = getCart();
+            cart.push(item);
+            saveCart(cart);
+            updateCartBadge();
+            showNotification('Added to cart!', 'success');
+        }
+        
+        // Cancel edit button
+        document.getElementById('cancel-edit')?.addEventListener('click', resetForm);
+        document.getElementById('add-requirement-row')?.addEventListener('click', () => {
+            const container = document.getElementById('requirements-container');
+            if (!container) return;
+            container.appendChild(createRequirementRow('', 1));
+        });
+        document.getElementById('requirements-container')?.addEventListener('click', (e) => {
+            const target = e.target;
+            if (!(target instanceof HTMLElement)) return;
+            if (!target.classList.contains('remove-requirement')) return;
+
+            const row = target.closest('.requirement-row');
+            const container = document.getElementById('requirements-container');
+            if (row && container) {
+                row.remove();
+                if (container.querySelectorAll('.requirement-row').length === 0) {
+                    container.appendChild(createRequirementRow('', 1));
+                }
+            }
+        });
+        document.getElementById('product-images')?.addEventListener('change', updateImageCountLabel);
+
+        document.getElementById('product-modal-close')?.addEventListener('click', closeProductModal);
+        document.getElementById('product-modal')?.addEventListener('click', (e) => {
+            if (e.target.id === 'product-modal') {
+                closeProductModal();
+            }
+        });
+        document.getElementById('modal-qty-inc')?.addEventListener('click', () => {
+            selectedQuantity += 1;
+            updateQuantityUI();
+        });
+        document.getElementById('modal-qty-dec')?.addEventListener('click', () => {
+            selectedQuantity = Math.max(1, selectedQuantity - 1);
+            updateQuantityUI();
+        });
+        document.getElementById('modal-add-to-cart')?.addEventListener('click', () => {
+            addSelectedProductToCart();
+            closeProductModal();
+        });
+        document.getElementById('modal-buy-now')?.addEventListener('click', () => {
+            addSelectedProductToCart();
+            window.location.href = 'checkout.html';
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeProductModal();
+            }
+        });
+        
+        // Update UI on load
+        updateAuthUI();
+        updateCartBadge();
+
+        const hamburgerBtn = document.getElementById('hamburger-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+        const mobileMenuClose = document.getElementById('mobile-menu-close');
+
+        function openMobileMenu() {
+            mobileMenu.classList.add('open');
+            mobileMenuOverlay.classList.add('open');
+            hamburgerBtn.setAttribute('aria-expanded', 'true');
+            mobileMenu.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMobileMenu() {
+            mobileMenu.classList.remove('open');
+            mobileMenuOverlay.classList.remove('open');
+            hamburgerBtn.setAttribute('aria-expanded', 'false');
+            mobileMenu.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+        }
+
+        hamburgerBtn?.addEventListener('click', openMobileMenu);
+        mobileMenuClose?.addEventListener('click', closeMobileMenu);
+        mobileMenuOverlay?.addEventListener('click', closeMobileMenu);
+
+        document.querySelectorAll('.mobile-nav a').forEach(link => {
+            link.addEventListener('click', closeMobileMenu);
+        });
+        renderRequirements({});
+        updateImageCountLabel();
+        updateAdminFormMode();
+        loadInventoryNames();
+        loadProducts();
+
+
+        
+        // Handle profile section click
+        const profileSection = document.getElementById('profile-section');
+        if (profileSection) {
+            profileSection.addEventListener('click', () => {
+                window.location.href = 'profile.html';
+            });
+            profileSection.style.cursor = 'pointer';
+        }
+        
+        // Handle logout
+        const logoutBtn = document.getElementById('logout-btn');
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                localStorage.removeItem('isLoggedIn');
+                localStorage.removeItem('user');
+                updateAuthUI();
+                window.location.href = 'shop.html';
+            });
+        }
+        // Listen for storage changes from other tabs/windows and update UI
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'user' || e.key === 'isLoggedIn') {
+                try { updateAuthUI(); } catch (err) { console.error(err); }
+            }
+            if (e.key === getCartStorageKey() || e.key === 'cart') {
+                updateCartBadge();
+            }
+        });
+    </script>
+    <script>
+        // Check login status for Start Designing button
+        document.querySelectorAll('a[href="customize.html"]').forEach(link => {
+            link.addEventListener('click', (e) => {
+                const isLoggedIn = localStorage.getItem('isLoggedIn');
+                if (!isLoggedIn) {
+                    e.preventDefault();
+                    window.location.href = 'login.html';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+

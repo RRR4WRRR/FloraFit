@@ -1,0 +1,16 @@
+# Sensitive
+.env
+
+# Logs
+*.log
+*.txt
+signup_log.txt
+uploads/3d/
+
+# Uploaded user files
+uploads/inventory/
+uploads/gcash_qr.*
+
+# OS files
+.DS_Store
+Thumbs.db

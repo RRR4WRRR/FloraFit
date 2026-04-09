@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Forgot Password | Flora Fit</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/auth.css">
+    <link rel="stylesheet" href="assets/css/notifications.css">
+</head>
+<body>
+<div class="auth-container">
+    <div class="auth-card">
+        <h2>Forgot Password</h2>
+        <p>Enter your email and we'll send a verification code.</p>
+
+        <form id="forgotForm">
+            <input type="email" id="forgotEmail" placeholder="Email Address" required>
+            <button type="submit">Send Code</button>
+        </form>
+
+        <div id="afterSend" style="display:none;margin-top:12px;">
+            <p>We sent a code — enter it below and set a new password.</p>
+            <input type="text" id="resetCode" placeholder="Verification code" required>
+            
+            <div class="password-wrapper">
+                <input type="password" id="newPassword" placeholder="New password" required>
+                <span class="toggle-password" onclick="togglePassword('newPassword', this)"><i class="fas fa-eye"></i></span>
+            </div>
+            
+            <div class="password-wrapper">
+                <input type="password" id="confirmNewPassword" placeholder="Confirm new password" required>
+                <span class="toggle-password" onclick="togglePassword('confirmNewPassword', this)"><i class="fas fa-eye"></i></span>
+            </div>
+            
+            <div class="password-requirements">
+                <small>Password must have:
+                    <ul>
+                        <li id="req-length">At least 8 characters</li>
+                        <li id="req-uppercase">1 uppercase letter</li>
+                        <li id="req-number">1 number</li>
+                    </ul>
+                </small>
+            </div>
+            
+            <button id="resetBtn">Reset Password</button>
+        </div>
+
+        <p style="margin-top:12px">Remembered your password? <a href="login.html">Log in</a></p>
+    </div>
+</div>
+
+<script src="assets/js/notifications.js"></script>
+<script src="assets/js/forgot.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,151 @@
+[02-Apr-2026 09:44:45 Europe/Berlin] === generate_3d_model.php called ===
+[02-Apr-2026 09:44:45 Europe/Berlin] FILES: Array
+(
+    [image] => Array
+        (
+            [name] => 1771052528_rose hybrid tea.jfif
+            [full_path] => 1771052528_rose hybrid tea.jfif
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\php7AF.tmp
+            [error] => 0
+            [size] => 9779
+        )
+
+)
+
+[02-Apr-2026 09:44:55 Europe/Berlin] === generate_3d_model.php called ===
+[02-Apr-2026 09:44:55 Europe/Berlin] FILES: Array
+(
+    [image] => Array
+        (
+            [name] => 1770781656_blue spider lily.jpg
+            [full_path] => 1770781656_blue spider lily.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\php2F4D.tmp
+            [error] => 0
+            [size] => 15250
+        )
+
+)
+
+[02-Apr-2026 09:46:41 Europe/Berlin] === generate_3d_model.php called ===
+[02-Apr-2026 09:46:41 Europe/Berlin] FILES: Array
+(
+    [image] => Array
+        (
+            [name] => 1770781656_blue spider lily.jpg
+            [full_path] => 1770781656_blue spider lily.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\phpCE48.tmp
+            [error] => 0
+            [size] => 15250
+        )
+
+)
+
+[02-Apr-2026 09:47:43 Europe/Berlin] === generate_3d_model.php called ===
+[02-Apr-2026 09:47:43 Europe/Berlin] FILES: Array
+(
+    [image] => Array
+        (
+            [name] => 1770781656_blue spider lily.jpg
+            [full_path] => 1770781656_blue spider lily.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\phpC0B7.tmp
+            [error] => 0
+            [size] => 15250
+        )
+
+)
+
+[02-Apr-2026 09:47:47 Europe/Berlin] STEP 2 payload: {"type":"image_to_model","file":{"type":"jpg","image_token":"76cac705-1f65-4a09-9c49-e39f6e912cbe"},"model_version":"v2.0-20240919"}
+[02-Apr-2026 09:47:47 Europe/Berlin] STEP 2 image_token: 76cac705-1f65-4a09-9c49-e39f6e912cbe
+[02-Apr-2026 09:47:47 Europe/Berlin] STEP 2 tripoType: jpg
+[02-Apr-2026 09:47:50 Europe/Berlin] STEP 2 response code: 400
+[02-Apr-2026 09:47:50 Europe/Berlin] STEP 2 response body: {"code":1004,"message":"One or more of your parameter is invalid","suggestion":"Refer to the API documentation for parameter requirements"}
+[07-Apr-2026 02:40:40 Europe/Berlin] === generate_3d_model.php called ===
+[07-Apr-2026 02:40:40 Europe/Berlin] FILES: Array
+(
+    [image] => Array
+        (
+            [name] => gerbera.jpg
+            [full_path] => gerbera.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\phpBEC0.tmp
+            [error] => 0
+            [size] => 48560
+        )
+
+)
+
+[07-Apr-2026 02:40:43 Europe/Berlin] STEP 2 payload: {"type":"image_to_model","file":{"type":"webp","image_token":"316064c0-9ec3-400e-a3a3-bfcfe08494b5"},"model_version":"v2.0-20240919"}
+[07-Apr-2026 02:40:43 Europe/Berlin] STEP 2 image_token: 316064c0-9ec3-400e-a3a3-bfcfe08494b5
+[07-Apr-2026 02:40:43 Europe/Berlin] STEP 2 tripoType: webp
+[07-Apr-2026 02:40:44 Europe/Berlin] STEP 2 response code: 400
+[07-Apr-2026 02:40:44 Europe/Berlin] STEP 2 response body: {"code":1004,"message":"One or more of your parameter is invalid","suggestion":"Refer to the API documentation for parameter requirements"}
+[07-Apr-2026 02:46:08 Europe/Berlin] === generate_3d_model.php called ===
+[07-Apr-2026 02:46:08 Europe/Berlin] FILES: Array
+(
+    [image] => Array
+        (
+            [name] => 1771052528_rose hybrid tea.jfif
+            [full_path] => 1771052528_rose hybrid tea.jfif
+            [type] => application/octet-stream
+            [tmp_name] => C:\xampp\tmp\phpC3D9.tmp
+            [error] => 0
+            [size] => 9779
+        )
+
+)
+
+[07-Apr-2026 02:46:09 Europe/Berlin] STEP 1 response code: 200
+[07-Apr-2026 02:46:09 Europe/Berlin] STEP 1 response body: {"code":0,"data":{"image_token":"adc1592e-e624-4505-b16b-e06008234ad3"}}
+[07-Apr-2026 02:46:09 Europe/Berlin] STEP 2 payload: {"type":"image_to_model","file":{"type":"jpg","file_token":"adc1592e-e624-4505-b16b-e06008234ad3"},"model_version":"v2.0-20240919"}
+[07-Apr-2026 02:46:09 Europe/Berlin] STEP 2 file_token: adc1592e-e624-4505-b16b-e06008234ad3
+[07-Apr-2026 02:46:09 Europe/Berlin] STEP 2 tripoType: jpg
+[07-Apr-2026 02:46:11 Europe/Berlin] STEP 2 response code: 403
+[07-Apr-2026 02:46:11 Europe/Berlin] STEP 2 response body: {"code":2010,"message":"You don't have enough credit to create this task","suggestion":"Please purchase more credit"}
+[07-Apr-2026 02:47:25 Europe/Berlin] === generate_3d_model.php called ===
+[07-Apr-2026 02:47:25 Europe/Berlin] FILES: Array
+(
+    [image] => Array
+        (
+            [name] => 1771052528_rose hybrid tea.jfif
+            [full_path] => 1771052528_rose hybrid tea.jfif
+            [type] => application/octet-stream
+            [tmp_name] => C:\xampp\tmp\phpEFA8.tmp
+            [error] => 0
+            [size] => 9779
+        )
+
+)
+
+[07-Apr-2026 02:47:26 Europe/Berlin] STEP 1 response code: 200
+[07-Apr-2026 02:47:26 Europe/Berlin] STEP 1 response body: {"code":0,"data":{"image_token":"f1790e0c-b052-4b4c-bfac-d5b24313ab7b"}}
+[07-Apr-2026 02:47:26 Europe/Berlin] STEP 2 payload: {"type":"image_to_model","file":{"type":"jpg","file_token":"f1790e0c-b052-4b4c-bfac-d5b24313ab7b"},"model_version":"v2.0-20240919"}
+[07-Apr-2026 02:47:26 Europe/Berlin] STEP 2 file_token: f1790e0c-b052-4b4c-bfac-d5b24313ab7b
+[07-Apr-2026 02:47:26 Europe/Berlin] STEP 2 tripoType: jpg
+[07-Apr-2026 02:47:27 Europe/Berlin] STEP 2 response code: 403
+[07-Apr-2026 02:47:27 Europe/Berlin] STEP 2 response body: {"code":2010,"message":"You don't have enough credit to create this task","suggestion":"Please purchase more credit"}
+[07-Apr-2026 05:49:28 Europe/Berlin] === generate_3d_model.php called ===
+[07-Apr-2026 05:49:28 Europe/Berlin] FILES: Array
+(
+    [image] => Array
+        (
+            [name] => baby's breathe.jpg
+            [full_path] => baby's breathe.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\phpA81A.tmp
+            [error] => 0
+            [size] => 4932
+        )
+
+)
+
+[07-Apr-2026 05:49:30 Europe/Berlin] STEP 1 response code: 200
+[07-Apr-2026 05:49:30 Europe/Berlin] STEP 1 response body: {"code":0,"data":{"image_token":"6dc505ed-2e86-41ef-84c7-731bd028a1e2"}}
+[07-Apr-2026 05:49:30 Europe/Berlin] STEP 2 payload: {"type":"image_to_model","file":{"type":"jpg","file_token":"6dc505ed-2e86-41ef-84c7-731bd028a1e2"},"model_version":"v2.0-20240919"}
+[07-Apr-2026 05:49:30 Europe/Berlin] STEP 2 file_token: 6dc505ed-2e86-41ef-84c7-731bd028a1e2
+[07-Apr-2026 05:49:30 Europe/Berlin] STEP 2 tripoType: jpg
+[07-Apr-2026 05:49:32 Europe/Berlin] STEP 2 response code: 403
+[07-Apr-2026 05:49:32 Europe/Berlin] STEP 2 response body: {"code":2010,"message":"You don't have enough credit to create this task","suggestion":"Please purchase more credit"}

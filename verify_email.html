@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Email | FloraFit</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .verify-container {
+            max-width: 450px;
+            width: 100%;
+            padding: 40px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+            text-align: center;
+        }
+        .logo {
+            color: #4CAF50;
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+        h2 {
+            color: #333;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 16px;
+        }
+        .email-display {
+            background: #f8f9fa;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 15px;
+            margin: 20px 0;
+            font-size: 16px;
+            color: #333;
+            word-break: break-all;
+        }
+        .code-input {
+            font-size: 32px;
+            font-family: 'Courier New', monospace;
+            text-align: center;
+            letter-spacing: 15px;
+            width: 100%;
+            padding: 25px 20px;
+            border: 3px solid #e0e0e0;
+            border-radius: 16px;
+            margin: 20px 0;
+            transition: all 0.3s ease;
+            background: white;
+        }
+        .code-input:focus {
+            border-color: #4CAF50;
+            box-shadow: 0 0 0 4px rgba(76, 175, 80, 0.1);
+            outline: none;
+        }
+        .code-input::placeholder {
+            letter-spacing: normal;
+            font-size: 18px;
+        }
+        .otp-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+        }
+        .otp-box {
+            width: 100%;
+            height: 62px;
+            border: 3px solid #e0e0e0;
+            border-radius: 12px;
+            text-align: center;
+            font-size: 28px;
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        .otp-box:focus {
+            border-color: #4CAF50;
+            box-shadow: 0 0 0 4px rgba(76, 175, 80, 0.1);
+        }
+        .otp-hint {
+            font-size: 12px;
+            color: #999;
+            margin-top: -8px;
+            margin-bottom: 8px;
+        }
+        .verify-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            border: none;
+            border-radius: 16px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px 0;
+        }
+        .verify-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(76, 175, 80, 0.3);
+        }
+        .verify-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .resend-section {
+            margin-top: 30px;
+            padding-top: 25px;
+            border-top: 1px solid #eee;
+        }
+        .resend-btn {
+            background: linear-gradient(135deg, #ff9800, #f57c00);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            margin: 10px;
+        }
+        .resend-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 152, 0, 0.4);
+        }
+        .resend-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .back-link {
+            color: #666;
+            text-decoration: none;
+            font-size: 14px;
+            display: block;
+            margin-top: 15px;
+        }
+        .back-link:hover {
+            color: #4CAF50;
+        }
+        .copy-hint {
+            font-size: 12px;
+            color: #999;
+            margin-top: 5px;
+        }
+        @media (max-width: 480px) {
+            .verify-container {
+                margin: 20px;
+                padding: 30px 20px;
+            }
+            .otp-grid {
+                gap: 8px;
+            }
+            .otp-box {
+                height: 54px;
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="verify-container">
+        <div>
+            <div class="logo">🌸</div>
+            <h2>Verify Email</h2>
+            <p class="subtitle">Enter the 6-digit code from signup</p>
+        </div>
+
+        <form id="verifyForm">
+            <!-- Auto-filled & locked by JS -->
+            <div class="email-display" id="emailDisplay">
+                Loading email...
+            </div>
+
+            <div class="otp-grid" aria-label="6-digit verification code">
+                <input type="text" class="otp-box" inputmode="numeric" maxlength="1" autocomplete="one-time-code" data-index="0">
+                <input type="text" class="otp-box" inputmode="numeric" maxlength="1" data-index="1">
+                <input type="text" class="otp-box" inputmode="numeric" maxlength="1" data-index="2">
+                <input type="text" class="otp-box" inputmode="numeric" maxlength="1" data-index="3">
+                <input type="text" class="otp-box" inputmode="numeric" maxlength="1" data-index="4">
+                <input type="text" class="otp-box" inputmode="numeric" maxlength="1" data-index="5">
+            </div>
+            <p class="otp-hint">Enter one number per box</p>
+            
+            <button type="submit" class="verify-btn">
+                <i class="fas fa-check-circle"></i> Verify Account
+            </button>
+        </form>
+
+        <div class="resend-section">
+            <p style="color: #666; font-size: 14px;">Didn't get code?</p>
+            <button type="button" class="resend-btn" onclick="resendCode()">
+                <i class="fas fa-redo"></i> Resend Code
+            </button>
+            <a href="signup.html" class="back-link">
+                ← Back to Signup
+            </a>
+        </div>
+    </div>
+
+    <!-- NO EXTERNAL DEPENDENCIES -->
+    <script>
+        // INLINE verify.js - ZERO external files needed!
+        document.addEventListener("DOMContentLoaded", function() {
+            const pending = JSON.parse(localStorage.getItem("pendingVerification") || "{}");
+            const otpInputs = document.querySelectorAll(".otp-box");
+            
+            if (!pending.email) {
+                document.getElementById("emailDisplay").innerHTML = 
+                    "No signup found. <a href='signup.html'>Go back</a>";
+                return;
+            }
+
+            // Show email
+            document.getElementById("emailDisplay").textContent = pending.email;
+            
+            // Focus first OTP box
+            otpInputs[0].focus();
+
+            otpInputs.forEach((input, index) => {
+                input.addEventListener("input", function(e) {
+                    const digit = e.target.value.replace(/\D/g, "").slice(0, 1);
+                    e.target.value = digit;
+
+                    if (digit && index < otpInputs.length - 1) {
+                        otpInputs[index + 1].focus();
+                    }
+
+                    const code = Array.from(otpInputs).map(box => box.value).join("");
+                    if (code.length === 6) {
+                        document.getElementById("verifyForm").dispatchEvent(new Event("submit"));
+                    }
+                });
+
+                input.addEventListener("keydown", function(e) {
+                    if (e.key === "Backspace" && !input.value && index > 0) {
+                        otpInputs[index - 1].focus();
+                    }
+                });
+
+                input.addEventListener("paste", function(e) {
+                    e.preventDefault();
+                    const pasted = (e.clipboardData.getData("text") || "").replace(/\D/g, "").slice(0, 6);
+                    pasted.split("").forEach((char, i) => {
+                        if (otpInputs[i]) otpInputs[i].value = char;
+                    });
+                    const nextIndex = Math.min(pasted.length, 5);
+                    otpInputs[nextIndex].focus();
+
+                    if (pasted.length === 6) {
+                        document.getElementById("verifyForm").dispatchEvent(new Event("submit"));
+                    }
+                });
+            });
+        });
+
+        // Form handler
+        document.getElementById("verifyForm").addEventListener("submit", async function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById("emailDisplay").textContent;
+            const code = Array.from(document.querySelectorAll(".otp-box")).map(box => box.value).join("");
+            const btn = document.querySelector(".verify-btn");
+            
+            if (code.length !== 6) {
+                alert("Enter 6-digit code");
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Verifying...';
+
+            try {
+                const response = await fetch("api/verify_email.php", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ email, code })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    localStorage.setItem("isLoggedIn", "true");
+                    localStorage.removeItem("pendingVerification");
+                    alert("✅ Verified! Redirecting...");
+                    setTimeout(() => window.location.href = "index.html", 1000);
+                } else {
+                    alert(data.message);
+                    document.querySelectorAll(".otp-box").forEach(box => box.value = "");
+                    document.querySelectorAll(".otp-box")[0].focus();
+                }
+            } catch {
+                alert("Connection error");
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-check-circle"></i> Verify Account';
+            }
+        });
+
+        // Resend (works if you have resend_code.php)
+        function resendCode() {
+            const email = document.getElementById("emailDisplay").textContent;
+            const btn = document.querySelector(".resend-btn");
+            
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+            
+            fetch("api/resend_code.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    alert("New code generated!");
+                    document.querySelectorAll(".otp-box").forEach(box => box.value = "");
+                    document.querySelectorAll(".otp-box")[0].focus();
+                } else {
+                    alert(data.message || "Failed");
+                }
+            })
+            .catch(() => alert("Resend failed"))
+            .finally(() => {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-redo"></i> Resend Code';
+            });
+        }
+    </script>
+</body>
+</html>
+

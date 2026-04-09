@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up | FloraFit</title>
+    <link rel="icon" type="image/png" href="assets/img/Flora.png">
+
+
+    <link rel="stylesheet" href="assets/css/auth.css">
+    <link rel="stylesheet" href="assets/css/notifications.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="auth-container">
+    <div class="auth-card">
+        <h2>Join FloraFit 🌸</h2>
+        <p>Create an account and start customizing flowers in 3D</p>
+
+        <form id="signupForm">
+            <input type="text" id="firstName" placeholder="First Name" required>
+            <input type="text" id="lastName" placeholder="Last Name" required>
+            <input type="email" id="signupEmail" placeholder="Email Address" required>
+
+            <div class="password-wrapper">
+                <input type="password" id="signupPassword" placeholder="Password" required>
+                <span class="toggle-password" onclick="togglePassword('signupPassword', this)"><i class="fas fa-eye"></i></span>
+            </div>
+
+            <div class="password-wrapper">
+                <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+                <span class="toggle-password" onclick="togglePassword('confirmPassword', this)"><i class="fas fa-eye"></i></span>
+            </div>
+
+            <div class="password-requirements">
+                <small>Password must have:
+                    <ul>
+                        <li id="req-length">At least 8 characters</li>
+                        <li id="req-uppercase">1 uppercase letter</li>
+                        <li id="req-number">1 number</li>
+                    </ul>
+                </small>
+            </div>
+
+            <div class="terms-wrapper">
+                <input type="checkbox" id="agreeTerms">
+                <label for="agreeTerms">I agree to the <a href="#" id="openTerms">Terms and Conditions</a></label>
+            </div>
+
+            <button type="submit">Create Account</button>
+        </form>
+
+        <p class="switch">
+            Already have an account?
+            <a href="login.html">Log in</a>
+        </p>
+    </div>
+</div>
+
+<!-- MODAL -->
+<div id="termsModal">
+    <div id="termsBox">
+        <h3>Terms and Conditions 🌸</h3>
+        <div id="termsBody">
+            <p><strong>Last updated:</strong> March 2026</p>
+
+            <h4>1. Acceptance of Terms</h4>
+            <p>By creating a FloraFit account, you agree to these Terms and Conditions. If you do not agree, please do not use our service.</p>
+
+            <h4>2. Account Responsibilities</h4>
+            <p>You are responsible for maintaining the confidentiality of your account credentials and for all activities that occur under your account.</p>
+
+            <h4>3. Use of Service</h4>
+            <p>FloraFit is a platform for customizing and managing floral arrangements. You agree to use the service only for lawful purposes and in a manner that does not infringe the rights of others.</p>
+
+            <h4>4. Privacy</h4>
+            <p>We collect your name and email address solely to manage your account and send you relevant notifications. We do not sell or share your data with third parties.</p>
+
+            <h4>5. Florist Accounts</h4>
+            <p>Florist accounts are created by admins and are subject to additional responsibilities. Temporary passwords must be changed upon first login.</p>
+
+            <h4>6. Termination</h4>
+            <p>We reserve the right to suspend or terminate accounts that violate these terms without prior notice.</p>
+
+            <h4>7. Changes to Terms</h4>
+            <p>FloraFit may update these terms at any time. Continued use of the service after changes constitutes acceptance of the new terms.</p>
+
+            <h4>8. Contact</h4>
+            <p>For questions regarding these terms, please contact us at <strong>admin@florafit.com</strong>.</p>
+        </div>
+        <button id="closeTerms">Close</button>
+    </div>
+</div>
+
+<script src="assets/js/notifications.js"></script>
+<script src="assets/js/signup.js"></script>
+</body>
+</html>
+

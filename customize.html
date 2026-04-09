@@ -1,0 +1,2187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Bouquet Designer | FloraFit</title>
+    <link rel="icon" type="image/png" href="assets/img/Flora.png">
+    <link rel="stylesheet" href="assets/css/website.css">
+    <link rel="stylesheet" href="assets/css/notifications.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- Header -->
+<header>
+    <div class="container header-container">
+        <button id="hamburger-btn" class="hamburger-btn" aria-label="Open menu" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <a href="index.html" class="logo">
+            <span style="font-size: 2rem;">🌸</span>
+            <h1> FLORAFIT</h1>
+        </a>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="mobile-menu" aria-hidden="true">
+            <button id="mobile-menu-close" class="mobile-menu-close" aria-label="Close menu">&times;</button>
+            <nav class="mobile-nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html#about">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="shop.html">Shop</a></li>
+                    <li><a href="customize.html">Start Designing</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div id="mobile-menu-overlay" class="mobile-menu-overlay"></div>
+        <div id="auth-toggle">
+            <a href="admin/dashboard.php" id="staff-dashboard-link" class="nav-cta" style="display:none; margin-right:15px; background:linear-gradient(135deg, #667eea 0%, #764ba2 100%); border:none;">
+                <i class="fas fa-chart-line"></i> Dashboard
+            </a>
+            <div id="auth-buttons">
+                <a href="login.html" class="nav-cta">Login</a>
+                <a href="signup.html" class="nav-cta">Sign Up</a>
+            </div>
+            <div id="profile-section" style="display: none;">
+                    <div class="profile-menu">
+                        <img id="cornerProfilePic" src="uploads/default-avatar.svg" alt="profile">
+                        <i class="fas fa-user-circle"></i>
+                        <span id="user-name"></span>
+                        <button id="logout-btn" class="nav-cta">Logout</button>
+                    </div>
+                </div>
+            <button type="button" id="cart-toggle-btn" class="cart-toggle-btn" aria-label="Open cart">
+                <i class="fas fa-shopping-cart"></i>
+                <span id="cart-badge" class="cart-badge">0</span>
+            </button>
+        </div>
+    </div>
+</header>
+
+<div class="customize-page-container">
+    <h1>Flower Customizer</h1>
+    
+    <div class="customize-layout">
+        <!-- Left Sidebar -->
+        <div class="left-sidebar">
+            <!-- Admin Management Panel -->
+            <div class="admin-flower-panel" id="admin-flower-panel" style="display:none;">
+                <h3><i class="fas fa-cog"></i> Manage Bouquet Items</h3>
+                <form id="admin-flower-form">
+                    <input type="hidden" id="edit-item-id">
+                    
+                    <!-- For Adding New Items from Inventory -->
+                    <div class="form-group" id="inventory-select-group">
+                        <label>Select from Inventory:</label>
+                        <select id="inventory-select" required>
+                            <option value="">-- Choose an inventory item --</option>
+                        </select>
+                        <small style="color:#666;">Select a flower, base, or other inventory item to add its 3D model</small>
+                    </div>
+                    
+                    <!-- For Editing (shows current name) -->
+                    <div class="form-group" id="flower-name-group" style="display:none;">
+                        <label>Item Name:</label>
+                        <input type="text" id="flower-name-display" readonly style="background:#f5f5f5;cursor:not-allowed;">
+                        <input type="hidden" id="flower-name">
+                        <input type="hidden" id="flower-category">
+                    </div>
+                    
+                    <input type="hidden" id="flower-emoji" value="">
+                    
+                    <div class="form-group">
+                        <label>3D Model File (.glb):</label>
+                        <input type="file" id="model-file" accept=".glb">
+                        <small id="current-model-name" style="color:#666;"></small>
+                    </div>
+                    <div class="form-group">
+                        <label>Display Order:</label>
+                        <input type="number" id="display-order" value="0" min="0">
+                    </div>
+
+                    <div class="form-group">
+                        <button type="button" id="generate-3d" class="btn add-btn" style="background:#2196f3; width:100%;">
+                            ✨ Generate 3D from Photo
+                        </button>
+                    </div>
+
+                    <div id="3d-preview-section" style="display:none; margin-top:12px; padding:12px; background:#f8f9fa; border-radius:8px; border:2px dashed rgba(33,150,243,0.3);">
+                        <h4 style="margin:0 0 10px 0; color:#2196f3; font-size:0.95rem;">🧊 3D Preview</h4>
+                        <div id="admin-3d-viewport" style="position:relative; height:220px; border-radius:8px; overflow:hidden; background:#f0f8ff;">
+                            <canvas id="admin-3d-preview-canvas"></canvas>
+                            <div id="3d-loading" style="position:absolute; inset:0; background:rgba(255,255,255,0.92); display:flex; flex-direction:column; align-items:center; justify-content:center; font-size:0.95rem; color:#64748b;">
+                                <div class="spinner-3d"></div>
+                                <div id="3d-loading-text">Generating 3D model...</div>
+                            </div>
+                        </div>
+                        <div style="display:flex; gap:8px; margin-top:10px; flex-wrap:wrap; align-items:center;">
+                            <button id="download-3d" class="btn add-btn" style="background:#4caf50; font-size:0.85rem; padding:8px 12px;">
+                                💾 Download GLB
+                            </button>
+                            <button id="reset-3d" class="btn remove-btn" style="font-size:0.85rem; padding:8px 12px;">
+                                Reset
+                            </button>
+                            <span id="admin-3d-model-info" style="font-size:0.78rem; color:#64748b; margin-left:4px;"></span>
+                        </div>
+                    </div>
+
+                    <div class="admin-buttons">
+                        <button type="submit" class="btn add-btn">
+                            <i class="fas fa-save"></i> <span id="form-action-text">Add 3D Model</span>
+                        </button>
+                        <button type="button" class="btn remove-btn" id="cancel-edit-btn">
+                            <i class="fas fa-times"></i> Cancel
+                        </button>
+                    </div>
+                </form>
+                <div id="admin-items-list" style="margin-top:15px;max-height:200px;overflow-y:auto;">
+                    <h4>Existing 3D Models:</h4>
+                    <div id="admin-items-container"></div>
+                </div>
+            </div>
+
+            <!-- Flower Picker Panel - ENHANCED -->
+            <div class="flower-picker-panel">
+                <h3><i class="fas fa-seedling"></i> Bouquet Builder</h3>
+                
+                <!-- Search -->
+                <div class="search-section">
+                    <input type="text" id="flower-search" placeholder="🔍 Search flowers, fillers, greenery, bases...">
+                </div>
+                
+                <!-- Category Tabs -->
+                <div class="category-tabs" id="category-tabs">
+                    <!-- Tabs will be populated dynamically -->
+                </div>
+                
+                <!-- Category Content -->
+                <div class="flower-options" id="flower-options-container">
+                    <!-- Items will be loaded dynamically -->
+                </div>
+                
+                <!-- Quick Stats -->
+                <div class="picker-stats" id="picker-stats" style="display:none;">
+                    <span id="flowers-count">0</span> Flowers | 
+                    <span id="fillers-count">0</span> Fillers | 
+                    <span id="greenery-count">0</span> Greenery
+                </div>
+            </div>
+
+            <div class="controls">
+                <div class="control-buttons">
+                    <button class="btn add-btn" id="add-flower">Apply Selected Item</button>
+                    <button class="btn delete-btn" id="delete-flower">🗑️ Delete Selected</button>
+                    <button class="btn remove-btn" id="remove-flower">− Remove Last</button>
+                    <button class="btn add-btn" id="add-bouquet-to-cart"><i class="fas fa-cart-plus"></i> Add Bouquet to Cart</button>
+                    <button class="btn" id="save-bouquet-design"><i class="fas fa-save"></i> Save Design</button>
+                    <button class="btn add-btn" id="buy-bouquet-now"><i class="fas fa-bag-shopping"></i> Buy Now</button>
+                </div>
+                <div class="adjust-controls" id="adjust-controls" aria-hidden="true" hidden>
+                    <h4>Adjust Selected</h4>
+                    <div class="adj-row">
+                        <label>X</label>
+                        <input type="range" id="adj-x" min="-300" max="300" step="1">
+                        <input type="number" id="adj-x-num" step="1">
+                    </div>
+                    <div class="adj-row">
+                        <label>Y</label>
+                        <input type="range" id="adj-y" min="0" max="300" step="1">
+                        <input type="number" id="adj-y-num" step="1">
+                    </div>
+                    <div class="adj-row">
+                        <label>Z</label>
+                        <input type="range" id="adj-z" min="-300" max="300" step="1">
+                        <input type="number" id="adj-z-num" step="1">
+                    </div>
+                    <div class="adj-row">
+                        <label>Rot Y</label>
+                        <input type="range" id="rot-y" min="-180" max="180" step="1">
+                        <input type="number" id="rot-y-num" step="1">
+                    </div>
+                    <div style="margin-top:8px">
+                        <button class="btn" id="reset-transform">Reset Transform</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flower-picker-panel" style="margin-top:12px;">
+                <h3>Saved Designs</h3>
+                <div id="saved-designs-list" style="display:grid; gap:8px;"></div>
+            </div>
+
+            <p>Flowers in bouquet: <span id="counter">0</span></p>
+        </div>
+
+        <!-- Right Main Content -->
+        <div class="content-main">
+            <div id="canvas-container">
+                <div id="loading-text">Loading Wrap Model...</div>
+            </div>
+            <div id="scale-control" class="scale-control" hidden>
+                <label>Scale Selected Flower:</label>
+                <input type="range" id="scale-slider" min="0.1" max="3" step="0.01" value="1">
+                <span id="scale-value">1.0x</span>
+            </div>
+            <div id="info">
+                <strong>How it works:</strong> Choose 1 flower, 1 filler, and 1 greenery — each snaps into the wrap automatically. You can still click an item later if you want to fine-tune it.
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="cart-overlay" class="cart-overlay" hidden></div>
+<aside id="cart-drawer" class="cart-drawer" aria-hidden="true">
+    <div class="cart-drawer-header">
+        <h3><i class="fas fa-shopping-cart"></i> Your Cart</h3>
+        <button type="button" id="cart-close-btn" class="cart-close-btn" aria-label="Close cart">&times;</button>
+    </div>
+    <div id="customize-cart-list" class="customize-cart-list"></div>
+    <div class="cart-drawer-footer">
+        <a href="checkout.html" id="cart-checkout-btn" class="nav-cta" style="text-decoration:none;text-align:center;">Checkout</a>
+    </div>
+</aside>
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div style="text-align: center;">
+            <h3>FLORA FIT</h3>
+            <p>Design your perfect bouquet in 3D, then order it delivered today.</p>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2026 Flora Fit. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+<script type="importmap">
+{
+    "imports": {
+        "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+    }
+}
+</script>
+
+<script type="module">
+    import * as THREE from 'three';
+    import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+    // ============================================================
+    // MAIN BOUQUET SCENE VARIABLES
+    // ============================================================
+    let scene, camera, renderer, controls, modelBlueprints = {};
+    let bouquet = [];
+    const CUSTOM_BOUQUET_BASE_PRICE = 0;
+    let raycaster, pointer;
+    let dragPlane, selectedObject = null, dragOffset = new THREE.Vector3();
+    let isDragging = false;
+    let currentFlowerType = ''; // Will be set dynamically after loading models
+    let previousMaterial = null;
+    const modelCategoryMap = {};
+    const container = document.getElementById('canvas-container');
+
+    function normalizeCustomizerCategory(category = '') {
+        const value = String(category || '').toLowerCase().trim();
+        if (value === 'flowers' || value === 'flower') return 'flowers';
+        if (value === 'filler' || value === 'fillers') return 'fillers';
+        if (value === 'greenery' || value === 'green') return 'greenery';
+        if (value === 'base' || value === 'bases') return 'bases';
+        if (value === 'wrap' || value === 'wraps') return 'wraps';
+        if (value === 'accessory' || value === 'extras' || value === 'extra') return 'extras';
+        return value;
+    }
+
+    function isWrapLikeModel(modelFile) {
+        const fileName = String(modelFile || '').toLowerCase();
+        const category = normalizeCustomizerCategory(modelCategoryMap[modelFile] || '');
+        return category === 'bases' || category === 'wraps' || fileName.includes('wrap') || fileName.includes('base');
+    }
+
+    function setBouquetBaseTransform(object3D, modelFile, label = 'Bouquet Base') {
+        if (!object3D) return;
+        object3D.position.set(20, -40, 0);
+        object3D.scale.set(1.5, 1.5, 1.5);
+        object3D.rotation.y = -Math.PI / 2;
+        object3D.userData.isWrap = true;
+        object3D.userData.modelFile = modelFile || object3D.userData.modelFile || '';
+        object3D.userData.flowerName = label;
+    }
+
+    function ensureBouquetBase(forceModelFile = '') {
+        const baseModelFile = forceModelFile || findWrapModelFile();
+        if (!baseModelFile) return null;
+
+        const existingBase = bouquet.find(item => item.userData.isWrap);
+        if (existingBase && existingBase.userData.modelFile === baseModelFile) {
+            setBouquetBaseTransform(existingBase, baseModelFile, existingBase.userData.flowerName || 'Bouquet Base');
+            return existingBase;
+        }
+
+        if (existingBase) {
+            if (selectedObject === existingBase) {
+                deselectFlower();
+            }
+            scene.remove(existingBase);
+            bouquet = bouquet.filter(item => item !== existingBase);
+        }
+
+        const baseModel = cloneModelObject(baseModelFile);
+        if (!baseModel) return null;
+
+        const matchingButton = Array.from(document.querySelectorAll('.flower-btn')).find(btn => btn.getAttribute('data-model') === baseModelFile);
+        const baseLabel = (matchingButton?.textContent || '')
+            .replace(/\s*\(\d+\)\s*$/, '')
+            .replace(/Out of Stock/i, '')
+            .trim() || 'Bouquet Base';
+
+        setBouquetBaseTransform(baseModel, baseModelFile, baseLabel);
+        scene.add(baseModel);
+        bouquet.unshift(baseModel);
+        updateCounter();
+        return baseModel;
+    }
+
+    function selectInitialFlowerModel(preferredModel = '') {
+        const buttons = Array.from(document.querySelectorAll('.flower-btn'));
+        if (!buttons.length) {
+            if (preferredModel) currentFlowerType = preferredModel;
+            return;
+        }
+
+        const preferredButton = buttons.find(btn => btn.getAttribute('data-model') === preferredModel && !btn.disabled)
+            || buttons.find(btn => !isWrapLikeModel(btn.getAttribute('data-model')) && !btn.disabled)
+            || buttons.find(btn => !btn.disabled)
+            || buttons[0];
+
+        buttons.forEach(btn => btn.classList.toggle('active', btn === preferredButton));
+
+        if (preferredButton) {
+            currentFlowerType = preferredButton.getAttribute('data-model') || preferredModel || '';
+            const category = preferredButton.getAttribute('data-category');
+            const targetTab = category ? document.querySelector(`.category-tab[data-category="${category}"]`) : null;
+            targetTab?.click();
+        } else if (preferredModel) {
+            currentFlowerType = preferredModel;
+        }
+    }
+
+    function getBouquetAnchorPoint() {
+        const wrap = bouquet.find(item => item.userData.isWrap);
+        if (!wrap) {
+            return new THREE.Vector3(10, 6, 0);
+        }
+
+        const box = new THREE.Box3().setFromObject(wrap);
+        const center = new THREE.Vector3();
+        box.getCenter(center);
+
+        return new THREE.Vector3(
+            center.x,
+            box.min.y + (box.max.y - box.min.y) * 0.56,
+            center.z
+        );
+    }
+
+    function getPlacementForCategory(category = '') {
+        const normalized = normalizeCustomizerCategory(category);
+        const anchor = getBouquetAnchorPoint();
+        const placements = {
+            flowers: { offset: [0, -12, 0], rotation: [-0.08, 0.03, 0], scale: 0.62 },
+            fillers: { offset: [-1.2, 10, -1], rotation: [0.06, -0.08, -0.03], scale: 0.42 },
+            greenery: { offset: [1.2, 11, 1], rotation: [0.03, 0.1, 0.04], scale: 0.46 },
+            extras: { offset: [0, -12, 0], rotation: [0, 0, 0], scale: 0.5 }
+        };
+        const placement = placements[normalized] || { offset: [0, 8, 0], rotation: [0, 0, 0], scale: 0.62 };
+
+        return {
+            position: [
+                anchor.x + placement.offset[0],
+                anchor.y + placement.offset[1],
+                anchor.z + placement.offset[2]
+            ],
+            rotation: placement.rotation,
+            scale: placement.scale
+        };
+    }
+
+    function removeBouquetItemByCategory(category = '') {
+        const normalized = normalizeCustomizerCategory(category);
+        if (!normalized) return;
+
+        const toRemove = bouquet.filter(item => !item.userData.isWrap && normalizeCustomizerCategory(item.userData.categoryKey || '') === normalized);
+        if (!toRemove.length) return;
+
+        toRemove.forEach(item => {
+            if (selectedObject === item) deselectFlower();
+            scene.remove(item);
+        });
+        bouquet = bouquet.filter(item => !toRemove.includes(item));
+    }
+
+    // ============================================================
+    // ADMIN 3D PREVIEW VARIABLES
+    // ============================================================
+    let adminScene, adminCamera, adminRenderer, adminControls, adminAnimId;
+
+    function initAdmin3DPreview() {
+        const canvas   = document.getElementById('admin-3d-preview-canvas');
+        const viewport = document.getElementById('admin-3d-viewport');
+        if (!canvas || !viewport) return;
+
+        // Tear down any previous instance
+        if (adminAnimId)   cancelAnimationFrame(adminAnimId);
+        if (adminRenderer) { adminRenderer.dispose(); adminRenderer.domElement.remove(); }
+
+        adminScene            = new THREE.Scene();
+        adminScene.background = new THREE.Color(0xf0f8ff);
+
+        const w = viewport.clientWidth  || 300;
+        const h = viewport.clientHeight || 220;
+
+        adminCamera = new THREE.PerspectiveCamera(45, w / h, 0.1, 2000);
+        adminCamera.position.set(0, 60, 180);
+
+        adminRenderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+        adminRenderer.setSize(w, h);
+        adminRenderer.setPixelRatio(window.devicePixelRatio);
+
+        // Lighting
+        adminScene.add(new THREE.HemisphereLight(0xffffff, 0x444444, 3));
+        const dir = new THREE.DirectionalLight(0xffffff, 2);
+        dir.position.set(0, 200, 100);
+        adminScene.add(dir);
+
+        adminControls = new OrbitControls(adminCamera, adminRenderer.domElement);
+        adminControls.enableDamping  = true;
+        adminControls.dampingFactor  = 0.08;
+
+        // Animate
+        (function loop() {
+            adminAnimId = requestAnimationFrame(loop);
+            adminControls.update();
+            adminRenderer.render(adminScene, adminCamera);
+        })();
+
+        // Resize observer
+        new ResizeObserver(() => {
+            const nw = viewport.clientWidth;
+            const nh = viewport.clientHeight;
+            adminCamera.aspect = nw / nh;
+            adminCamera.updateProjectionMatrix();
+            adminRenderer.setSize(nw, nh);
+        }).observe(viewport);
+    }
+
+    function loadGLBIntoAdminPreview(url, fileName) {
+        const loading   = document.getElementById('3d-loading');
+        const loadText  = document.getElementById('3d-loading-text');
+        const modelInfo = document.getElementById('admin-3d-model-info');
+
+        if (loading)  loading.style.display = 'flex';
+        if (loadText) loadText.textContent  = 'Loading model…';
+
+        initAdmin3DPreview();
+
+        const loader = new GLTFLoader();
+        loader.load(
+            url,
+            (gltf) => {
+                // Remove previous models (keep lights)
+                adminScene.children
+                    .filter(c => c.userData.isLoadedModel)
+                    .forEach(c => adminScene.remove(c));
+
+                const model = gltf.scene;
+                model.userData.isLoadedModel = true;
+
+                // Auto-scale to fit viewport
+                const box  = new THREE.Box3().setFromObject(model);
+                const size = new THREE.Vector3();
+                box.getSize(size);
+                const maxDim = Math.max(size.x, size.y, size.z) || 1;
+                model.scale.setScalar(120 / maxDim);
+
+                // Sit on y=0
+                const box2 = new THREE.Box3().setFromObject(model);
+                model.position.y -= box2.min.y;
+
+                // Center horizontally
+                const center = new THREE.Vector3();
+                box2.getCenter(center);
+                model.position.x -= center.x;
+                model.position.z -= center.z;
+
+                adminScene.add(model);
+
+                // Reset camera
+                adminCamera.position.set(0, 80, 200);
+                adminControls.reset();
+
+                if (loading)  loading.style.display = 'none';
+                if (modelInfo && fileName) modelInfo.textContent = `📦 ${fileName}`;
+            },
+            (xhr) => {
+                if (loadText && xhr.total) {
+                    const pct = Math.round((xhr.loaded / xhr.total) * 100);
+                    loadText.textContent = `Loading model… ${pct}%`;
+                }
+            },
+            (err) => {
+                console.error('GLB load error:', err);
+                if (loading)   loading.style.display  = 'none';
+                if (modelInfo) modelInfo.textContent  = '⚠️ Preview unavailable';
+                if (typeof showNotification === 'function') {
+                    showNotification('Could not preview this 3D model.', 'warning');
+                }
+            }
+        );
+    }
+
+    // Expose to non-module scripts
+    window._loadGLBIntoAdminPreview = loadGLBIntoAdminPreview;
+
+    // Expose to non-module scripts
+    window._loadGLBIntoAdminPreview = loadGLBIntoAdminPreview;
+
+    // Preview when admin manually picks a .glb file
+    document.getElementById('model-file')?.addEventListener('change', function () {
+        const file = this.files[0];
+        if (!file || !file.name.toLowerCase().endsWith('.glb')) return;
+        const objectUrl = URL.createObjectURL(file);
+        document.getElementById('3d-preview-section').style.display = 'block';
+        loadGLBIntoAdminPreview(objectUrl, file.name);
+    });
+
+    init();
+
+    function init() {
+        // 1. SCENE & CAMERA
+        scene = new THREE.Scene();
+        scene.background = new THREE.Color(0xffffff);
+        
+        camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 2000);
+        camera.position.set(0, 100, 300); // Adjusted camera to be closer
+
+        // 2. RENDERER
+        renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        container.appendChild(renderer.domElement);
+
+        // 3. LIGHTING
+        const hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444, 3);
+        scene.add(hemiLight);
+
+        const dirLight = new THREE.DirectionalLight(0xffffff, 2);
+        dirLight.position.set(0, 200, 100);
+        scene.add(dirLight);
+
+        // 4. MOUSE CONTROLS
+        controls = new OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = false;
+        controls.enableRotate = true;
+        controls.autoRotate = false;
+        controls.rotateSpeed = 0.3;
+        controls.panSpeed = 0.5;
+        controls.zoomSpeed = 0.5;
+
+        // Raycaster + pointer for selection/dragging
+        raycaster = new THREE.Raycaster();
+        pointer = new THREE.Vector2();
+
+        // Invisible plane used to compute dragging intersection at y=0
+        const planeGeo = new THREE.PlaneGeometry(2000, 2000);
+        const planeMat = new THREE.MeshBasicMaterial({ visible: false });
+        dragPlane = new THREE.Mesh(planeGeo, planeMat);
+        dragPlane.rotation.x = -Math.PI / 2;
+        dragPlane.position.y = 0;
+        scene.add(dragPlane);
+
+        // Pointer event handlers for drag/drop
+        renderer.domElement.addEventListener('pointerdown', onPointerDown);
+        window.addEventListener('pointermove', onPointerMove);
+        window.addEventListener('pointerup', onPointerUp);
+
+        // Keyboard event handler for rotation
+        window.addEventListener('keydown', onKeyDown);
+
+        // 5. LOADING ALL FLOWER MODELS DYNAMICALLY
+        const loader = new GLTFLoader();
+        let flowerModels = [];
+        let loadedCount = 0;
+        
+        // Fetch flower models from database
+        fetch('api/get_customize_items.php')
+            .then(response => response.json())
+            .then(data => {
+                if (data.items && data.items.length > 0) {
+                    flowerModels = data.items.map(item => item.model_file);
+                    data.items.forEach(item => {
+                        modelCategoryMap[item.model_file] = item.category || '';
+                    });
+                    
+                    // Load each model
+                    flowerModels.forEach(modelName => {
+                        loader.load('./models/' + modelName, (gltf) => {
+                            const scene_obj = gltf.scene;
+                            
+                            // Auto-scale model so it's a sensible size in the scene
+                            const bbox = new THREE.Box3().setFromObject(scene_obj);
+                            const size = new THREE.Vector3();
+                            bbox.getSize(size);
+                            const maxDim = Math.max(size.x, size.y, size.z) || 1;
+                            const targetSize = 80;
+                            const scaleFactor = targetSize / maxDim;
+                            scene_obj.scale.setScalar(scaleFactor);
+
+                            // Recompute bounding box after scaling and normalize model origin
+                            const bboxScaled = new THREE.Box3().setFromObject(scene_obj);
+                            const minY = bboxScaled.min.y;
+                            const center = new THREE.Vector3();
+                            bboxScaled.getCenter(center);
+                            scene_obj.position.y -= minY;
+                            scene_obj.position.x -= center.x;
+                            scene_obj.position.z -= center.z;
+                            
+                            // Rotate bouquet base/wrap to face the right side by default
+                            if (isWrapLikeModel(modelName)) {
+                                scene_obj.rotation.y = -Math.PI / 2;
+                                scene_obj.updateMatrix();
+                                scene_obj.updateWorldMatrix(true, true);
+                                scene_obj.matrixAutoUpdate = false;
+                                scene_obj.matrixWorldAutoUpdate = false;
+                            }
+                            
+                            modelBlueprints[modelName] = scene_obj;
+                            loadedCount++;
+                            
+                            if (loadedCount === flowerModels.length) {
+                                document.getElementById('loading-text').style.display = 'none';
+                                ensureBouquetBase();
+                                const preferredModel = flowerModels.find(name => !isWrapLikeModel(name)) || findWrapModelFile() || flowerModels[0] || '';
+                                selectInitialFlowerModel(preferredModel);
+                            }
+                        }, 
+                        undefined, 
+                        (error) => {
+                            console.error('Error loading ' + modelName + ':', error);
+                            loadedCount++;
+                            if (loadedCount === flowerModels.length) {
+                                document.getElementById('loading-text').style.display = 'none';
+                                ensureBouquetBase();
+                                const preferredModel = flowerModels.find(name => !isWrapLikeModel(name)) || findWrapModelFile() || flowerModels[0] || '';
+                                selectInitialFlowerModel(preferredModel);
+                            }
+                        });
+                    });
+                } else {
+                    console.error('No flower models found in database');
+                    document.getElementById('loading-text').textContent = 'No flowers available';
+                }
+            })
+            .catch(error => {
+                console.error('Failed to load flower list:', error);
+                document.getElementById('loading-text').textContent = 'Error loading flowers';
+            });
+
+        // Flower picker button events
+        document.querySelectorAll('.flower-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                currentFlowerType = this.getAttribute('data-model');
+                // Update active button
+                document.querySelectorAll('.flower-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+        
+        // Listen for dynamic flower selection
+        window.addEventListener('flowerSelected', (e) => {
+            currentFlowerType = e.detail;
+            addFlower();
+        });
+        
+        // Mark wrap as active by default (will be overridden by dynamic loading)
+        const firstFlowerBtn = document.querySelector('.flower-btn');
+        if (firstFlowerBtn) {
+            const firstModel = firstFlowerBtn.getAttribute('data-model');
+            if (firstModel) currentFlowerType = firstModel;
+            firstFlowerBtn.classList.add('active');
+        }
+
+        // Search/filter for flower buttons
+        const flowerSearch = document.getElementById('flower-search');
+        if (flowerSearch) {
+            flowerSearch.addEventListener('input', function() {
+                const q = this.value.trim().toLowerCase();
+                document.querySelectorAll('.flower-btn').forEach(b => {
+                    const text = b.textContent.toLowerCase();
+                    b.style.display = text.includes(q) ? 'block' : 'none';
+                });
+            });
+        }
+
+        // 6. BUTTON EVENTS
+        document.getElementById('add-flower').addEventListener('click', addFlower);
+        document.getElementById('delete-flower').addEventListener('click', deleteSelected);
+        document.getElementById('remove-flower').addEventListener('click', removeFlower);
+        document.getElementById('add-bouquet-to-cart')?.addEventListener('click', () => addCurrentBouquetToCart({ buyNow: false }));
+        document.getElementById('save-bouquet-design')?.addEventListener('click', saveCurrentBouquetDesign);
+        document.getElementById('buy-bouquet-now')?.addEventListener('click', () => addCurrentBouquetToCart({ buyNow: true }));
+        document.getElementById('saved-designs-list')?.addEventListener('click', onSavedDesignsClick);
+        renderSavedDesignsList();
+
+        // Cart drawer controls
+        document.getElementById('cart-toggle-btn')?.addEventListener('click', openCartDrawer);
+        document.getElementById('cart-close-btn')?.addEventListener('click', closeCartDrawer);
+        document.getElementById('cart-overlay')?.addEventListener('click', closeCartDrawer);
+        document.getElementById('customize-cart-list')?.addEventListener('click', onCartListClick);
+        window.addEventListener('storage', (e) => {
+            if (e.key === getCartStorageKey() || e.key === 'cart') {
+                updateCartBadge();
+                if (isCartOpen()) renderCartDrawer();
+            }
+        });
+        updateCartBadge();
+
+        // Adjustment controls wiring
+        const adjustPanel = document.getElementById('adjust-controls');
+        const scaleControl = document.getElementById('scale-control');
+        const scaleSlider = document.getElementById('scale-slider');
+        const scaleValue = document.getElementById('scale-value');
+        
+        const adj = {
+            x: document.getElementById('adj-x'),
+            y: document.getElementById('adj-y'),
+            z: document.getElementById('adj-z'),
+            xnum: document.getElementById('adj-x-num'),
+            ynum: document.getElementById('adj-y-num'),
+            znum: document.getElementById('adj-z-num'),
+            roty: document.getElementById('rot-y'),
+            rotyNum: document.getElementById('rot-y-num'),
+            reset: document.getElementById('reset-transform')
+        };
+
+        function ensureScaleState(object3D) {
+            if (!object3D) return;
+            if (!object3D.userData.baseScale) {
+                object3D.userData.baseScale = object3D.scale.clone();
+            }
+            if (typeof object3D.userData.scaleMultiplier !== 'number' || Number.isNaN(object3D.userData.scaleMultiplier)) {
+                object3D.userData.scaleMultiplier = 1;
+            }
+        }
+
+        function applyScaleMultiplier(object3D, multiplier) {
+            if (!object3D) return;
+            ensureScaleState(object3D);
+            const value = Math.max(0.1, Math.min(3, Number(multiplier) || 1));
+            object3D.userData.scaleMultiplier = value;
+            object3D.scale.copy(object3D.userData.baseScale).multiplyScalar(value);
+        }
+
+        function showAdjustControls(show){
+            if(!adjustPanel) return;
+            adjustPanel.hidden = !show;
+            adjustPanel.setAttribute('aria-hidden', (!show).toString());
+        }
+
+        function showScaleControl(show){
+            if(!scaleControl) return;
+            scaleControl.hidden = !show;
+        }
+
+        function updateAdjustUI(){
+            if(!selectedObject){
+                showAdjustControls(false);
+                showScaleControl(false);
+                return;
+            }
+            showAdjustControls(true);
+            showScaleControl(true);
+            adj.x.value = selectedObject.position.x.toFixed(0);
+            adj.xnum.value = selectedObject.position.x.toFixed(0);
+            adj.y.value = selectedObject.position.y.toFixed(0);
+            adj.ynum.value = selectedObject.position.y.toFixed(0);
+            adj.z.value = selectedObject.position.z.toFixed(0);
+            adj.znum.value = selectedObject.position.z.toFixed(0);
+            adj.roty.value = THREE.MathUtils.radToDeg(selectedObject.rotation.y).toFixed(0);
+            adj.rotyNum.value = THREE.MathUtils.radToDeg(selectedObject.rotation.y).toFixed(0);
+            ensureScaleState(selectedObject);
+            const multiplier = selectedObject.userData.scaleMultiplier || 1;
+            scaleSlider.value = multiplier.toFixed(2);
+            scaleValue.textContent = multiplier.toFixed(2) + 'x';
+        }
+
+        function applyFromUI(){
+            if(!selectedObject) return;
+            selectedObject.position.x = parseFloat(adj.x.value);
+            selectedObject.position.y = parseFloat(adj.y.value);
+            selectedObject.position.z = parseFloat(adj.z.value);
+            selectedObject.rotation.y = THREE.MathUtils.degToRad(parseFloat(adj.roty.value));
+        }
+
+        // keep range and number inputs in sync & apply
+        [['x','xnum'],['y','ynum'],['z','znum']].forEach(pair=>{
+            const r = adj[pair[0]];
+            const n = adj[pair[1]];
+            if(r && n){
+                r.addEventListener('input', ()=>{ n.value = r.value; applyFromUI(); });
+                n.addEventListener('input', ()=>{ r.value = n.value; applyFromUI(); });
+            }
+        });
+        if(adj.roty && adj.rotyNum){
+            adj.roty.addEventListener('input', ()=>{ adj.rotyNum.value = adj.roty.value; applyFromUI(); });
+            adj.rotyNum.addEventListener('input', ()=>{ adj.roty.value = adj.rotyNum.value; applyFromUI(); });
+        }
+        if(scaleSlider){
+            scaleSlider.addEventListener('input', ()=>{
+                if(!selectedObject) return;
+                const sc = Math.max(0.1, Math.min(3, parseFloat(scaleSlider.value)));
+                applyScaleMultiplier(selectedObject, sc);
+                scaleValue.textContent = sc.toFixed(2) + 'x';
+            });
+        }
+        if(adj.reset){
+            adj.reset.addEventListener('click', ()=>{
+                if(!selectedObject) return;
+                const categoryPlacement = getPlacementForCategory(selectedObject.userData.categoryKey || 'flowers');
+                selectedObject.position.set(...categoryPlacement.position);
+                selectedObject.rotation.set(...categoryPlacement.rotation);
+                applyScaleMultiplier(selectedObject, 1);
+                updateAdjustUI();
+            });
+        }
+
+
+        animate();
+    }
+
+    function getPointer(event) {
+        const rect = renderer.domElement.getBoundingClientRect();
+        pointer.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+        pointer.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+    }
+
+    function onPointerDown(event) {
+        getPointer(event);
+        raycaster.setFromCamera(pointer, camera);
+
+        // Check intersections against bouquet objects
+        const intersects = raycaster.intersectObjects(bouquet, true);
+        if (intersects.length > 0) {
+            // find root object (top-level in bouquet array)
+            let obj = intersects[0].object;
+            while (obj && !bouquet.includes(obj)) obj = obj.parent;
+            if (obj) {
+                // Prevent interaction with wrap
+                if (obj.userData.isWrap) {
+                    return;
+                }
+                
+                // If clicking the same flower, toggle deselection
+                if (selectedObject === obj) {
+                    deselectFlower();
+                    selectedObject = null;
+                    controls.enabled = true;
+                    document.body.style.cursor = '';
+                    isDragging = false;
+                    return;
+                }
+                
+                // If clicking a different flower, deselect the old one
+                if (selectedObject) {
+                    deselectFlower();
+                }
+                
+                selectedObject = obj;
+                isDragging = true;
+                
+                // Highlight selected flower by setting emissive glow
+                selectedObject.userData._origEmissive = {};
+                selectedObject.traverse((child) => {
+                    if (child.material) {
+                        selectedObject.userData._origEmissive[child.uuid] = {
+                            emissive: child.material.emissive.getHex(),
+                            emissiveIntensity: child.material.emissiveIntensity || 0
+                        };
+                        child.material.emissive.setHex(0xffaa00);
+                        child.material.emissiveIntensity = 0.6;
+                    }
+                });
+                selectedObject.userData._isHighlighted = true;
+
+                // compute offset between object's position and intersection with plane
+                const planeInter = raycaster.intersectObject(dragPlane, false);
+                if (planeInter.length > 0) {
+                    dragOffset.copy(selectedObject.position).sub(planeInter[0].point);
+                }
+
+                controls.enabled = false;
+                document.body.style.cursor = 'grabbing';
+                // Update adjust UI for this new selection
+                try{ updateAdjustUI(); }catch(e){/*ignore if UI not yet wired*/}
+            }
+        }
+    }
+
+    function deselectFlower() {
+        if (selectedObject && selectedObject.userData._isHighlighted) {
+            selectedObject.traverse((child) => {
+                if (child.material && selectedObject.userData._origEmissive[child.uuid]) {
+                    const orig = selectedObject.userData._origEmissive[child.uuid];
+                    child.material.emissive.setHex(orig.emissive);
+                    child.material.emissiveIntensity = orig.emissiveIntensity;
+                }
+            });
+            delete selectedObject.userData._origEmissive;
+            delete selectedObject.userData._isHighlighted;
+        }
+        selectedObject = null;
+        // hide adjust controls
+        const adjustPanelHide = document.getElementById('adjust-controls');
+        if(adjustPanelHide){ adjustPanelHide.hidden = true; adjustPanelHide.setAttribute('aria-hidden','true'); }
+        // hide scale control
+        const scaleCtrlHide = document.getElementById('scale-control');
+        if(scaleCtrlHide){ scaleCtrlHide.hidden = true; }
+    }
+
+    function onPointerMove(event) {
+        getPointer(event);
+        raycaster.setFromCamera(pointer, camera);
+
+        if (selectedObject && isDragging) {
+            const planeInter = raycaster.intersectObject(dragPlane, false);
+            if (planeInter.length > 0) {
+                const point = planeInter[0].point;
+                selectedObject.position.x = point.x + dragOffset.x;
+                selectedObject.position.z = point.z + dragOffset.z;
+            }
+        }
+    }
+
+    function onPointerUp(/*event*/) {
+        isDragging = false;
+        if (selectedObject) {
+            controls.enabled = true;
+            document.body.style.cursor = '';
+        }
+    }
+
+    function onKeyDown(event) {
+        if (!selectedObject) return;
+
+        const rotationSpeed = 0.1; // radians per keypress
+        const moveSpeed = 10; // units per keypress for Y-axis
+        const scaleSpeed = 0.05; // scale change per keypress
+        const key = event.key.toLowerCase();
+
+        if (key === 'arrowup') {
+            selectedObject.rotation.x -= rotationSpeed;
+            event.preventDefault();
+        } else if (key === 'arrowdown') {
+            selectedObject.rotation.x += rotationSpeed;
+            event.preventDefault();
+        } else if (key === 'arrowleft') {
+            selectedObject.rotation.y -= rotationSpeed;
+            event.preventDefault();
+        } else if (key === 'arrowright') {
+            selectedObject.rotation.y += rotationSpeed;
+            event.preventDefault();
+        } else if (key === 'q') {
+            selectedObject.rotation.z -= rotationSpeed;
+            event.preventDefault();
+        } else if (key === 'e') {
+            selectedObject.rotation.z += rotationSpeed;
+            event.preventDefault();
+        } else if (key === 'w') {
+            selectedObject.position.y += moveSpeed;
+            event.preventDefault();
+        } else if (key === 's') {
+            selectedObject.position.y = Math.max(0, selectedObject.position.y - moveSpeed);
+            event.preventDefault();
+        } else if (key === '[') {
+            // Scale down
+            ensureScaleState(selectedObject);
+            const currentMultiplier = selectedObject.userData.scaleMultiplier || 1;
+            const newMultiplier = Math.max(0.1, currentMultiplier - scaleSpeed);
+            applyScaleMultiplier(selectedObject, newMultiplier);
+            try { updateAdjustUI(); } catch(e) {}
+            event.preventDefault();
+        } else if (key === ']') {
+            // Scale up
+            ensureScaleState(selectedObject);
+            const currentMultiplier = selectedObject.userData.scaleMultiplier || 1;
+            const newMultiplier = Math.min(3, currentMultiplier + scaleSpeed);
+            applyScaleMultiplier(selectedObject, newMultiplier);
+            try { updateAdjustUI(); } catch(e) {}
+            event.preventDefault();
+        }
+    }
+
+    function addFlower() {
+        const activeBtn = document.querySelector('.flower-btn.active');
+        if (activeBtn) {
+            const inStock = activeBtn.getAttribute('data-in-stock') === 'true';
+            if (!inStock) {
+                showNotification('This item is currently out of stock. Please select a different one!', 'warning');
+                return;
+            }
+        }
+
+        const selectedCategory = normalizeCustomizerCategory(
+            activeBtn?.getAttribute('data-category') || modelCategoryMap[currentFlowerType] || ''
+        );
+        const isWrapLike = isWrapLikeModel(currentFlowerType) || selectedCategory === 'bases' || selectedCategory === 'wraps';
+
+        if (isWrapLike) {
+            ensureBouquetBase(currentFlowerType);
+            return;
+        }
+
+        const blueprint = modelBlueprints[currentFlowerType];
+        if (!blueprint) {
+            showNotification('3D model is still loading. Please wait a moment and try again.', 'warning');
+            return;
+        }
+
+        ensureBouquetBase();
+        removeBouquetItemByCategory(selectedCategory);
+
+        const newFlower = blueprint.clone();
+        newFlower.traverse((child) => {
+            if (child.material) {
+                child.material = child.material.clone();
+            }
+        });
+
+        const placement = getPlacementForCategory(selectedCategory);
+        newFlower.position.set(...placement.position);
+        newFlower.rotation.set(...placement.rotation);
+        newFlower.scale.multiplyScalar(Number(placement.scale || 1));
+
+        newFlower.userData.baseScale = newFlower.scale.clone();
+        newFlower.userData.scaleMultiplier = 1;
+        newFlower.userData.categoryKey = selectedCategory || 'flowers';
+        newFlower.userData.modelFile = currentFlowerType;
+
+        const flowerNameRaw = (activeBtn?.textContent || '').trim();
+        const flowerNameClean = flowerNameRaw.replace(/\s*\(\d+\)\s*$/, '').replace(/Out of Stock/i, '').trim();
+        newFlower.userData.flowerName = flowerNameClean || currentFlowerType;
+
+        scene.add(newFlower);
+        bouquet.push(newFlower);
+        updateCounter();
+    }
+
+    function deleteSelected() {
+        if (selectedObject && !selectedObject.userData.isWrap) {
+            const flowerToDelete = selectedObject;
+            deselectFlower();
+            scene.remove(flowerToDelete);
+            bouquet = bouquet.filter(f => f !== flowerToDelete);
+            controls.enabled = true;
+            document.body.style.cursor = '';
+            updateCounter();
+        }
+    }
+
+    function removeFlower() {
+        if (bouquet.length > 1) {
+            // Remove from end, but skip wrap
+            let removed = false;
+            while (bouquet.length > 1 && !removed) {
+                const lastFlower = bouquet.pop();
+                if (!lastFlower.userData.isWrap) {
+                    scene.remove(lastFlower);
+                    removed = true;
+                } else {
+                    // Put wrap back if we accidentally popped it
+                    bouquet.push(lastFlower);
+                }
+            }
+            updateCounter();
+        }
+    }
+
+    function updateCounter() {
+        const flowerCount = bouquet.filter(item => !item.userData.isWrap).length;
+        document.getElementById('counter').innerText = flowerCount;
+    }
+
+    function getStorageIdentity() {
+        try {
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            if (user && user.id) return `user_${user.id}`;
+            if (user && user.email) return `email_${String(user.email).toLowerCase()}`;
+        } catch (error) {
+        }
+        return 'guest';
+    }
+
+    function getCartStorageKey() {
+        return `cart_${getStorageIdentity()}`;
+    }
+
+    function getSavedDesignsStorageKey() {
+        return `savedCustomBouquetDesigns_${getStorageIdentity()}`;
+    }
+
+    function getLastSavedDesignStorageKey() {
+        return `lastSavedCustomBouquetDesign_${getStorageIdentity()}`;
+    }
+
+    function getCart() {
+        try {
+            const key = getCartStorageKey();
+            const scoped = localStorage.getItem(key);
+
+            if (scoped === null) {
+                const legacy = localStorage.getItem('cart');
+                if (legacy) {
+                    localStorage.setItem(key, legacy);
+                    localStorage.removeItem('cart');
+                }
+            }
+
+            const cart = JSON.parse(localStorage.getItem(key));
+            return Array.isArray(cart) ? cart : [];
+        } catch (error) {
+            return [];
+        }
+    }
+
+    function saveCart(cart) {
+        localStorage.setItem(getCartStorageKey(), JSON.stringify(cart));
+    }
+
+    function totalCartQuantity(cart) {
+        return cart.reduce((sum, item) => sum + Math.max(1, Number(item.quantity || 1)), 0);
+    }
+
+    function updateCartBadge() {
+        const badge = document.getElementById('cart-badge');
+        if (!badge) return;
+        badge.textContent = totalCartQuantity(getCart());
+    }
+
+    function isCartOpen() {
+        return document.getElementById('cart-drawer')?.classList.contains('open');
+    }
+
+    function openCartDrawer() {
+        const drawer = document.getElementById('cart-drawer');
+        const overlay = document.getElementById('cart-overlay');
+        if (!drawer || !overlay) return;
+        drawer.classList.add('open');
+        drawer.setAttribute('aria-hidden', 'false');
+        overlay.hidden = false;
+        document.body.style.overflow = 'hidden';
+        renderCartDrawer();
+    }
+
+    function closeCartDrawer() {
+        const drawer = document.getElementById('cart-drawer');
+        const overlay = document.getElementById('cart-overlay');
+        if (!drawer || !overlay) return;
+        drawer.classList.remove('open');
+        drawer.setAttribute('aria-hidden', 'true');
+        overlay.hidden = true;
+        document.body.style.overflow = '';
+    }
+
+    function buildCustomBouquetSummary() {
+        const flowerObjects = bouquet.filter(item => !item.userData.isWrap);
+        const countsByModel = {};
+        flowerObjects.forEach(item => {
+            const key = item.userData.flowerName || item.userData.modelFile || 'Flower';
+            countsByModel[key] = (countsByModel[key] || 0) + 1;
+        });
+        const summary = Object.entries(countsByModel).map(([name, count]) => ({
+            name,
+            count
+        }));
+        return {
+            flowerCount: flowerObjects.length,
+            summary
+        };
+    }
+
+    function captureBouquetPreview() {
+        try {
+            renderer.render(scene, camera);
+            return renderer.domElement.toDataURL('image/png');
+        } catch (error) {
+            console.warn('Could not capture bouquet preview:', error);
+            return 'https://via.placeholder.com/100?text=Custom+Bouquet';
+        }
+    }
+
+    function buildBouquetLayout() {
+        const toTransform = (obj) => ({
+            position: {
+                x: Number(obj.position.x.toFixed(3)),
+                y: Number(obj.position.y.toFixed(3)),
+                z: Number(obj.position.z.toFixed(3))
+            },
+            rotation: {
+                x: Number(obj.rotation.x.toFixed(3)),
+                y: Number(obj.rotation.y.toFixed(3)),
+                z: Number(obj.rotation.z.toFixed(3))
+            },
+            scale: {
+                x: Number(obj.scale.x.toFixed(3)),
+                y: Number(obj.scale.y.toFixed(3)),
+                z: Number(obj.scale.z.toFixed(3))
+            }
+        });
+
+        const wrap = bouquet.find(item => item.userData.isWrap);
+        const flowers = bouquet
+            .filter(item => !item.userData.isWrap)
+            .map(item => ({
+                modelFile: item.userData.modelFile || '',
+                flowerName: item.userData.flowerName || item.userData.modelFile || 'Flower',
+                transform: toTransform(item)
+            }));
+
+        return {
+            wrap: wrap ? { modelFile: wrap.userData.modelFile || '', transform: toTransform(wrap) } : null,
+            flowers
+        };
+    }
+
+    function saveCurrentBouquetDesign() {
+        const details = buildCustomBouquetSummary();
+        if (details.flowerCount === 0) {
+            showNotification('Add at least one flower before saving the design.', 'warning');
+            return;
+        }
+
+        const design = {
+            id: `design-${Date.now()}`,
+            createdAt: new Date().toISOString(),
+            image: captureBouquetPreview(),
+            customData: {
+                ...details,
+                layout: buildBouquetLayout()
+            }
+        };
+
+        const existing = (() => {
+            try {
+                const key = getSavedDesignsStorageKey();
+                const scoped = localStorage.getItem(key);
+
+                if (scoped === null) {
+                    const legacy = localStorage.getItem('savedCustomBouquetDesigns');
+                    if (legacy) {
+                        localStorage.setItem(key, legacy);
+                        localStorage.removeItem('savedCustomBouquetDesigns');
+                    }
+                }
+
+                const parsed = JSON.parse(localStorage.getItem(key) || '[]');
+                return Array.isArray(parsed) ? parsed : [];
+            } catch (error) {
+                return [];
+            }
+        })();
+
+        existing.unshift(design);
+        localStorage.setItem(getSavedDesignsStorageKey(), JSON.stringify(existing.slice(0, 25)));
+        localStorage.setItem(getLastSavedDesignStorageKey(), JSON.stringify(design));
+        renderSavedDesignsList();
+        showNotification('Bouquet design saved!', 'success');
+    }
+
+    function getSavedDesigns() {
+        try {
+            const key = getSavedDesignsStorageKey();
+            const scoped = localStorage.getItem(key);
+
+            if (scoped === null) {
+                const legacy = localStorage.getItem('savedCustomBouquetDesigns');
+                if (legacy) {
+                    localStorage.setItem(key, legacy);
+                    localStorage.removeItem('savedCustomBouquetDesigns');
+                }
+            }
+
+            const parsed = JSON.parse(localStorage.getItem(key) || '[]');
+            return Array.isArray(parsed) ? parsed : [];
+        } catch (error) {
+            return [];
+        }
+    }
+
+    function renderSavedDesignsList() {
+        const containerEl = document.getElementById('saved-designs-list');
+        if (!containerEl) return;
+
+        const designs = getSavedDesigns();
+        if (!designs.length) {
+            containerEl.innerHTML = '<p style="color:#666; font-size:0.9rem;">No saved designs yet.</p>';
+            return;
+        }
+
+        containerEl.innerHTML = designs.map((design, index) => {
+            const flowerCount = Number(design?.customData?.flowerCount || 0);
+            const createdAt = design?.createdAt ? new Date(design.createdAt).toLocaleString() : 'Unknown date';
+            const image = design?.image || 'https://via.placeholder.com/100?text=Saved+Design';
+
+            return `
+                <div style="display:grid; grid-template-columns:52px 1fr; gap:10px; border:1px solid rgba(0,0,0,0.08); border-radius:10px; padding:8px; background:#fff;">
+                    <img src="${image}" alt="Saved bouquet" style="width:52px; height:52px; border-radius:8px; object-fit:cover; background:#f3f3f3;">
+                    <div>
+                        <div style="font-weight:600; color:var(--dark); font-size:0.92rem;">Custom Bouquet (${flowerCount} flowers)</div>
+                        <div style="font-size:0.78rem; color:#666; margin:2px 0 6px;">${createdAt}</div>
+                        <div style="display:flex; gap:6px; flex-wrap:wrap;">
+                            <button type="button" class="btn" data-action="load-design" data-index="${index}" style="padding:6px 10px; font-size:0.8rem;">Load</button>
+                            <button type="button" class="btn" data-action="delete-design" data-index="${index}" style="padding:6px 10px; font-size:0.8rem; background:#fff5f5; color:#b71c1c;">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    function clearCurrentBouquet() {
+        deselectFlower();
+        bouquet.forEach(item => scene.remove(item));
+        bouquet = [];
+    }
+
+    function cloneModelObject(modelFile) {
+        const blueprint = modelBlueprints[modelFile];
+        if (!blueprint) return null;
+
+        const model = blueprint.clone();
+        model.traverse((child) => {
+            if (child.material) {
+                child.material = child.material.clone();
+            }
+        });
+
+        model.userData.modelFile = modelFile;
+        model.userData.baseScale = model.scale.clone();
+        model.userData.scaleMultiplier = 1;
+        return model;
+    }
+
+    function applyTransform(model, transform) {
+        if (!model || !transform) return;
+
+        if (transform.position) {
+            model.position.set(
+                Number(transform.position.x ?? model.position.x),
+                Number(transform.position.y ?? model.position.y),
+                Number(transform.position.z ?? model.position.z)
+            );
+        }
+        if (transform.rotation) {
+            model.rotation.set(
+                Number(transform.rotation.x ?? model.rotation.x),
+                Number(transform.rotation.y ?? model.rotation.y),
+                Number(transform.rotation.z ?? model.rotation.z)
+            );
+        }
+        if (transform.scale) {
+            model.scale.set(
+                Number(transform.scale.x ?? model.scale.x),
+                Number(transform.scale.y ?? model.scale.y),
+                Number(transform.scale.z ?? model.scale.z)
+            );
+        }
+
+        model.userData.baseScale = model.scale.clone();
+        model.userData.scaleMultiplier = 1;
+    }
+
+    function findWrapModelFile() {
+        const keys = Object.keys(modelBlueprints || {});
+        return keys.find(name => isWrapLikeModel(name)) || keys[0] || '';
+    }
+
+    function loadSavedDesign(index) {
+        const designs = getSavedDesigns();
+        const design = designs[index];
+        if (!design) return;
+
+        const layout = design?.customData?.layout;
+        if (!layout || !Array.isArray(layout.flowers)) {
+            showNotification('Saved design has no layout data.', 'error');
+            return;
+        }
+
+        clearCurrentBouquet();
+
+        const wrapModelFile = layout?.wrap?.modelFile || findWrapModelFile();
+        if (wrapModelFile) {
+            const wrapObj = cloneModelObject(wrapModelFile);
+            if (wrapObj) {
+                wrapObj.userData.isWrap = true;
+                applyTransform(wrapObj, layout.wrap?.transform || {
+                    position: { x: 0, y: -40, z: 0 },
+                    rotation: { x: 0, y: -Math.PI / 2, z: 0 },
+                    scale: { x: 1.5, y: 1.5, z: 1.5 }
+                });
+                scene.add(wrapObj);
+                bouquet.push(wrapObj);
+            }
+        }
+
+        let restored = 0;
+        layout.flowers.forEach((flower) => {
+            const modelFile = flower?.modelFile;
+            const model = modelFile ? cloneModelObject(modelFile) : null;
+            if (!model) return;
+
+            model.userData.isWrap = false;
+            model.userData.flowerName = flower?.flowerName || modelFile || 'Flower';
+            applyTransform(model, flower?.transform || {});
+            scene.add(model);
+            bouquet.push(model);
+            restored += 1;
+        });
+
+        updateCounter();
+        showNotification(`Loaded saved design with ${restored} flowers.`, 'success');
+    }
+
+    function deleteSavedDesign(index) {
+        const designs = getSavedDesigns();
+        if (!designs[index]) return;
+        designs.splice(index, 1);
+        localStorage.setItem(getSavedDesignsStorageKey(), JSON.stringify(designs));
+        renderSavedDesignsList();
+        showNotification('Saved design deleted.', 'success');
+    }
+
+    function onSavedDesignsClick(event) {
+        const action = event.target?.dataset?.action;
+        const index = Number(event.target?.dataset?.index);
+        if (!action || Number.isNaN(index)) return;
+
+        if (action === 'load-design') {
+            loadSavedDesign(index);
+        }
+        if (action === 'delete-design') {
+            deleteSavedDesign(index);
+        }
+    }
+
+    function addCurrentBouquetToCart(options = {}) {
+        const buyNow = Boolean(options.buyNow);
+        const details = buildCustomBouquetSummary();
+        if (details.flowerCount === 0) {
+            showNotification('Add at least one flower before adding to cart.', 'warning');
+            return;
+        }
+
+        const previewImage = captureBouquetPreview();
+        const layout = buildBouquetLayout();
+        const designSnapshot = {
+            id: `design-${Date.now()}`,
+            createdAt: new Date().toISOString(),
+            image: previewImage,
+            customData: {
+                ...details,
+                layout
+            }
+        };
+        localStorage.setItem(getLastSavedDesignStorageKey(), JSON.stringify(designSnapshot));
+
+        const item = {
+            id: `custom-${Date.now()}`,
+            name: 'Custom Bouquet',
+            image: previewImage,
+            basePrice: CUSTOM_BOUQUET_BASE_PRICE,
+            quantity: 1,
+            addOns: details.summary.map(entry => {
+                const inventoryItem = customizeItems.find(i => i.name === entry.name);
+                const unitPrice = Number(inventoryItem?.price || 0);
+                return {
+                    id: `flower-${entry.name}`,
+                    name: `${entry.name} x${entry.count}`,
+                    price: unitPrice * entry.count
+                };
+            }),
+            addedAt: Date.now(),
+            customData: {
+                ...details,
+                layout
+            }
+        };
+
+        const cart = getCart();
+        if (buyNow) {
+            const filteredCart = cart.filter(entry => String(entry.id || '').startsWith('custom-') === false);
+            filteredCart.push(item);
+            saveCart(filteredCart);
+        } else {
+            cart.push(item);
+            saveCart(cart);
+        }
+        updateCartBadge();
+        renderCartDrawer();
+
+        if (buyNow) {
+            showNotification('Custom bouquet ready! Redirecting to checkout...', 'success');
+            setTimeout(() => {
+                window.location.href = 'checkout.html';
+            }, 350);
+            return;
+        }
+
+        showNotification('Custom bouquet added to cart!', 'success');
+    }
+
+    function renderCartDrawer() {
+        const listEl = document.getElementById('customize-cart-list');
+        if (!listEl) return;
+
+        const cart = getCart();
+        if (!cart.length) {
+            listEl.innerHTML = '<p class="cart-empty-state">Your cart is empty.</p>';
+            return;
+        }
+
+        listEl.innerHTML = cart.map((item, index) => {
+            const qty = Math.max(1, Number(item.quantity || 1));
+            const name = String(item.name || 'Item');
+            return `
+                <div class="customize-cart-item" data-index="${index}">
+                    <div class="customize-cart-item-top">
+                        <strong>${name}</strong>
+                        <button type="button" class="cart-remove-btn" data-action="remove" data-index="${index}">Remove</button>
+                    </div>
+                    <div class="customize-cart-item-controls">
+                        <button type="button" class="qty-btn" data-action="decrease" data-index="${index}">-</button>
+                        <span class="cart-item-qty">${qty}</span>
+                        <button type="button" class="qty-btn" data-action="increase" data-index="${index}">+</button>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    function onCartListClick(event) {
+        const action = event.target?.dataset?.action;
+        const index = Number(event.target?.dataset?.index);
+        if (!action || Number.isNaN(index)) return;
+
+        const cart = getCart();
+        if (!cart[index]) return;
+
+        if (action === 'remove') {
+            cart.splice(index, 1);
+        } else if (action === 'increase') {
+            cart[index].quantity = Math.max(1, Number(cart[index].quantity || 1)) + 1;
+        } else if (action === 'decrease') {
+            const nextQty = Math.max(1, Number(cart[index].quantity || 1) - 1);
+            cart[index].quantity = nextQty;
+        }
+
+        saveCart(cart);
+        updateCartBadge();
+        renderCartDrawer();
+    }
+
+    function animate() {
+        requestAnimationFrame(animate);
+        controls.update(); 
+        renderer.render(scene, camera);
+    }
+
+    window.addEventListener('resize', () => {
+        camera.aspect = container.clientWidth / container.clientHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(container.clientWidth, container.clientHeight);
+    });
+</script>
+
+<script src="assets/js/notifications.js"></script>
+<script>
+    // Auth toggle functionality
+    function updateAuthUI() {
+        const isLoggedIn = localStorage.getItem('isLoggedIn');
+        const authButtons = document.getElementById('auth-buttons');
+        const profileSection = document.getElementById('profile-section');
+        const userName = document.getElementById('user-name');
+        const cornerImg = document.getElementById('cornerProfilePic');
+        const cartBtn = document.getElementById('cart-toggle-btn');
+        
+        if (isLoggedIn) {
+            const user = JSON.parse(localStorage.getItem('user'));
+            authButtons.style.display = 'none';
+            profileSection.style.display = 'block';
+            if (user) {
+                userName.textContent = user.name || [user.firstName, user.lastName].filter(Boolean).join(' ');
+            }
+            if (user && user.profile_picture) {
+                cornerImg.src = user.profile_picture;
+                cornerImg.style.display = 'inline-block';
+                const icon = profileSection.querySelector('.fa-user-circle');
+                if (icon) icon.style.display = 'none';
+            } else {
+                cornerImg.style.display = 'none';
+                const icon = profileSection.querySelector('.fa-user-circle');
+                if (icon) icon.style.display = 'inline-block';
+            }
+            
+            // Check if user is admin/staff
+            if (user && (user.role === 'admin' || user.role === 'staff' || user.is_admin)) {
+                // Show staff dashboard link
+                const staffLink = document.getElementById('staff-dashboard-link');
+                if (staffLink) staffLink.style.display = 'inline-block';
+                if (cartBtn) cartBtn.style.display = 'none';
+                // Replace Start Designing with plain Customize link for admins
+                const designLink = document.getElementById('start-designing-link');
+                if (designLink) {
+                    designLink.innerHTML = '<a href="customize.html">Customize</a>';
+                }
+            } else {
+                if (cartBtn) cartBtn.style.display = 'inline-flex';
+            }
+        } else {
+            authButtons.style.display = 'flex';
+            profileSection.style.display = 'none';
+            if (cartBtn) cartBtn.style.display = 'inline-flex';
+            // Hide staff dashboard link when not logged in
+            const staffLink = document.getElementById('staff-dashboard-link');
+            if (staffLink) staffLink.style.display = 'none';
+        }
+    }
+    
+    // Update UI on load
+    updateAuthUI();
+
+    const hamburgerBtn = document.getElementById('hamburger-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+    const mobileMenuClose = document.getElementById('mobile-menu-close');
+
+    function openMobileMenu() {
+        mobileMenu.classList.add('open');
+        mobileMenuOverlay.classList.add('open');
+        hamburgerBtn.setAttribute('aria-expanded', 'true');
+        mobileMenu.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeMobileMenu() {
+        mobileMenu.classList.remove('open');
+        mobileMenuOverlay.classList.remove('open');
+        hamburgerBtn.setAttribute('aria-expanded', 'false');
+        mobileMenu.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+    }
+
+    hamburgerBtn?.addEventListener('click', openMobileMenu);
+    mobileMenuClose?.addEventListener('click', closeMobileMenu);
+    mobileMenuOverlay?.addEventListener('click', closeMobileMenu);
+
+    document.querySelectorAll('.mobile-nav a').forEach(link => {
+        link.addEventListener('click', closeMobileMenu);
+    });
+
+    
+    // Handle profile section click
+    const profileSection = document.getElementById('profile-section');
+    if (profileSection) {
+        profileSection.addEventListener('click', () => {
+            window.location.href = 'profile.html';
+        });
+        profileSection.style.cursor = 'pointer';
+    }
+    
+    // Handle logout
+    const logoutBtn = document.getElementById('logout-btn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('user');
+            updateAuthUI();
+            window.location.href = 'index.html';
+        });
+    }
+
+    // Listen for storage changes from other tabs/windows and update UI
+    window.addEventListener('storage', (e) => {
+        if (e.key === 'user' || e.key === 'isLoggedIn') {
+            try { updateAuthUI(); } catch (err) { console.error(err); }
+        }
+    });
+</script>
+
+<script>
+    // Check if user is logged in, if not redirect to login
+    (function checkLogin() {
+        const isLoggedIn = localStorage.getItem('isLoggedIn');
+        if (!isLoggedIn) {
+            window.location.href = 'login.html';
+        }
+    })();
+</script>
+
+<script>
+// Enhanced Admin Flower Management & Dynamic Flower Loading - COMPLETE REPLACEMENT
+let customizeItems = [];
+let editingItemId = null;
+let inventoryItems = [];
+let isAdmin = false;
+let current3dModelUrl = null;
+
+const CATEGORIES = {
+    flowers: { emoji: '🌸', label: 'Flowers', color: '#e91e8c', keywords: ['rose','tulip','lily','orchid','daisy','sunflower','peony'] },
+    fillers: { emoji: '🌿', label: 'Fillers', color: '#4caf50', keywords: ['baby breath','gypsophila','alstroemeria','waxflower'] },
+    greenery: { emoji: '🍃', label: 'Greenery', color: '#388e3c', keywords: ['eucalyptus','fern','ruscus','salal','lemon leaf'] },
+    bases: { emoji: '🧺', label: 'Bases', color: '#8d6e63', keywords: ['base','paper wrap','wrapper','kraft','bouquet paper'] },
+    wraps: { emoji: '🎀', label: 'Wraps', color: '#ff9800', keywords: ['wrap'] },
+    extras: { emoji: '✨', label: 'Extras', color: '#9c27b0', keywords: ['ribbon','bow','accessory'] }
+};
+
+// Load and categorize items
+async function loadCustomizeItems() {
+    try {
+        const response = await fetch('api/get_customize_items.php');
+        const data = await response.json();
+        console.log('RAW ITEMS FROM DB:', JSON.stringify(data.items));
+        if (data.items) {
+            customizeItems = data.items;
+            categorizeAndRenderItems();
+            updatePickerStats();
+            if (isAdmin) renderAdminItemsList();
+        } else if (data.error) {
+            console.error('Error loading items:', data.error);
+            const container = document.getElementById('flower-options-container');
+            if (container && data.message && data.message.includes('create_customize_items_table')) {
+                container.innerHTML = '<p style="padding:10px;color:red;">Database table not found. Please run create_customize_items_table.php</p>';
+            }
+        }
+    } catch (error) {
+        console.error('Failed to load customize items:', error);
+    }
+}
+
+// Smart categorization function
+function categorizeItem(item) {
+    const name = (item.name || '').toLowerCase().trim();
+    const category = (item.category || '').toLowerCase().trim();
+    
+    if (category === 'flowers' || category === 'flower') return 'flowers';
+    if (category === 'filler' || category === 'fillers') return 'fillers';
+    if (category === 'greenery' || category === 'green') return 'greenery';
+    if (category === 'base' || category === 'bases') return 'bases';
+    if (category === 'wrap' || category === 'wraps') return 'wraps';
+    if (category === 'accessory' || category === 'extras' || category === 'extra') return 'extras';
+    
+    for (const [catKey, catData] of Object.entries(CATEGORIES)) {
+        if (catData.keywords.some(keyword => name.includes(keyword))) return catKey;
+    }
+    return 'flowers';
+}
+
+function categorizeAndRenderItems() {
+    const container = document.getElementById('flower-options-container');
+    const tabsContainer = document.getElementById('category-tabs');
+    if (!container || !tabsContainer) return;
+    
+    const categorized = {};
+    Object.keys(CATEGORIES).forEach(key => categorized[key] = []);
+    
+    customizeItems.forEach(item => {
+        const category = categorizeItem(item);
+        (categorized[category] || categorized.flowers).push(item);
+    });
+    
+    // Build tabs
+    tabsContainer.innerHTML = '';
+    Object.entries(categorized).forEach(([catKey, items]) => {
+        if (items.length === 0) return;
+        const tab = document.createElement('button');
+        tab.className = 'category-tab';
+        tab.dataset.category = catKey;
+        tab.innerHTML = `${CATEGORIES[catKey].emoji} ${CATEGORIES[catKey].label} (${items.length})`;
+        tabsContainer.appendChild(tab);
+    });
+    
+    // Build panels
+    container.innerHTML = '';
+    Object.entries(categorized).forEach(([catKey, items]) => {
+        if (items.length === 0) return;
+        const panel = document.createElement('div');
+        panel.className = 'category-panel';
+        panel.dataset.panel = catKey;
+        panel.style.borderTop = `3px solid ${CATEGORIES[catKey].color}20`;
+        panel.innerHTML = `<div style="font-size:13px;color:${CATEGORIES[catKey].color};font-weight:600;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid #eee;">${CATEGORIES[catKey].emoji} ${CATEGORIES[catKey].label} (${items.length})</div>`;
+        
+        items.forEach(item => panel.appendChild(createFlowerButton(item, catKey)));
+        container.appendChild(panel);
+    });
+    
+    const firstTab = tabsContainer.querySelector('.category-tab');
+    if (firstTab) {
+        firstTab.classList.add('active');
+        firstTab.click();
+    }
+    attachEnhancedEventListeners();
+}
+
+function createFlowerButton(item, category) {
+    const btn = document.createElement('button');
+    btn.className = 'flower-btn';
+    btn.setAttribute('data-model', item.model_file);
+    btn.setAttribute('data-item-id', item.id);
+    btn.setAttribute('data-category', category);
+    btn.setAttribute('data-stock', item.total_stock || 0);
+    btn.setAttribute('data-in-stock', item.in_stock ? 'true' : 'false');
+    btn.dataset.emoji = CATEGORIES[category]?.emoji || '🌸';
+    
+    const isOutOfStock = !item.in_stock || (item.total_stock || 0) <= 0;
+    if (isOutOfStock) {
+        btn.classList.add('out-of-stock');
+        btn.disabled = true;
+        btn.innerHTML = `${item.name} <span class="stock-label">Out of Stock</span>`;
+    } else {
+        btn.innerHTML = `${item.name} <span class="stock-count">(${item.total_stock || 0})</span>`;
+    }
+    return btn;
+}
+
+function attachEnhancedEventListeners() {
+    document.querySelectorAll('.category-tab').forEach(tab => {
+        tab.addEventListener('click', function() {
+            const category = this.dataset.category;
+            document.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+            document.querySelectorAll('.category-panel').forEach(p => p.classList.toggle('active', p.dataset.panel === category));
+        });
+    });
+    
+    document.querySelectorAll('.flower-btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            if (this.classList.contains('out-of-stock')) {
+                e.preventDefault();
+                showNotification('This item is currently out of stock!', 'warning');
+                return;
+            }
+            document.querySelectorAll('.flower-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            const modelFile = this.getAttribute('data-model');
+            window.dispatchEvent(new CustomEvent('flowerSelected', { detail: modelFile }));
+        });
+    });
+    
+    const searchInput = document.getElementById('flower-search');
+    if (searchInput) {
+        searchInput.addEventListener('input', function() {
+            const query = this.value.toLowerCase().trim();
+            document.querySelectorAll('.flower-btn').forEach(btn => {
+                const name = btn.textContent.toLowerCase();
+                btn.style.display = (!query || name.includes(query)) ? 'flex' : 'none';
+            });
+            const stats = document.getElementById('picker-stats');
+            if (stats) stats.style.display = query ? 'none' : 'block';
+        });
+    }
+}
+
+function updatePickerStats() {
+    const stats = {
+        flowers: customizeItems.filter(item => categorizeItem(item) === 'flowers').length,
+        fillers: customizeItems.filter(item => categorizeItem(item) === 'fillers').length,
+        greenery: customizeItems.filter(item => categorizeItem(item) === 'greenery').length
+    };
+    const flowersEl = document.getElementById('flowers-count');
+    const fillersEl = document.getElementById('fillers-count');
+    const greeneryEl = document.getElementById('greenery-count');
+    const statsEl = document.getElementById('picker-stats');
+    
+    if (flowersEl) flowersEl.textContent = stats.flowers;
+    if (fillersEl) fillersEl.textContent = stats.fillers;
+    if (greeneryEl) greeneryEl.textContent = stats.greenery;
+    if (statsEl) statsEl.style.display = 'block';
+}
+
+// Admin functions (KEEPING ALL YOUR EXISTING LOGIC)
+async function loadInventoryForDropdown() {
+    try {
+        const response = await fetch('api/get_inventory_for_customize.php');
+        const data = await response.json();
+        if (data.items) {
+            inventoryItems = data.items;
+            populateInventoryDropdown();
+        }
+    } catch (error) {
+        console.error('Failed to load inventory:', error);
+    }
+}
+
+function populateInventoryDropdown() {
+    const select = document.getElementById('inventory-select');
+    if (!select) return;
+    select.innerHTML = '<option value="">-- Choose an inventory item --</option>';
+    inventoryItems.forEach(item => {
+        const option = document.createElement('option');
+        option.value = JSON.stringify({ name: item.name, category: item.category });
+        option.textContent = `${item.name} (${item.category})`;
+        select.appendChild(option);
+    });
+}
+
+function updateAdminPanel() {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    isAdmin = user && (user.role === 'admin' || user.role === 'staff' || user.is_admin);
+    const adminPanel = document.getElementById('admin-flower-panel');
+    if (adminPanel) adminPanel.style.display = isAdmin ? 'block' : 'none';
+    if (isAdmin) renderAdminItemsList();
+}
+
+function renderAdminItemsList() {
+    const container = document.getElementById('admin-items-container');
+    if (!container) return;
+    container.innerHTML = '';
+    
+    if (customizeItems.length === 0) {
+        container.innerHTML = '<p style="color:#666;font-size:12px;">No items yet</p>';
+        return;
+    }
+    
+    const categorized = {};
+    customizeItems.forEach(item => {
+        const cat = categorizeItem(item);
+        if (!categorized[cat]) categorized[cat] = [];
+        categorized[cat].push(item);
+    });
+    
+    Object.entries(categorized).forEach(([cat, items]) => {
+        const catHeader = document.createElement('div');
+        catHeader.style.cssText = 'font-weight:600;color:#e91e8c;margin:12px 0 6px 0;padding-bottom:4px;border-bottom:1px solid #eee;font-size:13px;';
+        catHeader.textContent = `${CATEGORIES[cat]?.emoji || '🌸'} ${CATEGORIES[cat]?.label || cat} (${items.length})`;
+        container.appendChild(catHeader);
+        items.forEach(item => container.appendChild(createAdminItemRow(item)));
+    });
+}
+
+function createAdminItemRow(item) {
+    const itemDiv = document.createElement('div');
+    itemDiv.className = 'admin-item';
+    itemDiv.style.cssText = 'display:flex;justify-content:space-between;align-items:center;padding:10px;border:1px solid #e0e0e0;margin-bottom:6px;border-radius:8px;background:#fafafa;';
+    
+    const cat = categorizeItem(item);
+    const nameSpan = document.createElement('span');
+    nameSpan.style.fontSize = '14px';
+    nameSpan.innerHTML = `<strong>${item.name}</strong> <span style="color:${CATEGORIES[cat]?.color || '#666'};font-size:12px;">(${CATEGORIES[cat]?.label || cat})</span>`;
+    
+    const btnGroup = document.createElement('div');
+    btnGroup.style.cssText = 'display:flex;gap:6px;';
+    
+    const editBtn = document.createElement('button');
+    editBtn.innerHTML = '<i class="fas fa-edit"></i>';
+    editBtn.style.cssText = 'padding:6px 12px;font-size:12px;background:#2196F3;color:white;border:none;border-radius:6px;cursor:pointer;';
+    editBtn.onclick = () => editItem(item);
+    
+    const delBtn = document.createElement('button');
+    delBtn.innerHTML = '<i class="fas fa-trash"></i>';
+    delBtn.style.cssText = 'padding:6px 12px;font-size:12px;background:#f44336;color:white;border:none;border-radius:6px;cursor:pointer;';
+    delBtn.onclick = () => deleteItem(item.id);
+    
+    btnGroup.append(editBtn, delBtn);
+    itemDiv.append(nameSpan, btnGroup);
+    return itemDiv;
+}
+
+function editItem(item) {
+    editingItemId = item.id;
+    document.getElementById('edit-item-id').value = item.id;
+    document.getElementById('inventory-select-group').style.display = 'none';
+    document.getElementById('flower-name-group').style.display = 'block';
+    document.getElementById('flower-name-display').value = item.name;
+    document.getElementById('flower-name').value = item.name;
+    document.getElementById('flower-category').value = item.category;
+    document.getElementById('flower-emoji').value = item.emoji || '';
+    document.getElementById('display-order').value = item.display_order || 0;
+    document.getElementById('current-model-name').textContent = `Current: ${item.model_file}`;
+    document.getElementById('model-file').required = false;
+    document.getElementById('form-action-text').textContent = 'Update Model';
+    document.getElementById('admin-flower-form').scrollIntoView({ behavior: 'smooth' });
+}
+
+async function deleteItem(id) {
+    if (!confirm('Are you sure you want to delete this item?')) return;
+    try {
+        const formData = new FormData();
+        formData.append('id', id);
+        const response = await fetch('api/delete_customize_item.php', { method: 'POST', body: formData });
+        const data = await response.json();
+        if (data.success) {
+            showNotification('Item deleted successfully!', 'success');
+            await loadCustomizeItems();
+        } else {
+            showNotification('Error: ' + (data.message || 'Failed to delete item'), 'error');
+        }
+    } catch (error) {
+        console.error('Delete error:', error);
+        showNotification('Failed to delete item', 'error');
+    }
+}
+
+function resetAdminForm() {
+    editingItemId = null;
+    document.getElementById('admin-flower-form').reset();
+    document.getElementById('edit-item-id').value = '';
+    document.getElementById('current-model-name').textContent = '';
+    document.getElementById('model-file').required = false;
+    document.getElementById('inventory-select-group').style.display = 'block';
+    document.getElementById('flower-name-group').style.display = 'none';
+    document.getElementById('form-action-text').textContent = 'Add 3D Model';
+}
+
+// Form submission handler (YOUR ORIGINAL CODE)
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('admin-flower-form')?.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const formData = new FormData();
+        const itemId = document.getElementById('edit-item-id').value;
+        
+        if (itemId) {
+            formData.append('id', itemId);
+            formData.append('name', document.getElementById('flower-name').value);
+            formData.append('category', document.getElementById('flower-category').value);
+        } else {
+            const inventorySelect = document.getElementById('inventory-select');
+            if (!inventorySelect.value) {
+                showNotification('Please select an inventory item', 'warning');
+                return;
+            }
+            const selected = JSON.parse(inventorySelect.value);
+            formData.append('name', selected.name);
+            formData.append('category', selected.category);
+        }
+        
+        formData.append('emoji', document.getElementById('flower-emoji').value || '');
+        formData.append('display_order', document.getElementById('display-order').value);
+        formData.append('is_active', '1');
+        
+        const modelFile = document.getElementById('model-file').files[0];
+        if (modelFile) {
+            formData.append('model_file', modelFile);
+        } else if (!itemId) {
+            showNotification('Please upload a 3D model file (.glb)', 'warning');
+            return;
+        }
+        
+        try {
+            const response = await fetch('api/save_customize_item.php', { method: 'POST', body: formData });
+            const data = await response.json();
+            if (data.success) {
+                showNotification(itemId ? '3D model updated successfully!' : '3D model added successfully!', 'success');
+                resetAdminForm();
+                await loadCustomizeItems();
+            } else {
+                showNotification('Error: ' + (data.message || 'Failed to save item'), 'error');
+            }
+        } catch (error) {
+            console.error('Save error:', error);
+            showNotification('Failed to save item', 'error');
+        }
+    });
+
+    document.getElementById('cancel-edit-btn')?.addEventListener('click', resetAdminForm);
+    
+    // 3D Generation (YOUR ORIGINAL CODE)
+    document.getElementById('generate-3d')?.addEventListener('click', async () => {
+        const fileInput = document.createElement('input');
+        fileInput.type = 'file';
+        fileInput.accept = 'image/*';
+        fileInput.click();
+
+        fileInput.onchange = async () => {
+            const file = fileInput.files[0];
+            if (!file) return;
+
+            document.getElementById('3d-loading').style.display = 'flex';
+            document.getElementById('3d-preview-section').style.display = 'block';
+
+            const formData = new FormData();
+            formData.append('image', file);
+
+            try {
+                const response = await fetch('api/generate_3d_model.php', { method: 'POST', body: formData });
+                const rawText = await response.text();
+                console.log('🔍 Raw PHP response:', rawText);
+
+                let data;
+                try {
+                    data = JSON.parse(rawText);
+                } catch (parseErr) {
+                    throw new Error('PHP returned invalid JSON: ' + rawText.substring(0, 200));
+                }
+
+                if (data.success && data.model_url) {
+                    current3dModelUrl = data.model_url;
+
+                    if (window._loadGLBIntoAdminPreview) {
+                        window._loadGLBIntoAdminPreview(data.model_url, `generated_${Date.now()}.glb`);
+                    }
+
+                    document.getElementById('3d-loading').style.display = 'none';
+                    showNotification('✅ 3D model generated! Download it and upload as the model file.', 'success');
+
+                    document.getElementById('download-3d').onclick = () => {
+                        const a = document.createElement('a');
+                        a.href = data.model_url;
+                        a.download = `flower_3d_${Date.now()}.glb`;
+                        a.click();
+                    };
+                } else {
+                    throw new Error(data.message || JSON.stringify(data));
+                }
+            } catch (error) {
+                document.getElementById('3d-loading').style.display = 'none';
+                document.getElementById('3d-preview-section').style.display = 'none';
+                showNotification('❌ ' + error.message, 'error');
+                console.error('3D generation error:', error);
+            }
+        };
+    });
+
+    document.getElementById('reset-3d')?.addEventListener('click', () => {
+        document.getElementById('3d-preview-section').style.display = 'none';
+        current3dModelUrl = null;
+    });
+});
+
+// MAIN INITIALIZATION
+document.addEventListener('DOMContentLoaded', async () => {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    isAdmin = user && (user.role === 'admin' || user.role === 'staff' || user.is_admin);
+    
+    await loadCustomizeItems();
+    await loadInventoryForDropdown();
+    updateAdminPanel();
+    
+    // Update admin panel when auth changes
+    const originalUpdateAuthUI = window.updateAuthUI;
+    if (typeof originalUpdateAuthUI === 'function') {
+        window.updateAuthUI = function() {
+            originalUpdateAuthUI();
+            updateAdminPanel();
+        };
+    }
+});
+</script>
+</body>
+</html>
+

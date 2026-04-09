@@ -1,0 +1,440 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #fff5f8, #fdecef);
+    min-height: 100vh;
+}
+
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 40px 16px;
+}
+
+.auth-card {
+    background: white;
+    padding: 40px 35px;
+    width: 100%;
+    max-width: 420px;
+    border-radius: 25px;
+    box-shadow: 0 20px 40px rgba(255, 182, 193, 0.25);
+    text-align: center;
+}
+
+.auth-card h2 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.2rem;
+    color: #d46a8c;
+    margin-bottom: 10px;
+}
+
+.auth-card p {
+    font-size: 0.95rem;
+    color: #777;
+    margin-bottom: 25px;
+}
+
+.auth-card form input {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 15px;
+    border-radius: 20px;
+    border: 1px solid #f3c6d3;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.auth-card form input:focus {
+    border-color: #e58aa5;
+}
+
+/* ── Password wrapper ───────────────────────────────────────── */
+.password-wrapper {
+    position: relative;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.password-wrapper input {
+    margin-bottom: 0;
+    padding-right: 45px;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    user-select: none;
+    font-size: 1.2rem;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+}
+
+.toggle-password:hover {
+    opacity: 1;
+}
+
+/* ── Password requirements ──────────────────────────────────── */
+.password-requirements {
+    text-align: left;
+    margin-bottom: 15px;
+    padding: 10px 15px;
+    background: #fff5f8;
+    border-radius: 10px;
+    border: 1px solid #f3c6d3;
+}
+
+.password-requirements small {
+    color: #666;
+    font-size: 0.8rem;
+}
+
+.password-requirements ul {
+    margin: 8px 0 0 20px;
+    padding: 0;
+}
+
+.password-requirements li {
+    margin: 4px 0;
+    color: #999;
+    transition: color 0.2s;
+}
+
+.password-requirements li.valid {
+    color: #4caf50;
+    font-weight: 500;
+}
+
+.password-requirements li.invalid {
+    color: #f44336;
+}
+
+/* ── Terms checkbox ─────────────────────────────────────────── */
+.terms-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    margin: 4px 0 18px;
+    font-size: 13px;
+    color: #666;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.terms-wrapper input[type="checkbox"] {
+    width: 15px;
+    height: 15px;
+    min-width: 15px;
+    accent-color: #d46a8c;
+    cursor: pointer;
+    flex-shrink: 0;
+    margin: 0;
+}
+
+.terms-wrapper label {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    margin: 0;
+    line-height: 1;
+}
+
+.terms-wrapper a {
+    color: #d46a8c;
+    text-decoration: underline;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.terms-wrapper a:hover {
+    color: #b5517a;
+}
+
+/* ── Submit button ──────────────────────────────────────────── */
+.auth-card button[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    border-radius: 25px;
+    border: none;
+    background: linear-gradient(135deg, #ff9eb5, #ffb6c1);
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.auth-card button[type="submit"]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(255, 158, 181, 0.4);
+}
+
+.switch {
+    margin-top: 20px;
+    font-size: 0.85rem;
+}
+
+.switch a {
+    color: #d46a8c;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.switch a:hover {
+    text-decoration: underline;
+}
+
+.forgot-link {
+    text-align: center;
+    margin-top: 8px;
+    font-size: 0.85rem;
+}
+
+.forgot-link a {
+    color: #d46a8c;
+    text-decoration: none;
+}
+
+.forgot-link a:hover {
+    text-decoration: underline;
+}
+
+/* ── Modal ──────────────────────────────────────────────────── */
+#termsModal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 99999;
+    justify-content: center;
+    align-items: center;
+}
+
+#termsModal.show {
+    display: flex;
+}
+
+#termsBox {
+    background: #fff;
+    border-radius: 20px;
+    padding: 32px;
+    width: 90%;
+    max-width: 540px;
+    max-height: 80vh;
+    display: flex !important;
+    flex-direction: column;
+    box-shadow: 0 30px 80px rgba(212, 106, 140, 0.3);
+    animation: popIn 0.25s ease;
+}
+
+@keyframes popIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+#termsBox h3 {
+    margin: 0 0 16px;
+    color: #d46a8c;
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.8rem;
+    text-align: center;
+}
+
+#termsBody {
+    overflow-y: auto;
+    flex: 1;
+    padding-right: 8px;
+    font-size: 14px;
+    line-height: 1.75;
+    scrollbar-width: thin;
+    scrollbar-color: #f3c6d3 transparent;
+}
+
+#termsBody::-webkit-scrollbar {
+    width: 6px;
+}
+
+#termsBody::-webkit-scrollbar-thumb {
+    background: #f3c6d3;
+    border-radius: 3px;
+}
+
+#termsBody h4 {
+    color: #d46a8c;
+    margin: 18px 0 6px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+#termsBody p {
+    margin: 0 0 10px;
+    color: #666;
+}
+
+#termsBox button {
+    margin-top: 20px;
+    padding: 11px 32px;
+    background: linear-gradient(135deg, #ff9eb5, #ffb6c1);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    align-self: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#termsBox button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(255, 158, 181, 0.4);
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   MOBILE RESPONSIVE STYLES
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Tablet (≤ 600px) ───────────────────────────────────────── */
+@media (max-width: 600px) {
+    .auth-container {
+        padding: 24px 12px;
+        align-items: flex-start;
+        padding-top: 32px;
+    }
+
+    .auth-card {
+        padding: 30px 22px;
+        border-radius: 20px;
+    }
+
+    .auth-card h2 {
+        font-size: 1.9rem;
+    }
+
+    .auth-card p {
+        font-size: 0.88rem;
+        margin-bottom: 20px;
+    }
+
+    .auth-card form input {
+        font-size: 0.88rem;
+        padding: 11px 14px;
+    }
+
+    .password-requirements small {
+        font-size: 0.75rem;
+    }
+
+    .terms-wrapper {
+        white-space: normal;
+        flex-wrap: wrap;
+        font-size: 12px;
+        gap: 6px;
+    }
+
+    .terms-wrapper label {
+        flex-wrap: wrap;
+        white-space: normal;
+        line-height: 1.4;
+    }
+
+    .terms-wrapper a {
+        white-space: normal;
+    }
+
+    .auth-card button[type="submit"] {
+        font-size: 0.95rem;
+        padding: 13px;
+        /* Prevent double-tap zoom delay on mobile */
+        touch-action: manipulation;
+    }
+
+    .switch {
+        font-size: 0.82rem;
+    }
+
+    /* Modal on small screens */
+    #termsBox {
+        padding: 24px 18px;
+        max-height: 88vh;
+        border-radius: 16px;
+        width: 94%;
+    }
+
+    #termsBox h3 {
+        font-size: 1.5rem;
+    }
+
+    #termsBody {
+        font-size: 13px;
+    }
+
+    #termsBox button {
+        padding: 10px 28px;
+        font-size: 13px;
+        touch-action: manipulation;
+    }
+}
+
+/* ── Small phones (≤ 400px) ─────────────────────────────────── */
+@media (max-width: 400px) {
+    .auth-container {
+        padding: 16px 10px;
+        padding-top: 24px;
+    }
+
+    .auth-card {
+        padding: 24px 16px;
+        border-radius: 18px;
+    }
+
+    .auth-card h2 {
+        font-size: 1.7rem;
+    }
+
+    .auth-card form input {
+        padding: 10px 13px;
+        margin-bottom: 12px;
+    }
+
+    .password-wrapper {
+        margin-bottom: 12px;
+    }
+
+    .password-requirements {
+        padding: 8px 12px;
+        margin-bottom: 12px;
+    }
+
+    .terms-wrapper {
+        margin-bottom: 14px;
+    }
+
+    .toggle-password {
+        font-size: 1.05rem;
+        right: 13px;
+    }
+}
+
+/* ── Prevent iOS input zoom (font-size < 16px triggers zoom) ── */
+@media (max-width: 600px) {
+    .auth-card form input,
+    .password-wrapper input {
+        font-size: 16px;
+    }
+}

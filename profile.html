@@ -1,0 +1,1402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile | Flora Fit</title>
+    <link rel="icon" type="image/png" href="assets/img/Flora.png">
+    <link rel="stylesheet" href="assets/css/website.css">
+    <link rel="stylesheet" href="assets/css/notifications.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        .profile-container {
+            max-width: 600px;
+            margin: 140px auto 60px;
+            padding: 40px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-container h2 {
+            text-align: center;
+            color: #5d4037;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #5d4037;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ffb6c1;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: 'Montserrat', sans-serif;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #ff8fa3;
+        }
+
+        .form-group input:disabled {
+            background-color: #f5f5f5;
+            cursor: not-allowed;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-save {
+            background-color: #98fb98;
+            color: white;
+        }
+
+        .btn-save:hover {
+            background-color: #7ee27e;
+            transform: translateY(-3px);
+        }
+
+        .btn-edit {
+            background-color: #ffb6c1;
+            color: white;
+        }
+
+        .btn-edit:hover {
+            background-color: #ff8fa3;
+            transform: translateY(-3px);
+        }
+
+        .btn-back {
+            background-color: #dda0dd;
+            color: white;
+        }
+
+        .btn-back:hover {
+            background-color: #da70d6;
+            transform: translateY(-3px);
+        }
+
+        .btn-cancel {
+            background-color: #999;
+            color: white;
+        }
+
+        .btn-cancel:hover {
+            background-color: #777;
+        }
+
+        .message {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .message.success {
+            background-color: #98fb98;
+            color: white;
+        }
+
+        .message.error {
+            background-color: #ff6b6b;
+            color: white;
+        }
+
+        .password-section {
+            border-top: 2px solid #ffb6c1;
+            padding-top: 20px;
+            margin-top: 20px;
+        }
+
+        .password-section h3 {
+            color: #5d4037;
+            margin-bottom: 15px;
+        }
+
+        .password-wrapper-profile {
+            position: relative;
+            width: 100%;
+        }
+
+        .password-wrapper-profile input {
+            padding-right: 45px;
+        }
+
+        .toggle-password-profile {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            user-select: none;
+            font-size: 1.2rem;
+            opacity: 0.6;
+            transition: opacity 0.2s;
+        }
+
+        .toggle-password-profile:hover {
+            opacity: 1;
+        }
+
+        .password-requirements-profile {
+            margin-top: 10px;
+            padding: 10px 15px;
+            background: #fff5f8;
+            border-radius: 10px;
+            border: 1px solid #f3c6d3;
+            text-align: left;
+        }
+
+        .password-requirements-profile small {
+            color: #666;
+            font-size: 0.8rem;
+        }
+
+        .password-requirements-profile ul {
+            margin: 8px 0 0 20px;
+            padding: 0;
+        }
+
+        .password-requirements-profile li {
+            margin: 4px 0;
+            color: #999;
+            transition: color 0.2s;
+        }
+
+        .password-requirements-profile li.valid {
+            color: #4caf50;
+            font-weight: 500;
+        }
+
+        .password-requirements-profile li.invalid {
+            color: #f44336;
+        }
+
+        .profile-orders-section {
+            margin-top: 30px;
+            border-top: 2px solid #ffb6c1;
+            padding-top: 20px;
+        }
+
+        .profile-orders-section h3 {
+            color: #5d4037;
+            margin-bottom: 8px;
+        }
+
+        .profile-orders-hint {
+            color: #666;
+            font-size: 0.95rem;
+            margin-bottom: 14px;
+        }
+
+        .profile-orders-list {
+            display: grid;
+            gap: 14px;
+        }
+
+        .profile-order-card {
+            border: 1px solid #f3c6d3;
+            border-radius: 12px;
+            padding: 14px;
+            background: #fff8fb;
+        }
+
+        .profile-order-top {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+            color: #5d4037;
+            font-weight: 600;
+        }
+
+        .profile-order-items {
+            margin: 0 0 12px;
+            padding-left: 18px;
+            color: #555;
+        }
+
+        .payment-box {
+            border: 1px solid #d6e8ff;
+            background: #f4f9ff;
+            border-radius: 10px;
+            padding: 12px;
+        }
+
+        .payment-box h4 {
+            margin: 0 0 8px;
+            color: #1565c0;
+        }
+
+        .payment-meta {
+            font-size: 0.9rem;
+            color: #555;
+            margin-bottom: 8px;
+        }
+
+        .payment-qr {
+            width: 100%;
+            max-width: 240px;
+            border-radius: 10px;
+            border: 1px solid #d6e8ff;
+            margin-bottom: 10px;
+            background: white;
+        }
+
+        .payment-qr-placeholder {
+            max-width: 240px;
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px dashed #d6e8ff;
+            background: #ffffff;
+            color: #5f6b7a;
+            font-size: 0.9rem;
+            line-height: 1.45;
+            margin-bottom: 10px;
+        }
+
+        .payment-status {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .payment-status.unpaid {
+            background: #fff3e0;
+            color: #ef6c00;
+        }
+
+        .payment-status.pending {
+            background: #e3f2fd;
+            color: #1565c0;
+        }
+
+        .payment-status.paid {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .btn-pay-confirm {
+            border: none;
+            border-radius: 22px;
+            padding: 10px 14px;
+            background: #1a73e8;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-pay-confirm:hover {
+            transform: translateY(-1px);
+            background: #0d5fcc;
+        }
+
+        .btn-pay-confirm:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .profile-order-actions {
+            margin-top: 12px;
+            display: grid;
+            gap: 8px;
+        }
+
+        .btn-feedback-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 14px;
+            border-radius: 22px;
+            background: #ff8fa3;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .btn-feedback-link:hover {
+            background: #ff6f8e;
+            transform: translateY(-1px);
+        }
+
+        .btn-feedback-link.secondary {
+            background: #7c4dff;
+        }
+
+        .btn-feedback-link.secondary:hover {
+            background: #673de6;
+        }
+
+        .feedback-note {
+            font-size: 0.9rem;
+            color: #6d5a54;
+        }
+
+        .profile-orders-empty {
+            border: 1px dashed #f3c6d3;
+            border-radius: 10px;
+            padding: 16px;
+            text-align: center;
+            color: #777;
+            background: #fff;
+        }
+
+        .mobile-nav ul li.dashboard-sidebar-link a {
+        margin-top: 12px;
+        background: #1a73e8 !important;
+        color: #fff !important;
+        text-align: center;
+        }
+        .mobile-nav ul li.dashboard-sidebar-link a:hover {
+            background: #0d5fcc !important;
+            color: #fff !important;
+            padding-left: 16px !important;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <button id="hamburger-btn" class="hamburger-btn" aria-label="Open menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <a href="index.html" class="logo">
+                <span style="font-size: 2rem;">🌸</span>
+                <h1>FLORAFIT</h1>
+            </a>
+
+            <div id="mobile-menu" class="mobile-menu" aria-hidden="true">
+                <button id="mobile-menu-close" class="mobile-menu-close" aria-label="Close menu">&times;</button>
+                <nav class="mobile-nav">
+                    <ul>
+                        <li><a href="index.html#home">Home</a></li>
+                        <li><a href="index.html#about">About</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="shop.html">Shop</a></li>
+                        <li id="start-designing-link-mobile"><a href="customize.html">Start Designing</a></li>
+                        <li id="mobile-dashboard-link" class="dashboard-sidebar-link" style="display:none;"><a href="admin/dashboard.php">Dashboard</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div id="mobile-menu-overlay" class="mobile-menu-overlay"></div>
+
+            <div id="auth-toggle">
+                <div id="auth-buttons">
+                    <a href="login.html" class="nav-cta">Login</a>
+                    <a href="signup.html" class="nav-cta">Sign Up</a>
+                </div>
+                <div id="profile-section" style="display: none;">
+                    <div class="profile-menu">
+                        <img id="cornerProfilePic" src="uploads/default-avatar.svg" alt="profile">
+                        <i class="fas fa-user-circle"></i>
+                        <span id="user-name"></span>
+                        <button id="logout-btn" class="nav-cta">Logout</button>
+                    </div>
+                </div>
+                <button type="button" id="cart-toggle-btn" class="cart-toggle-btn" aria-label="Open cart">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span id="cart-badge" class="cart-badge">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="profile-container">
+        <h2>My Profile</h2>
+        <div id="message-container"></div>
+
+        <form id="profileForm">
+            <div class="form-group" style="text-align:center;">
+                <div style="display:inline-block; text-align:center;">
+                    <img id="profilePic" src="uploads/default-avatar.svg" alt="Profile" style="width:120px;height:120px;border-radius:60px;border:3px solid #ffb6c1;object-fit:cover;display:block;margin:0 auto 10px;">
+                    <input type="file" id="profilePicInput" accept="image/*" style="display:block;margin:0 auto;" />
+                    <small style="display:block;margin-top:6px;color:#777;">Click to choose a profile picture</small>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="firstName">First Name</label>
+                <input type="text" id="firstName" name="firstName" disabled required>
+            </div>
+
+            <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <input type="text" id="lastName" name="lastName" disabled required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" disabled required>
+            </div>
+
+            <div class="form-group">
+                <label for="contactNumber">Contact Number (Philippines)</label>
+                <input type="tel" id="contactNumber" name="contactNumber" disabled placeholder="+63 912-345-6789">
+            </div>
+
+            <div class="form-group">
+                <label for="address">Address</label>
+                <input type="text" id="address" name="address" disabled placeholder="123 Main St, City, State 12345">
+            </div>
+
+            <div class="password-section" id="passwordSection" style="display: none;">
+                <h3>Change Password</h3>
+                <div class="form-group">
+                    <label for="newPassword">New Password (leave blank to keep current)</label>
+                    <div class="password-wrapper-profile">
+                        <input type="password" id="newPassword" name="newPassword" placeholder="Enter new password">
+                        <span class="toggle-password-profile" onclick="togglePasswordProfile('newPassword', this)"><i class="fas fa-eye"></i></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <div class="password-wrapper-profile">
+                        <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm new password">
+                        <span class="toggle-password-profile" onclick="togglePasswordProfile('confirmPassword', this)"><i class="fas fa-eye"></i></span>
+                    </div>
+                </div>
+                <div class="password-requirements-profile">
+                    <small>Password must have:
+                        <ul>
+                            <li id="req-length-profile">At least 8 characters</li>
+                            <li id="req-uppercase-profile">1 uppercase letter</li>
+                            <li id="req-number-profile">1 number</li>
+                        </ul>
+                    </small>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button type="button" id="editBtn" class="btn btn-edit">Edit Profile</button>
+                <button type="button" id="cancelBtn" class="btn btn-cancel" style="display: none;">Cancel</button>
+                <button type="submit" id="saveBtn" class="btn btn-save" style="display: none;">Save Changes</button>
+                <button type="button" id="backBtn" class="btn btn-back">Back to Home</button>
+            </div>
+        </form>
+
+        <section class="profile-orders-section" id="gcash-orders-section" aria-labelledby="confirmed-orders-title">
+            <h3 id="confirmed-orders-title">Confirmed Orders (GCash)</h3>
+            <p class="profile-orders-hint">Once your order is confirmed by admin, it appears here. Pay using GCash, then tap confirm payment. When the bouquet is officially marked delivered, you can also leave feedback.</p>
+            <div id="profile-orders-list" class="profile-orders-list">
+                <div class="profile-orders-empty">Loading confirmed orders...</div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div style="text-align: center;">
+                <h3>FLORA FIT</h3>
+                <p>Bringing nature's beauty to your doorstep.</p>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2026 Flora Fit. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/notifications.js"></script>
+    <script>
+        // Password visibility toggle function
+        function togglePasswordProfile(inputId, icon) {
+            const input = document.getElementById(inputId);
+            const iconElement = icon.querySelector('i');
+            if (input.type === "password") {
+                input.type = "text";
+                iconElement.classList.remove('fa-eye');
+                iconElement.classList.add('fa-eye-slash');
+            } else {
+                input.type = "password";
+                iconElement.classList.remove('fa-eye-slash');
+                iconElement.classList.add('fa-eye');
+            }
+        }
+
+        // Validate password meets requirements
+        function validatePasswordRequirements(password) {
+            if (password.length < 8) {
+                return "Password must be at least 8 characters long";
+            }
+            if (!/[A-Z]/.test(password)) {
+                return "Password must contain at least 1 uppercase letter";
+            }
+            if (!/[0-9]/.test(password)) {
+                return "Password must contain at least 1 number";
+            }
+            return null;
+        }
+
+        // Auth toggle functionality
+        function getStorageIdentity() {
+            try {
+                const user = JSON.parse(localStorage.getItem('user') || '{}');
+                if (user && user.id) return `user_${user.id}`;
+                if (user && user.email) return `email_${String(user.email).toLowerCase()}`;
+            } catch (error) {
+            }
+            return 'guest';
+        }
+
+        function getCartStorageKey() {
+            return `cart_${getStorageIdentity()}`;
+        }
+
+        function getCart() {
+            try {
+                const key = getCartStorageKey();
+                const scoped = localStorage.getItem(key);
+
+                if (scoped === null) {
+                    const legacy = localStorage.getItem('cart');
+                    if (legacy) {
+                        localStorage.setItem(key, legacy);
+                        localStorage.removeItem('cart');
+                    }
+                }
+
+                const cart = JSON.parse(localStorage.getItem(key));
+                return Array.isArray(cart) ? cart : [];
+            } catch (error) {
+                return [];
+            }
+        }
+
+        function saveCart(cart) {
+            localStorage.setItem(getCartStorageKey(), JSON.stringify(Array.isArray(cart) ? cart : []));
+        }
+
+        function updateCartBadge() {
+            const badge = document.getElementById('cart-badge');
+            if (!badge) return;
+            const total = getCart().reduce((sum, item) => sum + Math.max(1, Number(item.quantity || 1)), 0);
+            badge.textContent = total;
+        }
+
+        const cartBtn = document.getElementById('cart-toggle-btn');
+        if (cartBtn) {
+            cartBtn.addEventListener('click', () => {
+                window.location.href = 'checkout.html';
+            });
+        }
+
+        function updateAuthUI() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            const authButtons = document.getElementById('auth-buttons');
+            const profileSection = document.getElementById('profile-section');
+            const userName = document.getElementById('user-name');
+            const cornerImg = document.getElementById('cornerProfilePic');
+            const cartBtn = document.getElementById('cart-toggle-btn');
+            
+            if (isLoggedIn) {
+                const user = JSON.parse(localStorage.getItem('user'));
+                authButtons.style.display = 'none';
+                profileSection.style.display = 'block';
+                if (user) {
+                    userName.textContent = user.name || [user.firstName, user.lastName].filter(Boolean).join(' ');
+                }
+                if (user && user.profile_picture) {
+                    cornerImg.src = user.profile_picture;
+                    cornerImg.style.display = 'inline-block';
+                    const icon = profileSection.querySelector('.fa-user-circle');
+                    if (icon) icon.style.display = 'none';
+                } else {
+                    cornerImg.style.display = 'none';
+                    const icon = profileSection.querySelector('.fa-user-circle');
+                    if (icon) icon.style.display = 'inline-block';
+                }
+
+                if (user && (user.role === 'admin' || user.role === 'staff' || user.is_admin)) {
+                    const staffLink = document.getElementById('mobile-dashboard-link');
+                    if (staffLink) staffLink.style.display = 'list-item';
+                    if (cartBtn) cartBtn.style.display = 'none';
+                    const designLink = document.getElementById('start-designing-link-mobile');
+                    if (designLink) {
+                        designLink.innerHTML = '<a href="customize.html">Customize</a>';
+                    }
+                } else {
+                    if (cartBtn) cartBtn.style.display = 'inline-flex';
+                    const staffLink = document.getElementById('mobile-dashboard-link');
+                    if (staffLink) staffLink.style.display = 'none';
+                }
+            } else {
+                authButtons.style.display = 'flex';
+                profileSection.style.display = 'none';
+                if (cartBtn) cartBtn.style.display = 'inline-flex';
+                const staffLink = document.getElementById('mobile-dashboard-link');
+                if (staffLink) staffLink.style.display = 'none';
+            }
+        }
+        
+        // Update UI on load
+        updateAuthUI();
+        updateCartBadge();
+
+        const hamburgerBtn = document.getElementById('hamburger-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+        const mobileMenuClose = document.getElementById('mobile-menu-close');
+
+        function openMobileMenu() {
+            mobileMenu?.classList.add('open');
+            mobileMenuOverlay?.classList.add('open');
+            hamburgerBtn?.setAttribute('aria-expanded', 'true');
+            mobileMenu?.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMobileMenu() {
+            mobileMenu?.classList.remove('open');
+            mobileMenuOverlay?.classList.remove('open');
+            hamburgerBtn?.setAttribute('aria-expanded', 'false');
+            mobileMenu?.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+        }
+
+        hamburgerBtn?.addEventListener('click', openMobileMenu);
+        mobileMenuClose?.addEventListener('click', closeMobileMenu);
+        mobileMenuOverlay?.addEventListener('click', closeMobileMenu);
+
+        document.querySelectorAll('.mobile-nav a').forEach(link => {
+            link.addEventListener('click', closeMobileMenu);
+        });
+        
+        const profileSection = document.getElementById('profile-section');
+        if (profileSection) {
+            profileSection.addEventListener('click', () => {
+                window.location.href = 'profile.html';
+            });
+            profileSection.style.cursor = 'pointer';
+        }
+        
+        // Handle logout
+        const logoutBtn = document.getElementById('logout-btn');
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                localStorage.removeItem('isLoggedIn');
+                localStorage.removeItem('user');
+                updateAuthUI();
+                window.location.href = 'index.html';
+            });
+        }
+
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'user' || e.key === 'isLoggedIn') {
+                try { updateAuthUI(); } catch (err) { console.error(err); }
+            }
+            if (e.key === getCartStorageKey() || e.key === 'cart') {
+                updateCartBadge();
+            }
+        });
+
+        // Profile page functionality
+        const isLoggedIn = localStorage.getItem('isLoggedIn');
+        if (!isLoggedIn) {
+            window.location.href = 'login.html';
+        }
+
+        const user = JSON.parse(localStorage.getItem('user'));
+        
+        // If user doesn't have an id, force re-login (old localStorage format)
+        if (!user || !user.id) {
+            showNotification('Session expired. Please log in again.', 'warning');
+            localStorage.removeItem('user');
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('isAdmin');
+            window.location.href = 'login.html';
+            // Stop script execution
+            throw new Error('Session expired');
+        }
+        
+        let isEditing = false;
+        let originalData = {};
+
+        const firstNameInput = document.getElementById('firstName');
+        const lastNameInput = document.getElementById('lastName');
+        const emailInput = document.getElementById('email');
+        const contactNumberInput = document.getElementById('contactNumber');
+        const addressInput = document.getElementById('address');
+        const newPasswordInput = document.getElementById('newPassword');
+        const confirmPasswordInput = document.getElementById('confirmPassword');
+        const editBtn = document.getElementById('editBtn');
+        const cancelBtn = document.getElementById('cancelBtn');
+        const saveBtn = document.getElementById('saveBtn');
+        const backBtn = document.getElementById('backBtn');
+        const profileForm = document.getElementById('profileForm');
+        const messageContainer = document.getElementById('message-container');
+        const passwordSection = document.getElementById('passwordSection');
+        const profileOrdersList = document.getElementById('profile-orders-list');
+
+        let latestProfileOrders = [];
+        let profilePicturePath = '';
+        let gcashQrState = {
+            available: false,
+            url: '',
+            message: 'Loading GCash QR...'
+        };
+
+        // Pre-fill from localStorage immediately (useful right after signup)
+        if (user) {
+            if (user.firstName && firstNameInput) firstNameInput.value = user.firstName;
+            if (user.lastName && lastNameInput) lastNameInput.value = user.lastName;
+            if (user.email && emailInput) emailInput.value = user.email;
+        }
+
+        // Normalize Philippine phone number to +63XXXXXXXXX
+        function normalizePHNumber(raw) {
+            if (!raw) return '';
+            // remove non-digit and non-plus
+            let s = raw.trim();
+            s = s.replace(/[^\d+]/g, '');
+            // if starts with +63 keep digits
+            if (s.startsWith('+')) {
+                // remove + and ensure country code
+                if (s.startsWith('+63')) {
+                    return '+63' + s.slice(3).replace(/\D/g, '');
+                }
+                return s; // unknown country prefix - leave as-is
+            }
+            // if starts with 0 and length 11 (09XXXXXXXXX)
+            if (s.length === 11 && s.startsWith('0')) {
+                return '+63' + s.slice(1);
+            }
+            // if starts with 9 and length 10
+            if (s.length === 10 && s.startsWith('9')) {
+                return '+63' + s;
+            }
+            // fallback: return cleaned digits
+            return s;
+        }
+
+        // Load user profile (will overwrite with DB values if available)
+        async function loadProfile() {
+            try {
+                const response = await fetch('api/profile.php?action=get', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ user_id: user.id })
+                });
+
+                const text = await response.text();
+                let data;
+                try {
+                    data = JSON.parse(text);
+                } catch (err) {
+                    console.error('Invalid JSON from profile.php?action=get:', text);
+                    showNotification('Server returned invalid response (check console)', 'error');
+                    return;
+                }
+
+                if (data.success) {
+                    firstNameInput.value = data.user.first_name || '';
+                    lastNameInput.value = data.user.last_name || '';
+                    contactNumberInput.value = data.user.contact_number ? normalizePHNumber(data.user.contact_number) : '';
+                    addressInput.value = data.user.address || '';
+                    if (data.user.profile_picture) {
+                        profilePicturePath = data.user.profile_picture;
+                        const img = document.getElementById('profilePic');
+                        img.src = profilePicturePath;
+                    }
+                    // store original data to detect changes
+                    originalData = {
+                        full_name: data.user.full_name || '',
+                        email: data.user.email || '',
+                        contact_number: data.user.contact_number ? normalizePHNumber(data.user.contact_number) : '',
+                        address: data.user.address || '',
+                        profile_picture: data.user.profile_picture || ''
+                    };
+                } else {
+                    showNotification(data.message, 'error');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showNotification('Failed to load profile', 'error');
+            }
+        }
+
+        function formatCurrency(amount) {
+            return `₱${Number(amount || 0).toFixed(2)}`;
+        }
+
+        function formatDateTime(value) {
+            const date = new Date(value);
+            if (Number.isNaN(date.getTime())) return '-';
+            return date.toLocaleString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        function paymentStatusUi(status) {
+            const normalized = String(status || 'Unpaid').toLowerCase();
+            if (normalized.includes('paid') || normalized.includes('confirmed')) {
+                return { label: 'Paid / Confirmed', className: 'paid' };
+            }
+            if (normalized.includes('pending')) {
+                return { label: 'Pending Confirmation', className: 'pending' };
+            }
+            return { label: 'Unpaid', className: 'unpaid' };
+        }
+
+        function escapeHtml(text) {
+            return String(text || '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/\"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        async function loadGcashQrState() {
+            try {
+                const response = await fetch('api/get_gcash_qr.php', { cache: 'no-store' });
+                const data = await response.json();
+
+                if (data && data.success) {
+                    gcashQrState = {
+                        available: Boolean(data.available && data.url),
+                        url: data.url || '',
+                        message: data.message || 'GCash QR is unavailable right now.'
+                    };
+                } else {
+                    gcashQrState = {
+                        available: false,
+                        url: '',
+                        message: 'GCash QR is unavailable right now.'
+                    };
+                }
+            } catch (error) {
+                console.error('Failed to load GCash QR:', error);
+                gcashQrState = {
+                    available: false,
+                    url: '',
+                    message: 'GCash QR is unavailable right now.'
+                };
+            }
+        }
+
+        function renderGcashQrBlock() {
+            if (gcashQrState.available && gcashQrState.url) {
+                return `<img src="${escapeHtml(gcashQrState.url)}" alt="GCash QR" class="payment-qr">`;
+            }
+
+            return `<div class="payment-qr-placeholder">${escapeHtml(gcashQrState.message || 'GCash QR not uploaded yet.')}</div>`;
+        }
+
+        function renderProfileOrders(orders) {
+            if (!profileOrdersList) return;
+
+            latestProfileOrders = Array.isArray(orders) ? orders : [];
+            if (!latestProfileOrders.length) {
+                profileOrdersList.innerHTML = '<div class="profile-orders-empty">No confirmed orders to pay yet.</div>';
+                return;
+            }
+
+            profileOrdersList.innerHTML = latestProfileOrders.map(order => {
+                const items = Array.isArray(order.items) ? order.items : [];
+                const paymentUi = paymentStatusUi(order.payment_status);
+                const canConfirmPayment = paymentUi.className === 'unpaid';
+                const isDelivered = String(order.status || '').toLowerCase() === 'delivered';
+                const hasFeedback = Number(order.has_feedback || 0) === 1;
+                const ratingValue = Math.max(1, Math.min(5, Number(order.feedback_rating || 0)));
+                const ratingStars = hasFeedback ? '★'.repeat(ratingValue) : '';
+                const feedbackNote = hasFeedback
+                    ? `Thanks for your feedback ${ratingStars}.`
+                    : 'Your bouquet is officially delivered — you can now share feedback.';
+                const voucherLine = order.voucher_code ? ` • Voucher: ${escapeHtml(order.voucher_code)}` : '';
+
+                return `
+                    <article class="profile-order-card">
+                        <div class="profile-order-top">
+                            <span>${escapeHtml(order.order_number || 'Order')}</span>
+                            <span>${formatCurrency(order.total)}</span>
+                        </div>
+                        <div class="payment-meta">Status: ${escapeHtml(order.status || 'Accepted')} • ${formatDateTime(order.created_at)}${voucherLine}</div>
+                        ${items.length ? `
+                            <ul class="profile-order-items">
+                                ${items.map(item => `<li>${escapeHtml(item.name || 'Item')} x${Number(item.quantity || 1)}</li>`).join('')}
+                            </ul>
+                        ` : ''}
+                        <div class="payment-box">
+                            <h4>Pay with GCash</h4>
+                            <div class="payment-status ${paymentUi.className}">${paymentUi.label}</div>
+                            <div class="payment-meta">Scan the business GCash QR below, then confirm your payment after sending it.</div>
+                            ${renderGcashQrBlock()}
+                            <div>
+                                <button type="button" class="btn-pay-confirm" data-order-id="${Number(order.id)}" ${canConfirmPayment ? '' : 'disabled'}>
+                                    ${canConfirmPayment ? 'I have paid via GCash' : 'Payment confirmation sent'}
+                                </button>
+                            </div>
+                            ${order.payment_confirmed_at ? `<div class="payment-meta">Submitted: ${formatDateTime(order.payment_confirmed_at)}</div>` : ''}
+                        </div>
+                        <div class="profile-order-actions">
+                            <a href="api/order_receipt.php?order_id=${Number(order.id)}" target="_blank" class="btn-feedback-link secondary">
+                                <i class="fas fa-file-invoice"></i>
+                                <span>View Receipt</span>
+                            </a>
+                            <button type="button" class="btn-feedback-link btn-reorder-order" data-reorder-id="${Number(order.id)}" style="border:none;">
+                                <i class="fas fa-rotate-left"></i>
+                                <span>Reorder This Order</span>
+                            </button>
+                            ${isDelivered ? `
+                                <a href="order_feedback.php?order_id=${Number(order.id)}" class="btn-feedback-link ${hasFeedback ? 'secondary' : ''}">
+                                    <i class="fas fa-comment-dots"></i>
+                                    <span>${hasFeedback ? 'Update Feedback' : 'Give Feedback'}</span>
+                                </a>
+                                <div class="feedback-note">${escapeHtml(feedbackNote)}</div>
+                            ` : '<div class="feedback-note">Feedback will be available once the bouquet is marked delivered.</div>'}
+                        </div>
+                    </article>
+                `;
+            }).join('');
+        }
+
+        async function loadProfileOrders() {
+            if (!profileOrdersList) return;
+
+            try {
+                const response = await fetch('api/get_profile_orders.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ user_id: user.id })
+                });
+                const data = await response.json();
+
+                if (data && data.success && Array.isArray(data.orders)) {
+                    renderProfileOrders(data.orders);
+                } else {
+                    profileOrdersList.innerHTML = '<div class="profile-orders-empty">Failed to load orders.</div>';
+                }
+            } catch (error) {
+                console.error('Failed to load profile orders:', error);
+                profileOrdersList.innerHTML = '<div class="profile-orders-empty">Failed to load orders.</div>';
+            }
+        }
+
+        async function confirmGcashPayment(orderId) {
+            try {
+                const response = await fetch('api/confirm_order_payment.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        order_id: orderId,
+                        user_id: user.id,
+                        payment_method: 'GCash'
+                    })
+                });
+                const data = await response.json();
+
+                if (data && data.success) {
+                    showNotification('Payment confirmation submitted.', 'success');
+                    await loadProfileOrders();
+                } else {
+                    showNotification(data.message || 'Failed to confirm payment.', 'error');
+                }
+            } catch (error) {
+                console.error('Failed to confirm payment:', error);
+                showNotification('Failed to confirm payment.', 'error');
+            }
+        }
+
+        function reorderPreviousOrder(orderId) {
+            const selectedOrder = latestProfileOrders.find(order => Number(order.id) === Number(orderId));
+            if (!selectedOrder || !Array.isArray(selectedOrder.items) || !selectedOrder.items.length) {
+                showNotification('This order has no items available to reorder yet.', 'warning');
+                return;
+            }
+
+            const currentCart = getCart();
+            const reorderedItems = selectedOrder.items.map((item, index) => ({
+                id: `reorder-${orderId}-${index}-${Date.now()}`,
+                name: item.name || 'Item',
+                description: item.description || '',
+                image: item.image || 'https://via.placeholder.com/100?text=FloraFit',
+                quantity: Math.max(1, Number(item.quantity || 1)),
+                basePrice: Number(item.unit_price || 0),
+                addOns: []
+            }));
+
+            saveCart(currentCart.concat(reorderedItems));
+            updateCartBadge();
+            showNotification('Order added back to cart. Redirecting to checkout...', 'success');
+            setTimeout(() => {
+                window.location.href = 'checkout.html';
+            }, 350);
+        }
+
+        const isAdminUser = user && (user.role === 'admin' || user.role === 'staff' || user.is_admin);
+        const gcashSection = document.getElementById('gcash-orders-section');
+        if (isAdminUser && gcashSection) {
+            gcashSection.style.display = 'none';
+        }
+
+        loadProfile();
+        if (!isAdminUser) {
+            loadGcashQrState().finally(() => {
+                loadProfileOrders();
+            });
+        }
+
+        // Edit mode toggle
+        editBtn.addEventListener('click', () => {
+            isEditing = true;
+            firstNameInput.disabled = false;
+            lastNameInput.disabled = false;
+            emailInput.disabled = false;
+            contactNumberInput.disabled = false;
+            addressInput.disabled = false;
+            newPasswordInput.disabled = false;
+            confirmPasswordInput.disabled = false;
+            
+            editBtn.style.display = 'none';
+            cancelBtn.style.display = 'block';
+            // hide save until there are changes
+            saveBtn.style.display = 'none';
+            passwordSection.style.display = 'block';
+            // attach change listeners to detect modifications
+            attachChangeListeners();
+            
+            // Setup real-time password validation
+            newPasswordInput.addEventListener('input', function() {
+                const password = this.value;
+                if (!password) return; // Don't validate if empty (password change is optional)
+                
+                const lengthReq = document.getElementById('req-length-profile');
+                if (password.length >= 8) {
+                    lengthReq.classList.add('valid');
+                    lengthReq.classList.remove('invalid');
+                } else {
+                    lengthReq.classList.add('invalid');
+                    lengthReq.classList.remove('valid');
+                }
+                
+                const uppercaseReq = document.getElementById('req-uppercase-profile');
+                if (/[A-Z]/.test(password)) {
+                    uppercaseReq.classList.add('valid');
+                    uppercaseReq.classList.remove('invalid');
+                } else {
+                    uppercaseReq.classList.add('invalid');
+                    uppercaseReq.classList.remove('valid');
+                }
+                
+                const numberReq = document.getElementById('req-number-profile');
+                if (/[0-9]/.test(password)) {
+                    numberReq.classList.add('valid');
+                    numberReq.classList.remove('invalid');
+                } else {
+                    numberReq.classList.add('invalid');
+                    numberReq.classList.remove('valid');
+                }
+            });
+        });
+
+        cancelBtn.addEventListener('click', () => {
+            isEditing = false;
+            firstNameInput.disabled = true;
+            lastNameInput.disabled = true;
+            emailInput.disabled = true;
+            contactNumberInput.disabled = true;
+            addressInput.disabled = true;
+            newPasswordInput.disabled = true;
+            confirmPasswordInput.disabled = true;
+            newPasswordInput.value = '';
+            confirmPasswordInput.value = '';
+            
+            editBtn.style.display = 'block';
+            cancelBtn.style.display = 'none';
+            saveBtn.style.display = 'none';
+            passwordSection.style.display = 'none';
+            
+            loadProfile();
+        });
+
+        function attachChangeListeners() {
+            [firstNameInput, lastNameInput, emailInput, contactNumberInput, addressInput, newPasswordInput, confirmPasswordInput].forEach(el => {
+                el.addEventListener('input', checkForChanges);
+            });
+        }
+
+        function checkForChanges() {
+            const changed = (
+                firstNameInput.value !== (originalData.first_name || '') ||
+                lastNameInput.value !== (originalData.last_name || '') ||
+                emailInput.value !== (originalData.email || '') ||
+                contactNumberInput.value !== (originalData.contact_number || '') ||
+                addressInput.value !== (originalData.address || '') ||
+                (profilePicturePath || '') !== (originalData.profile_picture || '') ||
+                (newPasswordInput.value && newPasswordInput.value.length > 0)
+            );
+            if (changed) {
+                saveBtn.style.display = 'block';
+            } else {
+                saveBtn.style.display = 'none';
+            }
+        }
+
+        // Phone validation
+        function validatePHNumber(value) {
+            if (!value) return true; // allow empty
+            // Accept +63XXXXXXXXXX, 09XXXXXXXXXX, or 9XXXXXXXXXX
+            const cleaned = value.replace(/[^\d+]/g, '');
+            if (cleaned.startsWith('+')) {
+                return /^\+63\d{10}$/.test(cleaned); // +63 followed by 10 digits
+            }
+            if (/^0\d{10}$/.test(cleaned)) return true; // 0XXXXXXXXXX (11 digits total)
+            if (/^9\d{9}$/.test(cleaned)) return true; // 9XXXXXXXXX (10 digits total)
+            return false;
+        }
+
+        const phoneError = document.createElement('div');
+        phoneError.style.color = '#b00020';
+        phoneError.style.fontSize = '0.9rem';
+        phoneError.style.display = 'none';
+        phoneError.textContent = 'Enter a valid Philippine mobile number (e.g. +63 9123456789 or 09123456789).';
+        contactNumberInput.parentNode.appendChild(phoneError);
+
+        contactNumberInput.addEventListener('input', () => {
+            const ok = validatePHNumber(contactNumberInput.value);
+            phoneError.style.display = ok ? 'none' : 'block';
+            checkForChanges();
+        });
+
+        backBtn.addEventListener('click', () => {
+            window.location.href = 'index.html';
+        });
+
+        profileForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            // Validate password requirements if password is being changed
+            if (newPasswordInput.value) {
+                const passwordError = validatePasswordRequirements(newPasswordInput.value);
+                if (passwordError) {
+                    showNotification(passwordError, 'error');
+                    return;
+                }
+            }
+
+            if (newPasswordInput.value !== confirmPasswordInput.value) {
+                showNotification('Passwords do not match', 'error');
+                return;
+            }
+
+                // Validate phone number before sending
+                if (!validatePHNumber(contactNumberInput.value)) {
+                    showNotification('Please enter a valid Philippine phone number.', 'error');
+                    saveBtn.disabled = false;
+                    return;
+                }
+
+            try {
+                // Disable save button to prevent duplicate submits
+                saveBtn.disabled = true;
+                // Normalize contact to consistent +63 form before sending
+                const normalizedContact = normalizePHNumber(contactNumberInput.value);
+                contactNumberInput.value = normalizedContact;
+
+                const payload = {
+                    user_id: user.id,
+                    first_name: firstNameInput.value,
+                    last_name: lastNameInput.value,
+                    email: emailInput.value,
+                    contact_number: normalizedContact,
+                    address: addressInput.value,
+                    password: newPasswordInput.value || null,
+                    profile_picture: profilePicturePath || null
+                };
+                console.log('Saving profile payload:', payload);
+
+                const response = await fetch('api/profile.php?action=update', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const text = await response.text();
+                let data;
+                try {
+                    data = JSON.parse(text);
+                } catch (err) {
+                    console.error('Invalid JSON from profile.php?action=update:', text);
+                    showNotification('Server returned invalid response (check console)', 'error');
+                    saveBtn.disabled = false;
+                    return;
+                }
+                console.log('profile.php response:', data);
+                if (data.success) {
+                    // Update localStorage with new user data
+                    if (user) {
+                        user.firstName = firstNameInput.value;
+                        user.lastName = lastNameInput.value;
+                        user.email = emailInput.value;
+                        if (profilePicturePath) user.profile_picture = profilePicturePath;
+                        localStorage.setItem('user', JSON.stringify(user));
+                    }
+
+                    showNotification('Profile updated successfully!', 'success');
+
+                    // Refresh profile from server to ensure persisted values
+                    await loadProfile();
+
+                    // Reset edit mode
+                    setTimeout(() => {
+                        isEditing = false;
+                        firstNameInput.disabled = true;
+                        lastNameInput.disabled = true;
+                        emailInput.disabled = true;
+                        contactNumberInput.disabled = true;
+                        addressInput.disabled = true;
+                        newPasswordInput.disabled = true;
+                        confirmPasswordInput.disabled = true;
+                        newPasswordInput.value = '';
+                        confirmPasswordInput.value = '';
+
+                        editBtn.style.display = 'block';
+                        cancelBtn.style.display = 'none';
+                        saveBtn.style.display = 'none';
+                        passwordSection.style.display = 'none';
+
+                        updateAuthUI();
+                        saveBtn.disabled = false;
+                    }, 800);
+                } else {
+                    saveBtn.disabled = false;
+                    showNotification(data.message || 'Failed to update profile', 'error');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                saveBtn.disabled = false;
+                showNotification('Failed to update profile: ' + (error.message || error), 'error');
+            }
+        });
+
+        // Profile picture upload
+        const profilePicInput = document.getElementById('profilePicInput');
+        const profilePicImg = document.getElementById('profilePic');
+        profilePicInput.addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            const formData = new FormData();
+            formData.append('profile_pic', file);
+
+            try {
+                const res = await fetch('api/upload_profile_pic.php', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await res.json();
+                if (data.success && data.path) {
+                    profilePicturePath = data.path;
+                    profilePicImg.src = profilePicturePath;
+                    // auto-save profile picture to DB immediately
+                    try {
+                        const saveResp = await fetch('api/profile.php?action=update', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ user_id: user.id, profile_picture: profilePicturePath })
+                        });
+                        const saveText = await saveResp.text();
+                        let saveData;
+                        try {
+                            saveData = JSON.parse(saveText);
+                        } catch (err) {
+                            console.error('Invalid JSON from profile.php (image save):', saveText);
+                            showNotification('Server returned invalid response (check console)', 'error');
+                            return;
+                        }
+                        if (saveData.success) {
+                            // update originalData and localStorage user
+                            originalData.profile_picture = profilePicturePath;
+                            if (user) {
+                                user.profile_picture = profilePicturePath;
+                                localStorage.setItem('user', JSON.stringify(user));
+                            }
+                            updateAuthUI();
+                            showNotification('Profile picture uploaded and saved', 'success');
+                        } else {
+                            showNotification(saveData.message || 'Could not persist profile picture', 'error');
+                        }
+                    } catch (err) {
+                        console.error(err);
+                        showNotification('Failed to save profile picture', 'error');
+                    }
+                    // check for changes to toggle Save button
+                    checkForChanges();
+                } else {
+                    showNotification(data.message || 'Upload failed', 'error');
+                }
+            } catch (err) {
+                console.error(err);
+                showNotification('Upload error', 'error');
+            }
+        });
+
+        profileOrdersList?.addEventListener('click', async (e) => {
+            const reorderButton = e.target.closest('.btn-reorder-order');
+            if (reorderButton) {
+                const reorderId = Number(reorderButton.dataset.reorderId);
+                if (reorderId) {
+                    reorderPreviousOrder(reorderId);
+                }
+                return;
+            }
+
+            const button = e.target.closest('.btn-pay-confirm');
+            if (!button) return;
+
+            const orderId = Number(button.dataset.orderId);
+            if (!orderId || button.disabled) return;
+
+            const shouldConfirm = window.confirm('Confirm that you have completed GCash payment for this order?');
+            if (!shouldConfirm) return;
+
+            button.disabled = true;
+            await confirmGcashPayment(orderId);
+        });
+    </script>
+</body>
+</html>
+
+

@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FLORAFIT | 3D Flower Customizer</title>
+    <link rel="icon" type="image/png" href="assets/img/Flora.png">
+    <link rel="stylesheet" href="assets/css/website.css">
+    <link rel="stylesheet" href="assets/css/notifications.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <button id="hamburger-btn" class="hamburger-btn" aria-label="Open menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <a href="index.html" class="logo" ...>
+                <span style="font-size: 2rem;">🌸</span>
+                <h1>FLORAFIT</h1>
+            </a>
+
+            <!-- Mobile Menu Overlay -->
+            <div id="mobile-menu" class="mobile-menu" aria-hidden="true">
+                <button id="mobile-menu-close" class="mobile-menu-close" aria-label="Close menu">&times;</button>
+                <nav class="mobile-nav">
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#about">About</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="shop.html">Shop</a></li>
+                        <li id="start-designing-link-mobile"><a href="customize.html">Start Designing</a></li>
+<li id="mobile-dashboard-link" class="dashboard-sidebar-link" style="display:none;"><a href="admin/dashboard.php">Dashboard</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div id="mobile-menu-overlay" class="mobile-menu-overlay"></div>
+            <div id="auth-toggle">
+                <div id="auth-buttons">
+                    <a href="login.html" class="nav-cta">Login</a>
+                    <a href="signup.html" class="nav-cta">Sign Up</a>
+                </div>
+                <div id="profile-section" style="display: none;">
+                    <div class="profile-menu">
+                        <img id="cornerProfilePic" src="uploads/default-avatar.svg" alt="profile">
+                        <i class="fas fa-user-circle"></i>
+                        <span id="user-name"></span>
+                        <button id="logout-btn" class="nav-cta">Logout</button>
+                    </div>
+                </div>
+                <button type="button" id="cart-toggle-btn" class="cart-toggle-btn" aria-label="Open cart">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span id="cart-badge" class="cart-badge">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container hero-container">
+            <div class="hero-content">
+                <h2>Design Your Dream Bouquet in 3D</h2>
+                <p>Create stunning, personalized floral arrangements with our interactive 3D designer. Mix flowers, colors, and vases to visualize your perfect bouquet before ordering.</p>
+                <a href="customize.html" class="cta-button">Start Designing <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">Why Choose Our 3D Designer</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-cube"></i>
+                    </div>
+                    <h3>Realistic 3D Preview</h3>
+                    <p>Visualize your floral arrangement from every angle with our lifelike 3D rendering.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <h3>Endless Customization</h3>
+                    <p>Choose from hundreds of flowers, colors, vases, and accessories to create your unique design.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shipping-fast"></i>
+                    </div>
+                    <h3>Same-Day Delivery</h3>
+                    <p>Order your custom creation by 2PM and receive it the same day in our delivery areas.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="about-section" id="about">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-image">
+                    <img src="https://images.unsplash.com/photo-1526047932273-341f2a7631f9?auto=format&fit=crop&w=800&q=80" alt="About FloraFit">
+                </div>
+                <div class="about-text">
+                    <h2 class="section-title">Blooming Since 2020</h2>
+                    <p>At <strong>FloraFit</strong>, we believe every flower tells a story. What started as a small passion project in the heart of Manila has grown into a digital haven for flower lovers.</p>
+                    <p>Our unique 3D Customizer allows you to be the artist. We combine the traditional beauty of fresh blooms with modern technology to ensure that what you see on your screen is exactly what arrives at your door.</p>
+                    <div class="about-stats">
+                        <div class="stat-item">
+                            <h4>5k+</h4>
+                            <span>Bouquets Delivered</span>
+                        </div>
+                        <div class="stat-item">
+                            <h4>100%</h4>
+                            <span>Freshness Guarantee</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact-preview-section">
+        <div class="container">
+            <div class="contact-preview-card">
+                <div>
+                    <span class="chat-badge">Contact FloraFit</span>
+                    <h2 class="section-title">Need help with an order or custom bouquet?</h2>
+                    <p>We moved our contact area into a dedicated page with a prettier layout and an instant AI-style chat assistant.</p>
+                </div>
+                <a href="contact.html" class="cta-button">Open Contact Page <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vouchers Section -->
+    <section id="vouchers" class="vouchers-section" style="display: none;">
+        <div class="container vouchers-container">
+            <h2 class="section-title">Your Vouchers</h2>
+            <div id="vouchers-container" class="vouchers-grid">
+                <div class="vouchers-empty">Loading vouchers...</div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div style="text-align: center;">
+                <h3>FLORA FIT</h3>
+                <p>Bringing nature's beauty to your doorstep.</p>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2026 Flora Fit. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/notifications.js"></script>
+    <script>
+        // Simple interactivity
+        document.addEventListener('DOMContentLoaded', function() {
+            // Simple scroll effect for navigation
+            document.querySelectorAll('nav a, .cta-button').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    if (this.getAttribute('href') && this.getAttribute('href').startsWith('#')) {
+                        e.preventDefault();
+                        const targetId = this.getAttribute('href');
+                        const targetElement = document.querySelector(targetId);
+                        
+                        if (targetElement) {
+                            window.scrollTo({
+                                top: targetElement.offsetTop - 100,
+                                behavior: 'smooth'
+                            });
+                        }
+                    }
+                });
+            });
+            
+            // Add a slight parallax effect to hero section
+            window.addEventListener('scroll', function() {
+                const scrolled = window.pageYOffset;
+                const hero = document.querySelector('.hero');
+                const rate = scrolled * -0.5;
+                
+                hero.style.backgroundPosition = `0px ${rate}px`;
+            });
+        });
+    </script>
+    <script>
+        function getStorageIdentity() {
+            try {
+                const user = JSON.parse(localStorage.getItem('user') || '{}');
+                if (user && user.id) return `user_${user.id}`;
+                if (user && user.email) return `email_${String(user.email).toLowerCase()}`;
+            } catch (error) {
+            }
+            return 'guest';
+        }
+
+        function getCartStorageKey() {
+            return `cart_${getStorageIdentity()}`;
+        }
+
+        function getCart() {
+            try {
+                const key = getCartStorageKey();
+                const scoped = localStorage.getItem(key);
+
+                if (scoped === null) {
+                    const legacy = localStorage.getItem('cart');
+                    if (legacy) {
+                        localStorage.setItem(key, legacy);
+                        localStorage.removeItem('cart');
+                    }
+                }
+
+                const cart = JSON.parse(localStorage.getItem(key));
+                return Array.isArray(cart) ? cart : [];
+            } catch (error) {
+                return [];
+            }
+        }
+
+        function updateCartBadge() {
+            const badge = document.getElementById('cart-badge');
+            if (!badge) return;
+            const total = getCart().reduce((sum, item) => sum + Math.max(1, Number(item.quantity || 1)), 0);
+            badge.textContent = total;
+        }
+
+        const cartBtn = document.getElementById('cart-toggle-btn');
+        if (cartBtn) {
+            cartBtn.addEventListener('click', () => {
+                window.location.href = 'checkout.html';
+            });
+        }
+
+        // Auth toggle functionality
+        function updateAuthUI() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            const authButtons = document.getElementById('auth-buttons');
+            const profileSection = document.getElementById('profile-section');
+            const userName = document.getElementById('user-name');
+            const cornerImg = document.getElementById('cornerProfilePic');
+            const cartBtn = document.getElementById('cart-toggle-btn');
+            
+            if (isLoggedIn) {
+                const user = JSON.parse(localStorage.getItem('user'));
+                authButtons.style.display = 'none';
+                profileSection.style.display = 'block';
+                if (user) {
+                    userName.textContent = user.name || [user.firstName, user.lastName].filter(Boolean).join(' ');
+                }
+                if (user && user.profile_picture) {
+                    cornerImg.src = user.profile_picture;
+                    cornerImg.style.display = 'inline-block';
+                    const icon = profileSection.querySelector('.fa-user-circle');
+                    if (icon) icon.style.display = 'none';
+                } else {
+                    cornerImg.style.display = 'none';
+                    const icon = profileSection.querySelector('.fa-user-circle');
+                    if (icon) icon.style.display = 'inline-block';
+                }
+                
+                // Check if user is admin/staff
+                if (user && (user.role === 'admin' || user.role === 'staff' || user.is_admin)) {
+                    // Show staff dashboard link
+                    const staffLink = document.getElementById('mobile-dashboard-link');
+                if (staffLink) staffLink.style.display = 'list-item';
+                if (cartBtn) cartBtn.style.display = 'none';
+                const designLink = document.getElementById('start-designing-link-mobile');
+                if (designLink) {
+                    designLink.innerHTML = '<a href="customize.html">Customize</a>';
+                }
+                } else {
+                    if (cartBtn) cartBtn.style.display = 'inline-flex';
+                    const staffLink = document.getElementById('mobile-dashboard-link');
+                    if (staffLink) staffLink.style.display = 'none';
+                }
+            } else {
+                authButtons.style.display = 'flex';
+                profileSection.style.display = 'none';
+                if (cartBtn) cartBtn.style.display = 'inline-flex';
+                // Hide staff dashboard link when not logged in
+                const staffLink = document.getElementById('mobile-dashboard-link');
+                if (staffLink) staffLink.style.display = 'none';
+            }
+        }
+        
+        // Update UI on load
+        updateAuthUI();
+        updateCartBadge();
+
+        // Hamburger menu
+        const hamburgerBtn = document.getElementById('hamburger-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+        const mobileMenuClose = document.getElementById('mobile-menu-close');
+
+        function openMobileMenu() {
+            mobileMenu.classList.add('open');
+            mobileMenuOverlay.classList.add('open');
+            hamburgerBtn.setAttribute('aria-expanded', 'true');
+            mobileMenu.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMobileMenu() {
+            mobileMenu.classList.remove('open');
+            mobileMenuOverlay.classList.remove('open');
+            hamburgerBtn.setAttribute('aria-expanded', 'false');
+            mobileMenu.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+        }
+
+        hamburgerBtn?.addEventListener('click', openMobileMenu);
+        mobileMenuClose?.addEventListener('click', closeMobileMenu);
+        mobileMenuOverlay?.addEventListener('click', closeMobileMenu);
+
+        document.querySelectorAll('.mobile-nav a').forEach(link => {
+            link.addEventListener('click', closeMobileMenu);
+        });
+        
+        // Handle profile section click
+        const profileSection = document.getElementById('profile-section');
+        if (profileSection) {
+            profileSection.addEventListener('click', () => {
+                window.location.href = 'profile.html';
+            });
+            profileSection.style.cursor = 'pointer';
+        }
+        
+        // Handle logout
+        const logoutBtn = document.getElementById('logout-btn');
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                localStorage.removeItem('isLoggedIn');
+                localStorage.removeItem('user');
+                updateAuthUI();
+                window.location.href = 'index.html';
+            });
+        }
+
+        // Listen for storage changes from other tabs/windows and update UI
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'user' || e.key === 'isLoggedIn') {
+                try { updateAuthUI(); } catch (err) { console.error(err); }
+            }
+            if (e.key === getCartStorageKey() || e.key === 'cart') {
+                updateCartBadge();
+            }
+        });
+    </script>
+    <script>
+        // Check login status for Start Designing button
+        document.querySelectorAll('a[href="customize.html"]').forEach(link => {
+            link.addEventListener('click', (e) => {
+                const isLoggedIn = localStorage.getItem('isLoggedIn');
+                if (!isLoggedIn) {
+                    e.preventDefault();
+                    window.location.href = 'login.html';
+                }
+            });
+        });
+    </script>
+
+    <script>
+        function pickAutoReply(replies) {
+            return replies[Math.floor(Math.random() * replies.length)] || replies[0] || '';
+        }
+
+        function getContactAutoReply(message) {
+            const text = String(message || '').toLowerCase();
+            const hasKeyword = (...keywords) => keywords.some(keyword => {
+                const normalized = String(keyword || '').toLowerCase().trim();
+                if (!normalized) return false;
+                if (/^[a-z0-9-]+$/i.test(normalized)) {
+                    return new RegExp(`\\b${normalized.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i').test(text);
+                }
+                return text.includes(normalized);
+            });
+
+            if (hasKeyword('delivery', 'ship', 'same-day')) {
+                return pickAutoReply([
+                    'We offer bouquet delivery, and same-day delivery may be available for selected areas when orders are placed early enough. Your final address and schedule are confirmed during checkout.',
+                    'Delivery details are set during checkout, where you choose the date and enter your address. If you need same-day service, ordering early gives you the best chance.',
+                    'FloraFit can deliver your bouquet, and some areas may qualify for same-day service. Be sure to complete your delivery details carefully before placing the order.'
+                ]);
+            }
+            if (hasKeyword('3d', 'preview', 'rotate', 'model', 'visual')) {
+                return pickAutoReply([
+                    'FloraFit’s 3D preview helps you visualize your bouquet before ordering, giving you a clearer idea of how the arrangement may look during the design stage.',
+                    'The 3D feature is meant to make bouquet creation more interactive, so you can view the arrangement while selecting flowers and styling options.',
+                    'If you want to see the bouquet more clearly before checkout, the 3D preview gives a more interactive look than a simple flat image.'
+                ]);
+            }
+            if (hasKeyword('custom', 'bouquet', 'design')) {
+                return pickAutoReply([
+                    'You can build your own bouquet in the 3D customizer by choosing flowers, fillers, greenery, and wrap styles before adding it to your cart.',
+                    'The customizer lets you create a more personal arrangement instead of choosing a ready-made bouquet from the Shop page.',
+                    'If you want a unique bouquet, use the FloraFit customizer to mix and match the floral elements you prefer before checkout.'
+                ]);
+            }
+            if (hasKeyword('payment', 'gcash', 'card', 'cash', 'cod')) {
+                return pickAutoReply([
+                    'FloraFit supports Cash on Delivery and GCash. If you choose GCash, the usual process is to wait for confirmation, scan the shop QR code, and submit the payment confirmation from your profile.',
+                    'Payment is selected during checkout. COD is paid upon delivery, while GCash is confirmed after the order is accepted and the payment is submitted through your profile.',
+                    'You can choose between COD and GCash for payment, then review the total before finalizing your order.'
+                ]);
+            }
+            if (hasKeyword('track', 'status', 'order')) {
+                return pickAutoReply([
+                    'You can track your order from your FloraFit profile, where statuses usually move from Pending to Accepted, Preparing, Delivering, and Delivered.',
+                    'For order updates, open your profile and review the order status shown there. That is the main place for tracking progress.',
+                    'If you want to know where your bouquet is, the profile page will show its latest order stage and delivery progress.'
+                ]);
+            }
+            if (hasKeyword('voucher', 'discount', 'promo', 'coupon')) {
+                return pickAutoReply([
+                    'If your account has an active voucher or promo, you can usually apply it during checkout. Availability depends on your account and current promotions.',
+                    'Voucher codes can be used during checkout when they are active and eligible for your order.',
+                    'If a discount is available to your account, you should see it in your voucher section and be able to apply it at checkout.'
+                ]);
+            }
+            if (hasKeyword('feedback', 'review', 'rating')) {
+                return pickAutoReply([
+                    'After your order is marked Delivered, you can open your profile and leave a rating and feedback for that order.',
+                    'Feedback is typically available once the bouquet has been delivered. You can then review the order from your profile page.',
+                    'If you want to leave a review, wait until the order status says Delivered, then submit your feedback through your profile.'
+                ]);
+            }
+            if (hasKeyword('contact', 'email', 'call', 'phone')) {
+                return pickAutoReply([
+                    'You can contact FloraFit through the Contact page using the listed email, phone number, and address for direct assistance.',
+                    'For urgent concerns, the Contact page is the best place to find FloraFit’s direct contact details.',
+                    'If you need direct support, use the FloraFit contact information shown on the site, including the shop email and phone details.'
+                ]);
+            }
+            if (hasKeyword('hour', 'open', 'schedule', 'time')) {
+                return pickAutoReply([
+                    'You can reach FloraFit online anytime, and detailed timing concerns are best confirmed through the Contact page.',
+                    'The website can guide you anytime, but if you need an exact schedule confirmation, contacting FloraFit directly is the safest option.',
+                    'For opening hours or timing questions, the best next step is to message FloraFit through the listed contact details.'
+                ]);
+            }
+            if (hasKeyword('where', 'location', 'address')) {
+                return pickAutoReply([
+                    'You can visit FloraFit at HUB l Make Lab, Escolta St., Binondo, Manila.',
+                    'FloraFit’s listed location is HUB l Make Lab, Escolta St., Binondo, Manila.',
+                    'If you are looking for the shop, FloraFit is located at HUB l Make Lab, Escolta St., Binondo, Manila.'
+                ]);
+            }
+
+            return pickAutoReply([
+                'Thanks for your message. You can ask about delivery, customization, payment, tracking, vouchers, feedback, location, or contact details.',
+                'Need quick help? Try asking about delivery, bouquet customization, order status, payment, vouchers, feedback, or FloraFit’s location.',
+                'I can help with common FloraFit questions such as delivery, payment, customizing a bouquet, tracking an order, or contacting the shop.'
+            ]);
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const chatForm = document.getElementById('contact-chat-form');
+            const chatInput = document.getElementById('contact-chat-input');
+            const chatMessages = document.getElementById('contact-chat-messages');
+
+            if (!chatForm || !chatInput || !chatMessages) return;
+
+            function appendContactMessage(sender, text) {
+                const message = document.createElement('div');
+                message.className = `chat-message ${sender}`;
+                message.innerHTML = `<strong>${sender === 'bot' ? 'FloraFit AI' : 'You'}</strong><p>${text}</p>`;
+                chatMessages.appendChild(message);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+
+            chatForm.addEventListener('submit', function (event) {
+                event.preventDefault();
+                const userMessage = chatInput.value.trim();
+                if (!userMessage) return;
+
+                appendContactMessage('user', userMessage);
+                chatInput.value = '';
+
+                window.setTimeout(() => {
+                    appendContactMessage('bot', getContactAutoReply(userMessage));
+                }, 350);
+            });
+
+            document.querySelectorAll('.chat-chip').forEach(chip => {
+                chip.addEventListener('click', function () {
+                    chatInput.value = this.dataset.prompt || this.textContent.trim();
+                    chatForm.requestSubmit();
+                });
+            });
+        });
+    </script>
+
+    <script>
+    // Vouchers functionality
+    async function loadUserVouchers() {
+        const isLoggedIn = localStorage.getItem('isLoggedIn');
+        const vouchersSection = document.getElementById('vouchers');
+        const vouchersContainer = document.getElementById('vouchers-container');
+        
+        // If not logged in, hide the section
+        if (!isLoggedIn) {
+            if (vouchersSection) vouchersSection.style.display = 'none';
+            return;
+        }
+        
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (!user || !user.id) {
+            if (vouchersSection) vouchersSection.style.display = 'none';
+            return;
+        }
+        
+        try {
+            const response = await fetch('api/get_user_vouchers.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ user_id: user.id })
+            });
+            
+            // Check if response is OK
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            const data = await response.json();
+            
+            console.log('Voucher data received:', data); // Debug log
+            
+            if (data.success && Array.isArray(data.vouchers) && data.vouchers.length > 0) {
+                vouchersSection.style.display = 'block';
+                vouchersContainer.innerHTML = data.vouchers.map(voucher => `
+                    <div class="voucher-card">
+                        <div class="voucher-code">${voucher.code}</div>
+                        <div class="voucher-type">${voucher.type}</div>
+                        <div class="voucher-value">${voucher.value}</div>
+                        <div class="voucher-expires">Expires: ${new Date(voucher.expiry_date).toLocaleDateString()}</div>
+                        <div class="voucher-status ${voucher.status}">${voucher.status.charAt(0).toUpperCase() + voucher.status.slice(1)}</div>
+                        <div class="voucher-actions">
+                            <button class="voucher-btn copy" onclick="copyVoucherCode('${voucher.code}')">Copy</button>
+                            <button class="voucher-btn apply" ${voucher.status === 'active' ? `onclick="applyVoucherAtCheckout('${voucher.code}')"` : 'disabled'}>Apply</button>
+                        </div>
+                    </div>
+                `).join('');
+            } else {
+                vouchersContainer.innerHTML = '<div class="vouchers-empty">No vouchers available yet. Check back later!</div>';
+            }
+        } catch (error) {
+            console.error('Failed to load vouchers:', error);
+            if (vouchersSection) vouchersSection.style.display = 'block';
+            vouchersContainer.innerHTML = '<div class="vouchers-empty">Failed to load vouchers. Please try again later.</div>';
+        }
+    }
+
+    // Copy voucher code function
+    function copyVoucherCode(code) {
+        navigator.clipboard.writeText(code).then(() => {
+            showNotification('Voucher code copied to clipboard!', 'success');
+        }).catch(err => {
+            console.error('Failed to copy:', err);
+            showNotification('Failed to copy code', 'error');
+        });
+    }
+
+    function applyVoucherAtCheckout(code) {
+        localStorage.setItem('pendingVoucherCode', code);
+        showNotification('Voucher saved. Redirecting to checkout...', 'success');
+        setTimeout(() => {
+            window.location.href = 'checkout.html';
+        }, 250);
+    }
+
+    // Load vouchers when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+        loadUserVouchers();
+    });
+</script>
+</body>
+</html>
+

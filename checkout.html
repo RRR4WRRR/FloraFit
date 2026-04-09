@@ -1,0 +1,1835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout | FLORAFIT</title>
+    <link rel="icon" type="image/png" href="assets/img/Flora.png">
+    <link rel="stylesheet" href="assets/css/website.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        .checkout-body {
+            background: linear-gradient(180deg, #fffaf0 0%, #fffdfb 100%);
+        }
+
+        .checkout-page {
+            padding: 128px 0 60px;
+        }
+
+        .checkout-hero-banner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 18px;
+            flex-wrap: wrap;
+            margin-bottom: 24px;
+            padding: 24px 26px;
+            border-radius: 28px;
+            background: linear-gradient(135deg, #fff7fb 0%, #ffffff 60%, #f6fff8 100%);
+            border: 1px solid rgba(255, 182, 193, 0.32);
+            box-shadow: 0 16px 40px rgba(255, 182, 193, 0.12);
+        }
+
+        .checkout-eyebrow {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 999px;
+            background: rgba(255, 182, 193, 0.18);
+            color: #b85d73;
+            font-size: 0.78rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin-bottom: 10px;
+        }
+
+        .checkout-hero-banner h2 {
+            margin: 0 0 8px;
+            color: #5d4037;
+            font-size: 2.5rem;
+        }
+
+        .checkout-hero-banner p {
+            margin: 0;
+            max-width: 620px;
+            color: #6d5c57;
+        }
+
+        .checkout-hero-points {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .checkout-hero-points span {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 14px;
+            border-radius: 999px;
+            background: white;
+            border: 1px solid rgba(152, 251, 152, 0.4);
+            color: #4d5f4d;
+            font-weight: 600;
+        }
+
+        .checkout-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.35fr) minmax(320px, 0.85fr);
+            gap: 22px;
+            align-items: start;
+        }
+
+        .checkout-main-column,
+        .checkout-sidebar-stack {
+            display: grid;
+            gap: 18px;
+        }
+
+        .checkout-card {
+            background: rgba(255, 255, 255, 0.96);
+            border-radius: 22px;
+            border: 1px solid rgba(255, 182, 193, 0.22);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
+            padding: 22px;
+        }
+
+        .checkout-card-accent {
+            background: linear-gradient(135deg, #fff9fc 0%, #ffffff 70%, #f8fff8 100%);
+        }
+
+        .checkout-card-heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 8px;
+        }
+
+        .checkout-card-heading h3 {
+            margin: 0;
+            color: #5d4037;
+            font-size: 1.35rem;
+        }
+
+        .checkout-step {
+            display: inline-flex;
+            width: 28px;
+            height: 28px;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ffb6c1 0%, #ff8fa3 100%);
+            color: white;
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-right: 10px;
+        }
+
+        .checkout-card-note {
+            margin: 0 0 14px;
+            color: #7a6b66;
+            font-size: 0.95rem;
+        }
+
+        .checkout-row {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        .checkout-field {
+            display: grid;
+            gap: 8px;
+            margin-bottom: 14px;
+        }
+
+        .checkout-field label {
+            font-weight: 600;
+            color: #5d4037;
+        }
+
+        .checkout-field input,
+        .checkout-field textarea,
+        .checkout-field select {
+            width: 100%;
+            border: 1px solid rgba(0, 0, 0, 0.12);
+            border-radius: 14px;
+            padding: 12px 14px;
+            font-size: 0.95rem;
+            font-family: 'Montserrat', sans-serif;
+            background: #fff;
+        }
+
+        .checkout-field textarea {
+            min-height: 96px;
+            resize: vertical;
+        }
+
+        .checkout-field input:focus,
+        .checkout-field textarea:focus,
+        .checkout-field select:focus {
+            outline: none;
+            border-color: #ff8fa3;
+            box-shadow: 0 0 0 3px rgba(255, 182, 193, 0.16);
+        }
+
+        .checkout-toggle-card {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 14px;
+            border-radius: 14px;
+            background: #fff7fb;
+            border: 1px solid rgba(255, 182, 193, 0.28);
+            margin-bottom: 10px;
+        }
+
+        .checkout-toggle-panel[hidden] {
+            display: none !important;
+        }
+
+        .checkout-toggle-panel {
+            margin-top: 10px;
+            padding-top: 10px;
+        }
+
+        .checkout-summary-card {
+            position: sticky;
+            top: 118px;
+        }
+
+        .phone-wrap {
+            display: grid;
+            grid-template-columns: 92px 1fr;
+            gap: 10px;
+        }
+
+        .checkout-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 18px;
+        }
+
+        .payment-methods {
+            display: grid;
+            gap: 12px;
+        }
+
+        .payment-method-option {
+            display: block;
+            border: 1px solid rgba(0,0,0,0.1);
+            border-radius: 16px;
+            padding: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: #fff;
+        }
+
+        .payment-method-option.active {
+            border-color: #ff8fa3;
+            background: #fff6fa;
+            box-shadow: 0 8px 18px rgba(255, 182, 193, 0.15);
+        }
+
+        .payment-method-content {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .payment-method-content i {
+            font-size: 1.4rem;
+            color: #ff8fa3;
+        }
+
+        .payment-method-content small {
+            display: block;
+            color: #777;
+        }
+
+        .payment-details,
+        .gcash-info {
+            margin-top: 12px;
+        }
+
+        .gcash-info {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            background: #f4f9ff;
+            border-radius: 12px;
+            padding: 10px 12px;
+            color: #2b5c8a;
+            font-size: 0.9rem;
+        }
+
+        #cart-summary-list {
+            display: grid;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+
+        .cart-item {
+            display: grid;
+            grid-template-columns: 64px 1fr auto;
+            gap: 12px;
+            align-items: start;
+            padding: 12px;
+            border-radius: 14px;
+            background: #fffafc;
+            border: 1px solid rgba(255, 182, 193, 0.18);
+        }
+
+        .cart-item img {
+            width: 64px;
+            height: 64px;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+
+        .cart-item-name {
+            font-weight: 700;
+            color: #5d4037;
+            margin-bottom: 4px;
+        }
+
+        .cart-item-meta {
+            color: #777;
+            font-size: 0.88rem;
+        }
+
+        .summary-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-top: 1px dashed rgba(0,0,0,0.08);
+        }
+
+        .summary-total {
+            font-size: 1.08rem;
+            color: #2e7d32;
+        }
+
+        .delivery-note {
+            margin-top: 10px;
+            padding: 10px 12px;
+            border-radius: 12px;
+            background: #f4fff7;
+            color: #2e7d32;
+            font-weight: 600;
+        }
+
+        .buy-button,
+        .checkout-remove-btn {
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .buy-button {
+            background: linear-gradient(135deg, #2e7d32 0%, #4caf50 100%);
+            color: white;
+            padding: 12px 18px;
+        }
+
+        .checkout-remove-btn {
+            background: #fff1f3;
+            color: #c55570;
+            padding: 8px 10px;
+            margin-top: 8px;
+        }
+
+        .qty-control {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+        }
+
+        .qty-btn,
+        .qty-pill {
+            width: 32px;
+            height: 32px;
+            border-radius: 999px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+
+        .qty-btn {
+            border: 1px solid rgba(255, 143, 163, 0.45);
+            background: #fff;
+            color: #b85d73;
+            cursor: pointer;
+        }
+
+        .qty-pill {
+            background: #fff7fb;
+            color: #5d4037;
+            width: auto;
+            min-width: 32px;
+            padding: 0 10px;
+        }
+
+        .voucher-box {
+            margin: 12px 0 6px;
+            padding: 12px;
+            border-radius: 14px;
+            background: #fffafc;
+            border: 1px solid rgba(255, 182, 193, 0.22);
+        }
+
+        .voucher-box h4 {
+            margin: 0 0 10px;
+            color: #5d4037;
+        }
+
+        .voucher-row {
+            display: grid;
+            grid-template-columns: 1fr auto auto;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .voucher-feedback {
+            margin: 10px 0 0;
+            font-size: 0.9rem;
+            color: #6d5c57;
+        }
+
+        .voucher-feedback.success {
+            color: #2e7d32;
+            font-weight: 600;
+        }
+
+        .voucher-feedback.error {
+            color: #c62828;
+            font-weight: 600;
+        }
+
+        .discount-row strong {
+            color: #2e7d32;
+        }
+
+        @media (max-width: 992px) {
+            .checkout-grid,
+            .checkout-row {
+                grid-template-columns: 1fr;
+            }
+
+            .checkout-summary-card {
+                position: static;
+            }
+
+            .cart-item {
+                grid-template-columns: 56px 1fr;
+            }
+
+            .cart-item-actions {
+                grid-column: 1 / -1;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body class="checkout-body">
+    <header>
+        <div class="container header-container">
+            <button id="hamburger-btn" class="hamburger-btn" aria-label="Open menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <a href="index.html" class="logo">
+                <span style="font-size: 2rem;">🌸</span>
+                <h1>FLORAFIT</h1>
+            </a>
+
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="mobile-menu" aria-hidden="true">
+                <button id="mobile-menu-close" class="mobile-menu-close" aria-label="Close menu">&times;</button>
+                <nav class="mobile-nav">
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#about">About</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="shop.html">Shop</a></li>
+                        <li><a href="customize.html">Start Designing</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div id="mobile-menu-overlay" class="mobile-menu-overlay"></div>
+
+            <div id="auth-toggle">
+                <a href="admin/dashboard.php" id="staff-dashboard-link" class="nav-cta" style="display:none; margin-right:15px; background:linear-gradient(135deg, #667eea 0%, #764ba2 100%); border:none;">
+                    <i class="fas fa-chart-line"></i> Dashboard
+                </a>
+                <div id="auth-buttons">
+                    <a href="login.html" class="nav-cta">Login</a>
+                    <a href="signup.html" class="nav-cta">Sign Up</a>
+                </div>
+                <div id="profile-section" style="display: none;">
+                    <div class="profile-menu">
+                        <img id="cornerProfilePic" src="uploads/default-avatar.svg" alt="profile">
+                        <i class="fas fa-user-circle"></i>
+                        <span id="user-name"></span>
+                        <button id="logout-btn" class="nav-cta">Logout</button>
+                    </div>
+                </div>
+                <button type="button" id="cart-toggle-btn" class="cart-toggle-btn" aria-label="Open cart">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span id="cart-badge" class="cart-badge">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div id="cart-overlay" class="cart-overlay" hidden></div>
+    <aside id="cart-drawer" class="cart-drawer" aria-hidden="true">
+        <div class="cart-drawer-header">
+            <h3><i class="fas fa-shopping-cart"></i> Your Cart</h3>
+            <button type="button" id="cart-close-btn" class="cart-close-btn" aria-label="Close cart">&times;</button>
+        </div>
+        <div id="checkout-cart-list" class="checkout-cart-list"></div>
+        <div class="cart-drawer-footer">
+            <a href="shop.html" class="nav-cta" style="text-decoration:none;text-align:center;">Add More Items</a>
+        </div>
+    </aside>
+
+    <main class="checkout-page">
+        <div class="container">
+            <section class="checkout-hero-banner">
+                <div>
+                    <span class="checkout-eyebrow">Secure Checkout</span>
+                    <h2>Complete your FloraFit order</h2>
+                    <p>Review your details, choose the delivery schedule, and place your bouquet order in one clean flow.</p>
+                </div>
+                <div class="checkout-hero-points">
+                    <span><i class="fas fa-user-check"></i> Profile autofill</span>
+                    <span><i class="fas fa-gift"></i> Optional recipient</span>
+                    <span><i class="fas fa-truck"></i> Delivery-ready</span>
+                </div>
+            </section>
+
+            <div class="checkout-grid">
+                <section class="checkout-main-column">
+                    <div class="checkout-card checkout-card-accent">
+                        <div class="checkout-card-heading">
+                            <div>
+                                <span class="checkout-step">1</span><h3 style="display:inline;">Sender Information</h3>
+                            </div>
+                            <button type="button" id="autofill-profile" class="btn-small outline">Use My Profile Info</button>
+                        </div>
+                        <p class="checkout-card-note">We can automatically fill your saved profile details here.</p>
+                        <div class="checkout-row">
+                            <div class="checkout-field">
+                                <label for="sender-name">Full Name</label>
+                                <input id="sender-name" type="text" placeholder="Your full name" autocomplete="name">
+                            </div>
+                            <div class="checkout-field">
+                                <label for="sender-phone">Phone Number</label>
+                                <input id="sender-phone" type="text" placeholder="09xxxxxxxxx" autocomplete="tel">
+                            </div>
+                        </div>
+                        <div class="checkout-field">
+                            <label for="sender-email">Email</label>
+                            <input id="sender-email" type="email" placeholder="you@email.com" autocomplete="email">
+                        </div>
+                        <label class="checkbox-field" for="sender-anonymous">
+                            <input id="sender-anonymous" type="checkbox">
+                            <span>Send as anonymous sender</span>
+                        </label>
+                    </div>
+
+                    <div class="checkout-card">
+                        <div class="checkout-card-heading">
+                            <div>
+                                <span class="checkout-step">2</span><h3 style="display:inline;">Recipient Details</h3>
+                            </div>
+                        </div>
+                        <label class="checkout-toggle-card" for="different-recipient-toggle">
+                            <input id="different-recipient-toggle" type="checkbox">
+                            <span>This order is for a different recipient</span>
+                        </label>
+                        <p id="recipient-mode-hint" class="checkout-card-note">If unchecked, the order will use your sender details as the recipient contact.</p>
+
+                        <div id="recipient-details-panel" class="checkout-toggle-panel" hidden>
+                            <div class="checkout-row">
+                                <div class="checkout-field">
+                                    <label for="recipient-first-name">First Name</label>
+                                    <input id="recipient-first-name" type="text" placeholder="Recipient first name" autocomplete="given-name">
+                                </div>
+                                <div class="checkout-field">
+                                    <label for="recipient-last-name">Last Name</label>
+                                    <input id="recipient-last-name" type="text" placeholder="Recipient last name" autocomplete="family-name">
+                                </div>
+                            </div>
+                            <div class="checkout-field">
+                                <label for="recipient-phone">Phone Number</label>
+                                <div class="phone-wrap">
+                                    <select id="recipient-country-code">
+                                        <option value="+63" selected>+63</option>
+                                    </select>
+                                    <input id="recipient-phone" type="text" placeholder="Enter a phone number" autocomplete="tel-national">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="checkout-card">
+                        <div class="checkout-card-heading">
+                            <div>
+                                <span class="checkout-step">3</span><h3 style="display:inline;">Delivery Address</h3>
+                            </div>
+                        </div>
+                        <p class="checkout-card-note">You can start with your saved profile address and adjust it if needed.</p>
+                        <div class="checkout-field">
+                            <label for="recipient-address-line">Address</label>
+                            <input id="recipient-address-line" type="text" placeholder="House/unit, street" autocomplete="street-address">
+                        </div>
+                        <div class="checkout-row">
+                            <div class="checkout-field">
+                                <label for="recipient-region">Region</label>
+                                <select id="recipient-region"></select>
+                            </div>
+                            <div class="checkout-field">
+                                <label for="recipient-province">Province</label>
+                                <select id="recipient-province"></select>
+                            </div>
+                        </div>
+                        <div class="checkout-row">
+                            <div class="checkout-field">
+                                <label for="recipient-city">Municipality / City</label>
+                                <select id="recipient-city"></select>
+                            </div>
+                            <div class="checkout-field">
+                                <label for="recipient-district">District/Barangay</label>
+                                <select id="recipient-district"></select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="checkout-card">
+                        <div class="checkout-card-heading">
+                            <div>
+                                <span class="checkout-step">4</span><h3 style="display:inline;">Message & Schedule</h3>
+                            </div>
+                        </div>
+                        <div class="checkout-field">
+                            <label for="gift-message">Message to Recipient</label>
+                            <textarea id="gift-message" placeholder="Write your message here..."></textarea>
+                        </div>
+                        <div class="checkout-field">
+                            <label for="special-instructions">Special Instructions</label>
+                            <textarea id="special-instructions" placeholder="Delivery notes, gate info, handling instructions, etc."></textarea>
+                        </div>
+                        <div class="checkout-row">
+                            <div class="checkout-field">
+                                <label for="delivery-date">Delivery Date</label>
+                                <input id="delivery-date" type="date">
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <aside>
+                    <div class="checkout-sidebar-stack">
+                        <div class="checkout-card">
+                            <h3><i class="fab fa-cc-paypal"></i> Payment Method</h3>
+                            <div class="payment-methods">
+                                <label class="payment-method-option">
+                                    <input type="radio" name="payment" value="cod">
+                                    <div class="payment-method-content">
+                                        <i class="fas fa-money-bill-wave"></i>
+                                        <div>
+                                            <strong>Cash on Delivery</strong>
+                                            <small>Pay when your order is delivered</small>
+                                        </div>
+                                    </div>
+                                </label>
+
+                                <label class="payment-method-option" data-method="gcash">
+                                    <input type="radio" name="payment" value="gcash">
+                                    <div class="payment-method-content">
+                                        <i class="fas fa-mobile-alt"></i>
+                                        <div>
+                                            <strong>GCash</strong>
+                                            <small>Pay securely via GCash</small>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+
+                            <div id="gcash-details" class="payment-details" style="display: none;">
+                                <div class="checkout-field">
+                                    <label for="gcash-number">GCash Number</label>
+                                    <input id="gcash-number" type="tel" placeholder="09xxxxxxxxx" maxlength="11">
+                                    <small>Enter your GCash mobile number</small>
+                                </div>
+                                <div class="gcash-info">
+                                    <i class="fas fa-info-circle"></i>
+                                    <span>You will receive payment instructions after order confirmation</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="checkout-card checkout-summary-card">
+                            <h3>Order Summary</h3>
+                            <div id="cart-summary-list"></div>
+                            <div class="voucher-box">
+                                <h4><i class="fas fa-ticket-alt"></i> Apply Voucher</h4>
+                                <div class="checkout-field" style="margin-bottom:10px;">
+                                    <label for="voucher-select">Available vouchers</label>
+                                    <select id="voucher-select">
+                                        <option value="">No voucher selected</option>
+                                    </select>
+                                </div>
+                                <div class="voucher-row">
+                                    <input id="voucher-code" type="text" placeholder="Enter voucher code">
+                                    <button id="apply-voucher" type="button" class="nav-cta">Apply</button>
+                                    <button id="clear-voucher" type="button" class="checkout-remove-btn" style="margin-top:0;">Clear</button>
+                                </div>
+                                <p id="voucher-feedback" class="voucher-feedback">Log in to load your available vouchers.</p>
+                            </div>
+                            <div class="summary-row"><span>Subtotal</span><strong id="subtotal-amount">₱0.00</strong></div>
+                            <div class="summary-row"><span>Shipping</span><strong id="shipping-amount">₱150.00</strong></div>
+                            <div class="summary-row discount-row"><span>Discount</span><strong id="discount-amount">-₱0.00</strong></div>
+                            <div class="summary-row summary-total"><span>Total</span><strong id="total-amount">₱0.00</strong></div>
+                            <div class="delivery-note" id="delivery-summary">Delivery: Not selected</div>
+                            <div class="checkout-actions">
+                                <a href="shop.html" class="nav-cta" style="text-decoration:none; display:inline-flex; align-items:center; justify-content:center;">Back to Shop</a>
+                                <button id="place-order" type="button" class="buy-button">Place Order</button>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <script src="assets/js/notifications.js"></script>
+    <script>
+        function updateAuthUI() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            const authButtons = document.getElementById('auth-buttons');
+            const profileSection = document.getElementById('profile-section');
+            const userName = document.getElementById('user-name');
+            const cornerImg = document.getElementById('cornerProfilePic');
+            const cartBtn = document.getElementById('cart-toggle-btn');
+
+            if (isLoggedIn) {
+                const user = JSON.parse(localStorage.getItem('user'));
+                authButtons.style.display = 'none';
+                profileSection.style.display = 'block';
+                if (user) {
+                    userName.textContent = user.name || [user.firstName, user.lastName].filter(Boolean).join(' ');
+                }
+                if (user && user.profile_picture) {
+                    cornerImg.src = user.profile_picture;
+                    cornerImg.style.display = 'inline-block';
+                    const icon = profileSection.querySelector('.fa-user-circle');
+                    if (icon) icon.style.display = 'none';
+                } else {
+                    cornerImg.style.display = 'none';
+                    const icon = profileSection.querySelector('.fa-user-circle');
+                    if (icon) icon.style.display = 'inline-block';
+                }
+
+                if (user && (user.role === 'admin' || user.role === 'staff' || user.is_admin)) {
+                    const staffLink = document.getElementById('staff-dashboard-link');
+                    if (staffLink) staffLink.style.display = 'inline-block';
+                    if (cartBtn) cartBtn.style.display = 'none';
+                    const designLink = document.getElementById('start-designing-link');
+                    if (designLink) {
+                        designLink.innerHTML = '<a href="customize.html">Customize</a>';
+                    }
+                } else {
+                    if (cartBtn) cartBtn.style.display = 'inline-flex';
+                }
+            } else {
+                authButtons.style.display = 'flex';
+                profileSection.style.display = 'none';
+                if (cartBtn) cartBtn.style.display = 'inline-flex';
+                const staffLink = document.getElementById('staff-dashboard-link');
+                if (staffLink) staffLink.style.display = 'none';
+            }
+        }
+
+        updateAuthUI();
+
+        const hamburgerBtn = document.getElementById('hamburger-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+        const mobileMenuClose = document.getElementById('mobile-menu-close');
+
+        function openMobileMenu() {
+            mobileMenu.classList.add('open');
+            mobileMenuOverlay.classList.add('open');
+            hamburgerBtn.setAttribute('aria-expanded', 'true');
+            mobileMenu.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMobileMenu() {
+            mobileMenu.classList.remove('open');
+            mobileMenuOverlay.classList.remove('open');
+            hamburgerBtn.setAttribute('aria-expanded', 'false');
+            mobileMenu.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+        }
+
+        hamburgerBtn?.addEventListener('click', openMobileMenu);
+        mobileMenuClose?.addEventListener('click', closeMobileMenu);
+        mobileMenuOverlay?.addEventListener('click', closeMobileMenu);
+
+        document.querySelectorAll('.mobile-nav a').forEach(link => {
+            link.addEventListener('click', closeMobileMenu);
+        });
+
+        const profileSection = document.getElementById('profile-section');
+        if (profileSection) {
+            profileSection.addEventListener('click', () => {
+                window.location.href = 'profile.html';
+            });
+            profileSection.style.cursor = 'pointer';
+        }
+
+        const logoutBtn = document.getElementById('logout-btn');
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                localStorage.removeItem('isLoggedIn');
+                localStorage.removeItem('user');
+                updateAuthUI();
+                window.location.href = 'index.html';
+            });
+        }
+
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'user' || e.key === 'isLoggedIn') {
+                try { updateAuthUI(); } catch (err) { console.error(err); }
+            }
+        });
+
+        document.querySelectorAll('a[href="customize.html"]').forEach(link => {
+            link.addEventListener('click', (e) => {
+                const isLoggedIn = localStorage.getItem('isLoggedIn');
+                if (!isLoggedIn) {
+                    e.preventDefault();
+                    window.location.href = 'login.html';
+                }
+            });
+        });
+    </script>
+    <script>
+        const SHIPPING_FEE = 150;
+        const REGION_DATA = {
+            'Region III (Central Luzon)': [
+                'Bataan', 'Bulacan', 'Nueva Ecija', 'Pampanga', 'Tarlac', 'Zambales', 'Aurora'
+            ]
+        };
+
+        const CITY_DISTRICT_ASSOCIATION = {
+            // Bataan municipalities/cities → their districts
+            'Balanga (Capital)':    '2nd District',
+            'Abucay':               '1st District',
+            'Bagac':                '3rd District',
+            'Dinalupihan':          '3rd District',
+            'Hermosa':              '1st District',
+            'Limay':                '2nd District',
+            'Mariveles':            '3rd District',
+            'Morong':               '3rd District',
+            'Orani':                '1st District',
+            'Orion':                '2nd District',
+            'Pilar':                '2nd District',
+            'Samal':                '1st District'
+        };
+
+        const BARANGAY_OPTIONS_BY_CITY = {
+            'Balanga (Capital)': [
+                'Bagong Silang', 'Bagumbayan', 'Cabog-Cabog', 'Camacho', 'Cataning',
+                'Central', 'Cupang North', 'Cupang Proper', 'Cupang West', 'Dangcol',
+                'Doña Francisca', 'Ibayo', 'Malabia', 'Munting Batangas',
+                'Poblacion Barcenas', 'Puerto Rivas Ibaba', 'Puerto Rivas Itaas',
+                'Puerto Rivas Lote', 'San Jose', 'Sibacan', 'Talisay', 'Tanato',
+                'Tenejero', 'Tortugas', 'Tuyo'
+            ],
+            'Abucay': [
+                'Bangkal', 'Calaylayan', 'Capitangan', 'Gabon', 'Laon',
+                'Mabatang', 'Omboy', 'Salian', 'Wawa'
+            ],
+            'Bagac': [
+                'Atilano L. Ricardo', 'Bagumbayan', 'Banawang', 'Binuangan', 'Binukawan',
+                'Ibaba', 'Ibis', 'Pag-asa', 'Parang', 'Paysawan', 'Quinawan',
+                'San Antonio', 'Saysain', 'Tabing-Ilog (Poblacion)'
+            ],
+            'Dinalupihan': [
+                'Aquino', 'Bonifacio', 'Burgos', 'Del Pilar', 'General Luna',
+                'Gomez', 'Mabini Extension', 'Mabini Proper', 'Padre Dandan',
+                'Rizal', 'Roxas', 'San Isidro', 'Torres Bugauen', 'Zamora',
+                'Daang Bago', 'Layac', 'Luacan', 'New San Jose', 'Old San Jose',
+                'San Ramon', 'Santa Isabel', 'Bangal', 'Bayan-bayanan', 'Colo',
+                'Dalao', 'Happy Valley', 'Jose C. Payumo, Jr.', 'Kataasan',
+                'Magsaysay', 'Maligaya', 'Naparing', 'Pag-asa', 'Pagalanggang',
+                'Payangan', 'Pentor', 'Pinulot', 'Pita', 'Roosevelt', 'Saguing',
+                'San Benito', 'San Pablo', 'San Simon', 'Sapang Balas',
+                'Santo Niño', 'Tubo-tubo', 'Tucop'
+            ],
+            'Hermosa': [
+                'A. Rivera', 'Almacen', 'Bacong', 'Balsic', 'Bamban', 'Cataning',
+                'Culis', 'Daungan', 'Mandama', 'Mabuco', 'Maite',
+                'Mambog - Caballero', 'Palihan', 'Pandatung', 'Pulo',
+                'Saba', 'San Pedro', 'Santout', 'Tipo'
+            ],
+            'Limay': [
+                'Alangan', 'Duale', 'Kitang I', 'Kitang 2 & Luz', 'Lamao',
+                'Landing', 'Poblacion', 'Reformista', 'San Francisco de Asis',
+                'St. Francis II', 'Townsite', 'Wawa'
+            ],
+            'Mariveles': [
+                'Alas-asin', 'Alion', 'Balon-Anito', 'Baseco Country', 'Batangas II',
+                'Biaan', 'Cabcaben', 'Camaya', 'Ipag', 'Lucanin', 'Malaya',
+                'Maligaya', 'Mountain View', 'Poblacion', 'San Carlos',
+                'San Isidro', 'Sisiman', 'Townsite'
+            ],
+            'Morong': [
+                'Binaritan', 'Mabayo', 'Nagbalayong', 'Poblacion', 'Sabang'
+            ],
+            'Orani': [
+                'Apollo', 'Bagong Paraiso', 'Balut', 'Bayan', 'Calero',
+                'Centro I', 'Centro II', 'Doña', 'Kabalutan', 'Kaparangan',
+                'Maria Fe', 'Masantol', 'Mulawin', 'Pacar', 'Pag-asa',
+                'Palihan', 'Paking-Carbonero', 'Pantalan Bago', 'Pantalan Luma',
+                'Parang Parang', 'Puksuan', 'Sibul', 'Silahis', 'Tagumpay',
+                'Tala', 'Talimundoc', 'Tapulao', 'Tenejero', 'Tugatog', 'Wawa'
+            ],
+            'Orion': [
+                'Arellano', 'Bagumbayan', 'Balagtas', 'Balut', 'Bantan',
+                'Bilolo', 'Calabane', 'Camachile', 'Daang Bago', 'Daang Bilolo',
+                'Daang Pare', 'General Lim', 'Kapunitan', 'Lati', 'Lusungan',
+                'Puting Pasig', 'Sabatan', 'San Vicente', 'Santa Elena',
+                'Santo Domingo', 'Villa Angeles', 'Wakas', 'Wawa'
+            ],
+            'Pilar': [
+                'Balut I', 'Balut II', 'Landing', 'Wawa', 'Diwa', 'Liyang',
+                'Nagwaling', 'Pantingan', 'Ala-uli', 'Bagumbayan', 'Bantan Munti',
+                'Burgos', 'Del Rosario', 'Panilao', 'Poblacion', 'Rizal',
+                'Santa Rosa', 'Wakas North', 'Wakas South'
+            ],
+            'Samal': [
+                'East Calaguiman', 'East Daang Bago', 'Gugo', 'Ibaba', 'Imelda',
+                'Lalawigan', 'Palili', 'San Juan', 'San Roque', 'Santa Lucia',
+                'Sapa', 'Tabing Ilog', 'West Calaguiman', 'West Daang Bago'
+            ]
+        };
+
+        function getStorageIdentity() {
+            try {
+                const user = JSON.parse(localStorage.getItem('user') || '{}');
+                if (user && user.id) return `user_${user.id}`;
+                if (user && user.email) return `email_${String(user.email).toLowerCase()}`;
+            } catch (error) {
+            }
+            return 'guest';
+        }
+
+        function getCartStorageKey() {
+            return `cart_${getStorageIdentity()}`;
+        }
+
+        function getCart() {
+            try {
+                const key = getCartStorageKey();
+                const scoped = localStorage.getItem(key);
+
+                if (scoped === null) {
+                    const legacy = localStorage.getItem('cart');
+                    if (legacy) {
+                        localStorage.setItem(key, legacy);
+                        localStorage.removeItem('cart');
+                    }
+                }
+
+                const cart = JSON.parse(localStorage.getItem(key));
+                return Array.isArray(cart) ? cart : [];
+            } catch (error) {
+                return [];
+            }
+        }
+
+        function saveCart(cart) {
+            localStorage.setItem(getCartStorageKey(), JSON.stringify(cart));
+        }
+
+        function totalCartQuantity(cart) {
+            return cart.reduce((sum, item) => sum + Math.max(1, Number(item.quantity || 1)), 0);
+        }
+
+        function updateCartBadge() {
+            const badge = document.getElementById('cart-badge');
+            if (!badge) return;
+            badge.textContent = totalCartQuantity(getCart());
+        }
+
+        function openCartDrawer() {
+            const drawer = document.getElementById('cart-drawer');
+            const overlay = document.getElementById('cart-overlay');
+            if (!drawer || !overlay) return;
+            drawer.classList.add('open');
+            drawer.setAttribute('aria-hidden', 'false');
+            overlay.hidden = false;
+            document.body.style.overflow = 'hidden';
+            renderNavCart();
+        }
+
+        function closeCartDrawer() {
+            const drawer = document.getElementById('cart-drawer');
+            const overlay = document.getElementById('cart-overlay');
+            if (!drawer || !overlay) return;
+            drawer.classList.remove('open');
+            drawer.setAttribute('aria-hidden', 'true');
+            overlay.hidden = true;
+            document.body.style.overflow = '';
+        }
+
+        function removeCartItem(index) {
+            const cart = getCart();
+            if (!cart[index]) return;
+            cart.splice(index, 1);
+            saveCart(cart);
+            updateCartBadge();
+            renderSummary();
+            renderNavCart();
+        }
+
+        function changeCartItemQuantity(index, delta) {
+            const cart = getCart();
+            if (!cart[index]) return;
+
+            const nextQuantity = Math.max(1, Number(cart[index].quantity || 1) + Number(delta || 0));
+            cart[index].quantity = nextQuantity;
+            saveCart(cart);
+            updateCartBadge();
+            renderSummary();
+            renderNavCart();
+        }
+
+        function renderNavCart() {
+            const list = document.getElementById('checkout-cart-list');
+            if (!list) return;
+
+            const cart = getCart();
+            if (!cart.length) {
+                list.innerHTML = '<p class="cart-empty-state">Your cart is empty.</p>';
+                return;
+            }
+
+            list.innerHTML = cart.map((item, index) => {
+                const qty = Math.max(1, Number(item.quantity || 1));
+                const addOnNames = (item.addOns || []).map(addOn => addOn.name).join(', ');
+                const recipeText = buildRecipeText(item);
+                return `
+                    <div class="checkout-cart-item">
+                        <div class="checkout-cart-item-top">
+                            <strong>${item.name || 'Item'}</strong>
+                            <strong>${currency(computeItemTotal(item))}</strong>
+                        </div>
+                        <div class="cart-item-meta">Qty: ${qty}${addOnNames ? ` • Add-ons: ${addOnNames}` : ''}</div>
+                        ${recipeText ? `<div class="cart-item-meta">Recipe: ${recipeText}</div>` : ''}
+                        <div class="qty-control">
+                            <button type="button" class="qty-btn" data-action="decrease" data-index="${index}">−</button>
+                            <span class="qty-pill">${qty}</span>
+                            <button type="button" class="qty-btn" data-action="increase" data-index="${index}">+</button>
+                            <button type="button" class="cart-remove-btn" data-action="remove" data-index="${index}">Remove</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function setSelectOptions(selectId, options, placeholder) {
+            const select = document.getElementById(selectId);
+            if (!select) return;
+            select.innerHTML = '';
+
+            const placeholderOpt = document.createElement('option');
+            placeholderOpt.value = '';
+            placeholderOpt.textContent = placeholder;
+            select.appendChild(placeholderOpt);
+
+            options.forEach(option => {
+                const opt = document.createElement('option');
+                opt.value = option;
+                opt.textContent = option;
+                select.appendChild(opt);
+            });
+        }
+
+        function initializeAddressFields() {
+            const regionSelect = document.getElementById('recipient-region');
+            const provinceSelect = document.getElementById('recipient-province');
+            const citySelect = document.getElementById('recipient-city');
+
+            setSelectOptions('recipient-region', Object.keys(REGION_DATA), 'Choose Region');
+            setSelectOptions('recipient-province', [], 'Choose Province / Municipality');
+            setSelectOptions('recipient-city', [], 'Choose City');
+            setSelectOptions('recipient-district', [], 'Choose District/Barangay');
+
+            regionSelect.addEventListener('change', () => {
+                const region = regionSelect.value;
+                const provinces = region ? (REGION_DATA[region] || []) : [];
+                setSelectOptions('recipient-province', provinces, 'Choose Province / Municipality');
+                setSelectOptions('recipient-city', [], 'Choose City');
+                setSelectOptions('recipient-district', [], 'Choose District/Barangay');
+            });
+
+            provinceSelect.addEventListener('change', () => {
+                const region = regionSelect.value;
+                const province = provinceSelect.value;
+                const cities = (region === 'Region III (Central Luzon)' && province === 'Bataan')
+                ? Object.keys(CITY_DISTRICT_ASSOCIATION)
+                : [];
+                setSelectOptions('recipient-city', cities, 'Choose City');
+                setSelectOptions('recipient-district', [], 'Choose District/Barangay');
+            });
+
+            citySelect.addEventListener('change', () => {
+                const city = citySelect.value;
+                const districtName = CITY_DISTRICT_ASSOCIATION[city] || '';
+                const barangays = BARANGAY_OPTIONS_BY_CITY[city] || [];
+                const options = [];
+
+                if (districtName) {
+                    options.push(`${districtName}`);
+                }
+
+                if (barangays.length) {
+                    options.push(...barangays);
+                } else if (city) {
+                    options.push('Other barangay (specify in address)');
+                }
+
+                setSelectOptions('recipient-district', options, 'Choose District/Barangay');
+            });
+
+            if (regionSelect.options.length > 1) {
+                regionSelect.selectedIndex = 1;
+                regionSelect.dispatchEvent(new Event('change'));
+            }
+        }
+
+        function normalizePHNumber(raw) {
+            const input = String(raw || '').trim();
+            if (!input) return '';
+            let value = input.replace(/[^\d+]/g, '');
+            if (value.startsWith('+63')) return `+63${value.slice(3).replace(/\D/g, '')}`;
+            value = value.replace(/\D/g, '');
+            if (value.startsWith('63')) return `+63${value.slice(2)}`;
+            if (value.startsWith('0')) return `+63${value.slice(1)}`;
+            if (value.startsWith('9')) return `+63${value}`;
+            return input;
+        }
+
+        function toLocalPHNumber(raw) {
+            const normalized = normalizePHNumber(raw);
+            if (normalized.startsWith('+63')) {
+                return `0${normalized.slice(3)}`;
+            }
+            return String(raw || '').trim();
+        }
+
+        function stripToNationalNumber(raw) {
+            const local = toLocalPHNumber(raw);
+            return local.startsWith('0') ? local.slice(1) : local;
+        }
+
+        function splitFullName(fullName) {
+            const parts = String(fullName || '').trim().split(/\s+/).filter(Boolean);
+            return {
+                firstName: parts[0] || '',
+                lastName: parts.slice(1).join(' ')
+            };
+        }
+
+        function syncRecipientWithSender() {
+            const differentRecipientToggle = document.getElementById('different-recipient-toggle');
+            if (differentRecipientToggle?.checked) return;
+
+            const senderNameValue = document.getElementById('sender-name')?.value || '';
+            const senderPhoneValue = document.getElementById('sender-phone')?.value || '';
+            const nameParts = splitFullName(senderNameValue);
+
+            const recipientFirstName = document.getElementById('recipient-first-name');
+            const recipientLastName = document.getElementById('recipient-last-name');
+            const recipientPhone = document.getElementById('recipient-phone');
+
+            if (recipientFirstName) recipientFirstName.value = nameParts.firstName;
+            if (recipientLastName) recipientLastName.value = nameParts.lastName;
+            if (recipientPhone) recipientPhone.value = stripToNationalNumber(senderPhoneValue);
+        }
+
+        function toggleRecipientDetails() {
+            const toggle = document.getElementById('different-recipient-toggle');
+            const panel = document.getElementById('recipient-details-panel');
+            const hint = document.getElementById('recipient-mode-hint');
+            if (!toggle || !panel) return;
+
+            panel.hidden = !toggle.checked;
+            if (hint) {
+                hint.textContent = toggle.checked
+                    ? 'Enter separate recipient information for this gift order.'
+                    : 'If unchecked, the order will use your sender details as the recipient contact.';
+            }
+
+            if (!toggle.checked) {
+                syncRecipientWithSender();
+            }
+        }
+
+        function applyCheckoutProfilePrefill(profile = {}) {
+            const firstName = profile.first_name || profile.firstName || '';
+            const lastName = profile.last_name || profile.lastName || '';
+            const fullName = `${firstName} ${lastName}`.trim() || profile.full_name || profile.name || '';
+            const email = profile.email || '';
+            const phone = toLocalPHNumber(profile.contact_number || profile.contactNumber || '');
+            const address = profile.address || '';
+
+            const senderName = document.getElementById('sender-name');
+            const senderPhone = document.getElementById('sender-phone');
+            const senderEmail = document.getElementById('sender-email');
+            const recipientAddress = document.getElementById('recipient-address-line');
+
+            if (senderName && !senderName.value && fullName) senderName.value = fullName;
+            if (senderPhone && !senderPhone.value && phone) senderPhone.value = phone;
+            if (senderEmail && !senderEmail.value && email) senderEmail.value = email;
+            if (recipientAddress && !recipientAddress.value && address) recipientAddress.value = address;
+
+            syncRecipientWithSender();
+        }
+
+        async function autofillCheckoutFromProfile() {
+            let localUser = {};
+            try {
+                localUser = JSON.parse(localStorage.getItem('user') || '{}') || {};
+            } catch (error) {
+                localUser = {};
+            }
+
+            applyCheckoutProfilePrefill(localUser);
+
+            if (!localUser?.id) return;
+
+            try {
+                const response = await fetch('api/profile.php?action=get', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ user_id: localUser.id })
+                });
+
+                const data = await response.json();
+                if (data?.success && data.user) {
+                    applyCheckoutProfilePrefill(data.user);
+                }
+            } catch (error) {
+                console.warn('Checkout autofill could not load full profile:', error);
+            }
+        }
+
+        let availableVouchers = [];
+        let appliedVoucher = null;
+
+        function currency(value) {
+            return `₱${Number(value || 0).toFixed(2)}`;
+        }
+
+        function setVoucherFeedback(message, type = 'info') {
+            const feedback = document.getElementById('voucher-feedback');
+            if (!feedback) return;
+            feedback.textContent = message;
+            feedback.className = `voucher-feedback${type ? ` ${type}` : ''}`;
+        }
+
+        function isVoucherActive(voucher) {
+            if (!voucher) return false;
+            const status = String(voucher.status || '').toLowerCase();
+            if (status !== 'active') return false;
+            if (!voucher.expiry_date) return true;
+            const expiryTime = new Date(voucher.expiry_date).getTime();
+            return Number.isFinite(expiryTime) ? expiryTime >= (new Date().setHours(0, 0, 0, 0)) : true;
+        }
+
+        function formatVoucherOption(voucher) {
+            const valueLabel = String(voucher.type || '').toLowerCase() === 'percentage'
+                ? `${Number(voucher.value || 0)}% off`
+                : `${currency(voucher.value || 0)} off`;
+            return `${voucher.code} — ${valueLabel}`;
+        }
+
+        function getVoucherDiscount(subtotal) {
+            if (!appliedVoucher || subtotal <= 0) return 0;
+
+            if (String(appliedVoucher.type || '').toLowerCase() === 'percentage') {
+                return Math.min(subtotal, Number((subtotal * (Number(appliedVoucher.value || 0) / 100)).toFixed(2)));
+            }
+
+            return Math.min(subtotal, Number(appliedVoucher.value || 0));
+        }
+
+        function calculateCartTotals(cart = getCart()) {
+            const subtotal = cart.reduce((sum, item) => sum + computeItemTotal(item), 0);
+            const shipping = cart.length ? SHIPPING_FEE : 0;
+            const discount = getVoucherDiscount(subtotal);
+            const total = Math.max(0, subtotal - discount) + shipping;
+            return { subtotal, shipping, discount, total };
+        }
+
+        function populateVoucherOptions() {
+            const select = document.getElementById('voucher-select');
+            if (!select) return;
+
+            select.innerHTML = '<option value="">No voucher selected</option>';
+            availableVouchers.filter(isVoucherActive).forEach(voucher => {
+                const option = document.createElement('option');
+                option.value = voucher.code || '';
+                option.textContent = formatVoucherOption(voucher);
+                select.appendChild(option);
+            });
+
+            if (appliedVoucher?.code) {
+                select.value = appliedVoucher.code;
+            }
+        }
+
+        async function loadAvailableVouchers() {
+            const select = document.getElementById('voucher-select');
+            const codeInput = document.getElementById('voucher-code');
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            let user = null;
+
+            try {
+                user = JSON.parse(localStorage.getItem('user') || 'null');
+            } catch (error) {
+                user = null;
+            }
+
+            if (!isLoggedIn || !user?.id) {
+                availableVouchers = [];
+                if (select) select.disabled = true;
+                setVoucherFeedback('Log in to load and use your account vouchers.', 'info');
+                renderSummary();
+                return;
+            }
+
+            try {
+                const response = await fetch('api/get_user_vouchers.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ user_id: user.id })
+                });
+                const data = await response.json();
+
+                availableVouchers = data?.success && Array.isArray(data.vouchers)
+                    ? data.vouchers.filter(isVoucherActive)
+                    : [];
+
+                if (select) select.disabled = false;
+                populateVoucherOptions();
+
+                const pendingCode = localStorage.getItem('pendingVoucherCode') || '';
+                if (pendingCode && codeInput) {
+                    codeInput.value = pendingCode;
+                    applyVoucherCode(pendingCode, false);
+                } else if (availableVouchers.length) {
+                    setVoucherFeedback('Select or paste a voucher code, then click Apply.', 'info');
+                } else {
+                    setVoucherFeedback('No active vouchers are available for this account right now.', 'info');
+                }
+            } catch (error) {
+                console.error('Failed to load vouchers:', error);
+                availableVouchers = [];
+                setVoucherFeedback('Failed to load vouchers. Please try again.', 'error');
+            }
+        }
+
+        function applyVoucherCode(rawCode, notify = true) {
+            const code = String(rawCode || '').trim().toUpperCase();
+            const codeInput = document.getElementById('voucher-code');
+            const select = document.getElementById('voucher-select');
+
+            if (!code) {
+                appliedVoucher = null;
+                localStorage.removeItem('pendingVoucherCode');
+                if (notify) setVoucherFeedback('Enter a voucher code first.', 'error');
+                renderSummary();
+                return;
+            }
+
+            const match = availableVouchers.find(voucher => String(voucher.code || '').toUpperCase() === code);
+            if (!match) {
+                appliedVoucher = null;
+                if (notify) setVoucherFeedback('That voucher is not active for your account.', 'error');
+                renderSummary();
+                return;
+            }
+
+            appliedVoucher = match;
+            localStorage.setItem('pendingVoucherCode', match.code);
+            if (codeInput) codeInput.value = match.code;
+            if (select) select.value = match.code;
+            setVoucherFeedback(`Voucher applied: ${formatVoucherOption(match)}`, 'success');
+            renderSummary();
+        }
+
+        function clearAppliedVoucher(message = 'Voucher cleared.') {
+            appliedVoucher = null;
+            localStorage.removeItem('pendingVoucherCode');
+            const codeInput = document.getElementById('voucher-code');
+            const select = document.getElementById('voucher-select');
+            if (codeInput) codeInput.value = '';
+            if (select) select.value = '';
+            setVoucherFeedback(message, 'info');
+            renderSummary();
+        }
+
+        function computeItemTotal(item) {
+            const base = Number(item.basePrice || 0);
+            const quantity = Number(item.quantity || 1);
+            const addOnTotal = (item.addOns || []).reduce((sum, addOn) => sum + Number(addOn.price || 0), 0);
+            return (base + addOnTotal) * quantity;
+        }
+
+        function buildRecipeText(item) {
+            const summary = item?.customData?.summary;
+            if (!Array.isArray(summary) || !summary.length) return '';
+            return summary
+                .map(entry => `${entry?.name || 'Flower'} x${Math.max(1, Number(entry?.count || 1))}`)
+                .join(', ');
+        }
+
+        function renderSummary() {
+            const cart = getCart();
+            const list = document.getElementById('cart-summary-list');
+
+            if (!cart.length) {
+                list.innerHTML = '<p style="color: var(--text);">Your cart is empty.</p>';
+                document.getElementById('subtotal-amount').textContent = currency(0);
+                document.getElementById('shipping-amount').textContent = currency(0);
+                document.getElementById('discount-amount').textContent = `-${currency(0)}`;
+                document.getElementById('total-amount').textContent = currency(0);
+                document.getElementById('place-order').disabled = true;
+                document.getElementById('place-order').style.opacity = '0.6';
+                return;
+            }
+
+            document.getElementById('place-order').disabled = false;
+            document.getElementById('place-order').style.opacity = '1';
+            list.innerHTML = '';
+
+            cart.forEach((item, index) => {
+                const itemTotal = computeItemTotal(item);
+                const addOnNames = (item.addOns || []).map(addOn => addOn.name).join(', ');
+                const recipeText = buildRecipeText(item);
+                const qty = Math.max(1, Number(item.quantity || 1));
+                const card = document.createElement('div');
+                card.className = 'cart-item';
+                card.innerHTML = `
+                    <img src="${item.image || 'https://via.placeholder.com/100?text=No+Image'}" alt="${item.name}">
+                    <div>
+                        <div class="cart-item-name">${item.name}</div>
+                        <div class="cart-item-meta">Qty: ${qty}${addOnNames ? ` • Add-ons: ${addOnNames}` : ''}</div>
+                        ${recipeText ? `<div class="cart-item-meta">Recipe: ${recipeText}</div>` : ''}
+                    </div>
+                    <div class="cart-item-actions">
+                        <strong>${currency(itemTotal)}</strong>
+                        <div class="qty-control">
+                            <button type="button" class="qty-btn" data-action="decrease" data-index="${index}">−</button>
+                            <span class="qty-pill">${qty}</span>
+                            <button type="button" class="qty-btn" data-action="increase" data-index="${index}">+</button>
+                        </div>
+                        <button type="button" class="checkout-remove-btn" data-action="remove" data-index="${index}">Remove</button>
+                    </div>
+                `;
+                list.appendChild(card);
+            });
+
+            const totals = calculateCartTotals(cart);
+            document.getElementById('subtotal-amount').textContent = currency(totals.subtotal);
+            document.getElementById('shipping-amount').textContent = currency(totals.shipping);
+            document.getElementById('discount-amount').textContent = `-${currency(totals.discount)}`;
+            document.getElementById('total-amount').textContent = currency(totals.total);
+        }
+
+        function updateDeliverySummary() {
+            const date = document.getElementById('delivery-date')?.value || '';
+            const dateLabel = date || 'Not selected';
+            document.getElementById('delivery-summary').textContent = `Delivery: ${dateLabel}`;
+        }
+
+        function getTodayDateString() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+
+        function parseTimeToMinutes(text) {
+            const value = String(text || '').trim();
+            const match = value.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i);
+            if (!match) return null;
+
+            let hours = Number(match[1]);
+            const minutes = Number(match[2]);
+            const period = match[3].toUpperCase();
+
+            if (period === 'PM' && hours !== 12) hours += 12;
+            if (period === 'AM' && hours === 12) hours = 0;
+
+            return (hours * 60) + minutes;
+        }
+
+        function getSlotStartMinutes(slotLabel) {
+            const raw = String(slotLabel || '').trim();
+            if (!raw || !raw.includes('-')) return null;
+            const startText = raw.split('-')[0].trim();
+            return parseTimeToMinutes(startText);
+        }
+
+        function getSlotEndMinutes(slotLabel) {
+            const raw = String(slotLabel || '').trim();
+            if (!raw || !raw.includes('-')) return null;
+            const endText = raw.split('-')[1].trim();
+            return parseTimeToMinutes(endText);
+        }
+
+        function isPastDeliverySelection(dateValue, timeValue) {
+            if (!dateValue || !timeValue) return false;
+
+            const today = getTodayDateString();
+            if (dateValue < today) return true;
+            if (dateValue > today) return false;
+
+            const slotEnd = getSlotEndMinutes(timeValue);
+            if (slotEnd === null) return false;
+
+            const now = new Date();
+            const currentMinutes = (now.getHours() * 60) + now.getMinutes();
+            return slotEnd <= currentMinutes;
+        }
+
+        function enforceDeliveryDateMin() {
+            const dateInput = document.getElementById('delivery-date');
+            if (!dateInput) return;
+
+            const today = getTodayDateString();
+            dateInput.min = today;
+
+            if (!dateInput.value || dateInput.value < today) {
+                dateInput.value = today;
+            }
+        }
+
+        function filterDeliveryTimeOptions() {
+            return;
+        }
+
+        function initializeDeliveryConstraints() {
+            enforceDeliveryDateMin();
+        }
+
+        function notifyCheckout(message, type = 'info', useAlert = false) {
+            if (typeof showNotification === 'function') {
+                showNotification(message, type);
+            }
+            if (useAlert) {
+                window.alert(message);
+            }
+        }
+
+        function getSelectedPaymentMethod() {
+            return document.querySelector('input[name="payment"]:checked')?.value || '';
+        }
+
+        function isValidEmail(value) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(value || '').trim());
+        }
+
+        function isValidPHMobile(value) {
+            const cleaned = String(value || '').replace(/[^\d+]/g, '');
+            return /^(\+63|0)9\d{9}$/.test(cleaned);
+        }
+
+        function getCheckoutValidationErrors() {
+            const errors = [];
+            const senderName = document.getElementById('sender-name')?.value.trim() || '';
+            const senderPhone = document.getElementById('sender-phone')?.value.trim() || '';
+            const senderEmail = document.getElementById('sender-email')?.value.trim() || '';
+            const addressLine = document.getElementById('recipient-address-line')?.value.trim() || '';
+            const region = document.getElementById('recipient-region')?.value || '';
+            const province = document.getElementById('recipient-province')?.value || '';
+            const city = document.getElementById('recipient-city')?.value || '';
+            const district = document.getElementById('recipient-district')?.value || '';
+            const differentRecipient = Boolean(document.getElementById('different-recipient-toggle')?.checked);
+            const paymentMethod = getSelectedPaymentMethod();
+            const gcashNumber = document.getElementById('gcash-number')?.value.trim() || '';
+
+            if (senderName.length < 2) errors.push('Please enter your full sender name.');
+            if (!isValidPHMobile(senderPhone)) errors.push('Please enter a valid sender phone number.');
+            if (!isValidEmail(senderEmail)) errors.push('Please enter a valid email address.');
+            if (!addressLine) errors.push('Please enter the delivery street address.');
+            if (!region || !province || !city || !district) errors.push('Please complete the delivery region, province, city, and barangay.');
+            if (!paymentMethod) errors.push('Please select a payment method.');
+            if (paymentMethod === 'gcash' && !isValidPHMobile(gcashNumber)) errors.push('Please enter a valid GCash mobile number.');
+
+            if (differentRecipient) {
+                const recipientFirstName = document.getElementById('recipient-first-name')?.value.trim() || '';
+                const recipientLastName = document.getElementById('recipient-last-name')?.value.trim() || '';
+                const recipientPhone = document.getElementById('recipient-phone')?.value.trim() || '';
+                if (!recipientFirstName && !recipientLastName) errors.push('Please enter the recipient name.');
+                if (!isValidPHMobile(`0${recipientPhone.replace(/^0+/, '')}`)) errors.push('Please enter a valid recipient phone number.');
+            }
+
+            return errors;
+        }
+
+        async function placeOrder() {
+            const cart = getCart();
+            if (!cart.length) {
+                notifyCheckout('Cart is empty.', 'error', true);
+                return;
+            }
+
+            const deliveryDate = document.getElementById('delivery-date').value;
+            const today = getTodayDateString();
+
+            if (!deliveryDate) {
+                notifyCheckout('Please select a delivery date.', 'error', true);
+                return;
+            }
+
+            if (deliveryDate < today) {
+                notifyCheckout('Delivery date cannot be in the past.', 'error', true);
+                return;
+            }
+
+            const validationErrors = getCheckoutValidationErrors();
+            if (validationErrors.length) {
+                notifyCheckout(validationErrors[0], 'error', true);
+                return;
+            }
+
+            const placeOrderBtn = document.getElementById('place-order');
+            if (placeOrderBtn) {
+                placeOrderBtn.disabled = true;
+                placeOrderBtn.style.opacity = '0.7';
+            }
+
+            const differentRecipient = Boolean(document.getElementById('different-recipient-toggle')?.checked);
+            const senderNameValue = document.getElementById('sender-name').value.trim();
+            const senderNameParts = splitFullName(senderNameValue);
+            const senderPhoneValue = document.getElementById('sender-phone').value.trim();
+            const paymentMethod = getSelectedPaymentMethod();
+            const gcashNumber = document.getElementById('gcash-number')?.value.trim() || '';
+            const totals = calculateCartTotals(cart);
+
+            const orderDraft = {
+                userId: (() => {
+                    try {
+                        const user = JSON.parse(localStorage.getItem('user') || '{}');
+                        return user && user.id ? Number(user.id) : null;
+                    } catch (e) {
+                        return null;
+                    }
+                })(),
+                sender: {
+                    name: senderNameValue,
+                    phone: senderPhoneValue,
+                    email: document.getElementById('sender-email').value.trim(),
+                    anonymous: document.getElementById('sender-anonymous').checked
+                },
+                recipient: {
+                    firstName: differentRecipient ? document.getElementById('recipient-first-name').value.trim() : senderNameParts.firstName,
+                    lastName: differentRecipient ? document.getElementById('recipient-last-name').value.trim() : senderNameParts.lastName,
+                    phone: differentRecipient
+                        ? normalizePHNumber(`${document.getElementById('recipient-country-code').value}${document.getElementById('recipient-phone').value.trim()}`)
+                        : normalizePHNumber(senderPhoneValue),
+                    addressLine: document.getElementById('recipient-address-line').value.trim(),
+                    region: document.getElementById('recipient-region').value,
+                    provinceMunicipality: document.getElementById('recipient-province').value,
+                    city: document.getElementById('recipient-city').value,
+                    districtBarangay: document.getElementById('recipient-district').value,
+                    sameAsSender: !differentRecipient
+                },
+                messageToRecipient: document.getElementById('gift-message').value.trim(),
+                specialInstructions: document.getElementById('special-instructions').value.trim(),
+                deliveryDate: document.getElementById('delivery-date').value,
+                deliveryTime: '',
+                paymentMethod,
+                gcashNumber: paymentMethod === 'gcash' ? normalizePHNumber(gcashNumber) : '',
+                voucher: appliedVoucher ? {
+                    code: appliedVoucher.code,
+                    type: appliedVoucher.type,
+                    value: appliedVoucher.value
+                } : null,
+                subtotal: totals.subtotal,
+                discountAmount: totals.discount,
+                total: totals.total,
+                cart,
+                shippingFee: totals.shipping,
+                createdAt: new Date().toISOString()
+            };
+
+            try {
+                const response = await fetch('api/save_order.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(orderDraft)
+                });
+
+                const rawText = await response.text();
+                let result;
+                try {
+                    result = JSON.parse(rawText);
+                } catch (parseError) {
+                    throw new Error('Server returned an invalid response while placing order.');
+                }
+
+                if (!response.ok || !result.success) {
+                    throw new Error(result.message || 'Failed to place order');
+                }
+
+                localStorage.setItem('checkoutDraft', JSON.stringify(orderDraft));
+                localStorage.setItem('lastOrderNumber', result.order_number || '');
+                localStorage.removeItem('pendingVoucherCode');
+                localStorage.setItem('lastOrderReceipt', JSON.stringify({ ...orderDraft, ...result }));
+                saveCart([]);
+                updateCartBadge();
+                renderSummary();
+                renderNavCart();
+                const successMessage = `Order placed successfully! ${result.order_number ? 'Order #' + result.order_number : ''}`;
+                notifyCheckout(`${successMessage} Opening your receipt...`, 'success', true);
+                setTimeout(() => {
+                    window.location.href = result.receipt_url || `api/order_receipt.php?order_id=${encodeURIComponent(result.order_id || '')}`;
+                }, 700);
+            } catch (error) {
+                notifyCheckout(error.message || 'Failed to place order.', 'error', true);
+            } finally {
+                if (placeOrderBtn) {
+                    placeOrderBtn.disabled = false;
+                    placeOrderBtn.style.opacity = '1';
+                }
+            }
+        }
+
+        document.getElementById('delivery-date').addEventListener('change', () => {
+            enforceDeliveryDateMin();
+            filterDeliveryTimeOptions();
+            updateDeliverySummary();
+        });
+        document.getElementById('different-recipient-toggle')?.addEventListener('change', toggleRecipientDetails);
+        document.getElementById('autofill-profile')?.addEventListener('click', autofillCheckoutFromProfile);
+        ['sender-name', 'sender-phone'].forEach(id => {
+            document.getElementById(id)?.addEventListener('input', syncRecipientWithSender);
+        });
+        document.getElementById('place-order').addEventListener('click', placeOrder);
+        document.getElementById('cart-toggle-btn')?.addEventListener('click', openCartDrawer);
+        document.getElementById('cart-close-btn')?.addEventListener('click', closeCartDrawer);
+        document.getElementById('cart-overlay')?.addEventListener('click', closeCartDrawer);
+        document.getElementById('checkout-cart-list')?.addEventListener('click', (e) => {
+            const action = e.target?.dataset?.action;
+            const index = Number(e.target?.dataset?.index);
+            if (action === 'remove') {
+                removeCartItem(index);
+            } else if (action === 'increase') {
+                changeCartItemQuantity(index, 1);
+            } else if (action === 'decrease') {
+                changeCartItemQuantity(index, -1);
+            }
+        });
+        document.getElementById('cart-summary-list')?.addEventListener('click', (e) => {
+            const action = e.target?.dataset?.action;
+            const index = Number(e.target?.dataset?.index);
+            if (action === 'remove') {
+                removeCartItem(index);
+            } else if (action === 'increase') {
+                changeCartItemQuantity(index, 1);
+            } else if (action === 'decrease') {
+                changeCartItemQuantity(index, -1);
+            }
+        });
+        document.getElementById('voucher-select')?.addEventListener('change', (e) => {
+            const selectedCode = e.target.value || '';
+            const codeInput = document.getElementById('voucher-code');
+            if (codeInput) codeInput.value = selectedCode;
+            if (selectedCode) {
+                applyVoucherCode(selectedCode);
+            }
+        });
+        document.getElementById('apply-voucher')?.addEventListener('click', () => {
+            applyVoucherCode(document.getElementById('voucher-code')?.value || '');
+        });
+        document.getElementById('clear-voucher')?.addEventListener('click', () => {
+            clearAppliedVoucher('Voucher cleared.');
+        });
+        document.getElementById('voucher-code')?.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                applyVoucherCode(e.target.value || '');
+            }
+        });
+
+        window.addEventListener('storage', (e) => {
+            if (e.key === getCartStorageKey() || e.key === 'cart') {
+                updateCartBadge();
+                renderSummary();
+                renderNavCart();
+            }
+        });
+
+        initializeAddressFields();
+        initializeDeliveryConstraints();
+        toggleRecipientDetails();
+        updateCartBadge();
+        renderSummary();
+        renderNavCart();
+        updateDeliverySummary();
+        autofillCheckoutFromProfile();
+        loadAvailableVouchers();
+
+        const paymentRadios = document.querySelectorAll('input[name="payment"]');
+        paymentRadios.forEach(radio => {
+            radio.addEventListener('change', function () {
+                document.querySelectorAll('.payment-method-option').forEach(opt => {
+                    opt.classList.remove('active');
+                });
+                this.closest('.payment-method-option').classList.add('active');
+
+                const gcashDetails = document.getElementById('gcash-details');
+                if (gcashDetails) {
+                    gcashDetails.style.display = this.value === 'gcash' ? 'block' : 'none';
+                }
+            });
+        });
+
+        if (paymentRadios.length) {
+            paymentRadios[0].checked = true;
+            paymentRadios[0].dispatchEvent(new Event('change'));
+        }
+    </script>
+</body>
+</html>
+
+
